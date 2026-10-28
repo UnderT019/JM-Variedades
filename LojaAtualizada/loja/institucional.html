@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Institucional & Atendimento | JM Variedades</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ===== DESIGN SYSTEM ===== */
+:root{
+  --preto:#070707;
+  --dourado:#F5B52E;
+  --dourado-claro:#FFD66B;
+  --dourado-escuro:#8A5F00;
+  --branco:#FFFFFF;
+  --fundo:#F6F6F4;
+  --linha:#E8E8E4;
+  --texto:#161616;
+  --texto-sec:#777777;
+  --texto-footer:#999999;
+  --verde:#16875B;
+  --vermelho:#C94A4A;
+  --img-bg:#F0F0EC;
+  --radius-btn:12px;
+  --radius-input:12px;
+  --radius-card:18px;
+  --radius-banner:22px;
+  --shadow:0 14px 45px rgba(0,0,0,.09);
+  --font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  --serif:Georgia,'Times New Roman',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--fundo);color:var(--texto);line-height:1.6}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+.container{max-width:1240px;margin:0 auto;padding:0 24px}
+
+/* ===== TOPBAR ===== */
+.topbar{background:var(--preto);color:var(--branco);font-size:12px;font-weight:600;text-align:center;padding:8px 16px}
+.topbar span{color:var(--dourado)}
+
+/* ===== HEADER ===== */
+header.site{background:var(--branco);border-bottom:1px solid var(--linha);position:sticky;top:0;z-index:100}
+.header-main{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 0}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer}
+.logo-box{background:var(--preto);color:var(--branco);border-radius:12px;padding:8px 14px;display:flex;align-items:center;gap:10px;line-height:1}
+.logo-box .jm{font-weight:900;font-size:22px;letter-spacing:.5px}
+.logo-box .jm i{font-style:normal;color:var(--dourado)}
+.logo-box .bag{font-size:20px;color:var(--dourado)}
+.logo-txt small{display:block;font-size:11px;font-weight:800;letter-spacing:2.5px;color:var(--dourado)}
+.logo-txt strong{font-size:13px;font-weight:800;color:var(--preto)}
+
+.btn-voltar-loja{background:var(--dourado);color:var(--preto);padding:10px 18px;border-radius:var(--radius-btn);font-weight:800;font-size:13px;display:flex;align-items:center;gap:8px;transition:200ms}
+.btn-voltar-loja:hover{background:var(--dourado-claro);transform:translateY(-1px)}
+
+/* ===== HERO LANDING PAGE ===== */
+.hero-inst{background:linear-gradient(135deg, #070707 0%, #1c1917 100%);color:var(--branco);border-radius:var(--radius-banner);margin:24px 0;padding:48px 40px;position:relative;overflow:hidden}
+.hero-inst::after{content:'';position:absolute;top:-50%;right:-10%;width:350px;height:350px;background:radial-gradient(circle, rgba(245,181,46,0.15) 0%, transparent 70%);border-radius:50%;pointer-events:none}
+.hero-inst .eyebrow{color:var(--dourado);font-size:12px;font-weight:900;letter-spacing:2px;margin-bottom:8px;display:block}
+.hero-inst h1{font-family:var(--serif);font-size:clamp(28px,4vw,42px);font-weight:400;margin-bottom:12px}
+.hero-inst h1 span{color:var(--dourado);font-style:italic}
+.hero-inst p{color:#ccc;font-size:15px;max-width:680px}
+
+/* ===== TAB NAV ===== */
+.nav-tabs{display:flex;gap:10px;margin-bottom:32px;overflow-x:auto;padding-bottom:8px}
+.tab-btn{background:var(--branco);border:1px solid var(--linha);border-radius:14px;padding:12px 20px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:200ms;color:var(--texto-sec);display:flex;align-items:center;gap:8px}
+.tab-btn:hover{border-color:var(--dourado);color:var(--texto)}
+.tab-btn.active{background:var(--preto);color:var(--dourado);border-color:var(--preto);box-shadow:var(--shadow)}
+
+/* ===== SECTIONS ===== */
+.inst-section{display:none}
+.inst-section.active{display:block;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Card Styles */
+.card{background:var(--branco);border:1px solid var(--linha);border-radius:var(--radius-card);padding:32px;margin-bottom:24px;box-shadow:0 4px 22px rgba(0,0,0,.025)}
+.card h2{font-size:22px;font-weight:900;margin-bottom:12px;display:flex;align-items:center;gap:12px}
+.card h2 span{font-size:26px}
+.card p{font-size:14px;color:#444;margin-bottom:16px;line-height:1.7}
+
+/* Stats grid */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:28px 0}
+.stat-box{background:var(--fundo);border:1px solid var(--linha);border-radius:16px;padding:20px;text-align:center}
+.stat-box strong{display:block;font-size:28px;font-weight:900;color:var(--dourado-escuro)}
+.stat-box span{font-size:12px;font-weight:700;color:var(--texto-sec)}
+
+/* Values grid */
+.valores-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:20px}
+.valor-card{background:var(--fundo);border-radius:14px;padding:18px;border:1px solid var(--linha)}
+.valor-card h4{font-size:15px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.valor-card p{font-size:13px;color:var(--texto-sec);margin:0}
+
+/* Contact Grid & Form */
+.atendimento-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.canal-item{display:flex;gap:16px;align-items:flex-start;padding:16px;background:var(--fundo);border-radius:14px;border:1px solid var(--linha);margin-bottom:12px}
+.canal-ico{width:44px;height:44px;background:var(--preto);color:var(--dourado);border-radius:12px;display:grid;place-items:center;font-size:20px;flex-shrink:0}
+.canal-txt h4{font-size:14px;font-weight:800}
+.canal-txt p{font-size:13px;color:var(--texto-sec);margin:2px 0 0}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:800;margin-bottom:6px}
+.field input, .field textarea, .field select{width:100%;padding:12px 14px;border:1px solid #dcdcd7;border-radius:var(--radius-input);font-family:var(--font);font-size:13px;outline:none}
+.field input:focus, .field textarea:focus{border-color:var(--dourado);box-shadow:0 0 0 3px rgba(245,181,46,.16)}
+
+.btn-send{background:var(--dourado);color:var(--preto);border:none;padding:14px 24px;border-radius:var(--radius-btn);font-weight:900;font-size:14px;cursor:pointer;width:100%;transition:200ms}
+.btn-send:hover{background:var(--dourado-claro)}
+
+/* FAQ Accordion */
+.faq-item{border:1px solid var(--linha);border-radius:14px;margin-bottom:10px;overflow:hidden;background:var(--branco)}
+.faq-header{padding:16px 20px;font-weight:800;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:var(--branco)}
+.faq-header:hover{background:var(--fundo)}
+.faq-body{padding:0 20px 16px;font-size:13px;color:#555;display:none;line-height:1.6;border-top:1px solid var(--linha);padding-top:14px}
+.faq-item.open .faq-body{display:block}
+.faq-item.open .faq-header span{transform:rotate(180deg)}
+
+/* Terms & Privacy Lists */
+.policy-list{list-style-type:none;margin:16px 0}
+.policy-list li{position:relative;padding-left:24px;margin-bottom:12px;font-size:14px;color:#444}
+.policy-list li::before{content:'✓';position:absolute;left:0;top:0;color:var(--verde);font-weight:900}
+
+/* Toast */
+.toast-msg{display:none;background:#E6F4ED;color:var(--verde);border:1px solid #B9DCC8;padding:14px;border-radius:12px;font-size:13px;font-weight:700;margin-top:12px;text-align:center}
+
+/* FOOTER */
+footer.main-footer{background:var(--preto);color:var(--branco);margin-top:40px}
+.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:32px;padding:48px 0 24px}
+.foot-grid h4{font-size:13px;font-weight:800;margin-bottom:12px;color:var(--branco)}
+.foot-grid a{display:block;font-size:13px;color:var(--texto-footer);margin-bottom:8px;cursor:pointer}
+.foot-grid a:hover{color:var(--dourado)}
+.foot-desc{font-size:13px;color:var(--texto-footer);margin-top:12px;max-width:280px}
+.foot-bottom{border-top:1px solid #222;padding:16px 0;font-size:12px;color:var(--texto-footer);text-align:center}
+
+@media(max-width:800px){
+  .atendimento-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr}
+  .valores-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">JM Variedades <span>| Central de Atendimento & Portal Institucional</span></div>
+
+<!-- HEADER -->
+<header class="site">
+  <div class="container header-main">
+    <a href="index.html" class="logo">
+      <div class="logo-box"><span class="bag">🛍️</span><span class="jm">J<i>M</i></span></div>
+      <div class="logo-txt"><small>VARIEDADES</small><strong>JM Variedades</strong></div>
+    </a>
+    <a href="index.html" class="btn-voltar-loja">← Voltar para a Loja</a>
+  </div>
+</header>
+
+<div class="container">
+  <!-- HERO BANNER -->
+  <div class="hero-inst">
+    <span class="eyebrow">PORTAL INSTITUCIONAL & SUPORTE</span>
+    <h1>Transparência, <span>qualidade</span> e respeito por você</h1>
+    <p>Conheça a história da JM Variedades, tire suas dúvidas com nossa equipe de atendimento e acesse nossos termos e políticas de privacidade.</p>
+  </div>
+
+  <!-- NAVIGATION TABS -->
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab('historia', this)">🏛️ Nossa História</button>
+    <button class="tab-btn" onclick="showTab('atendimento', this)">🎧 Atendimento & Contato</button>
+    <button class="tab-btn" onclick="showTab('trocas', this)">📦 Trocas & Entregas</button>
+    <button class="tab-btn" onclick="showTab('privacidade', this)">🔒 Privacidade</button>
+    <button class="tab-btn" onclick="showTab('termos', this)">📜 Termos de Uso</button>
+  </div>
+
+  <!-- SECTION: NOSSA HISTÓRIA -->
+  <div id="historia" class="inst-section active">
+    <div class="card">
+      <h2><span>🏪</span> Nossa História</h2>
+      <p>Fundada em 2018 com o propósito de simplificar a rotina das famílias brasileiras, a <strong>JM Variedades</strong> nasceu de uma modesta loja de bairro focada em utilidades domésticas e produtos essenciais. A paixão pelo bom atendimento e a busca incessante pelos melhores fornecedores transformaram o pequeno negócio em uma referência regional.</p>
+      <p>Com a expansão digital em 2021, transformamos nosso catálogo em um ecossistema completo de e-commerce. Hoje oferecemos desde eletrônicos de alta tecnologia, produtos de beleza e moda, até itens esportivos, livros e mercado, com presença nacional e entregas rápidas para todo o Brasil.</p>
+
+      <div class="stats-grid">
+        <div class="stat-box"><strong>+50 MIL</strong><span>Clientes Atendidos</span></div>
+        <div class="stat-box"><strong>99.8%</strong><span>Entregas no Prazo</span></div>
+        <div class="stat-box"><strong>+10.000</strong><span>Produtos no Catálogo</span></div>
+      </div>
+
+      <h3>Nossos Valores Fundamentais</h3>
+      <div class="valores-grid">
+        <div class="valor-card">
+          <h4><span>⭐</span> Excelência no Atendimento</h4>
+          <p>Tratamos cada cliente como único, garantindo suporte rápido, humano e eficiente em todas as etapas.</p>
+        </div>
+        <div class="valor-card">
+          <h4><span>🚀</span> Entrega Ágil e Segura</h4>
+          <p>Parcerias com as melhores operadoras logísticas do país para garantir que seu pedido chegue intacto.</p>
+        </div>
+        <div class="valor-card">
+          <h4><span>🛡️</span> Transparência Absoluta</h4>
+          <p>Preços fair, políticas claras de trocas e proteção total dos seus dados bancários e pessoais.</p>
+        </div>
+        <div class="valor-card">
+          <h4><span>💡</span> Inovação Constante</h4>
+          <p>Atualização diária do nosso catálogo para trazer as maiores novidades e tendências globais.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: ATENDIMENTO & CONTATO -->
+  <div id="atendimento" class="inst-section">
+    <div class="card">
+      <h2><span>🎧</span> Central de Atendimento & Suporte</h2>
+      <p>Nossa equipe de suporte técnico e atendimento ao cliente está disponível para tirar dúvidas, rastrear pedidos e auxiliar na sua experiência de compra.</p>
+
+      <div class="atendimento-grid">
+        <div>
+          <h3>Canais Diretos</h3>
+          <br>
+          <div class="canal-item">
+            <div class="canal-ico">💬</div>
+            <div class="canal-txt">
+              <h4>WhatsApp Oficial</h4>
+              <p>(11) 98888-7777 — Atendimento imediato das 08h às 20h</p>
+            </div>
+          </div>
+          <div class="canal-item">
+            <div class="canal-ico">✉️</div>
+            <div class="canal-txt">
+              <h4>E-mail de Suporte</h4>
+              <p>atendimento@jmvariedades.com.br</p>
+            </div>
+          </div>
+          <div class="canal-item">
+            <div class="canal-ico">⏰</div>
+            <div class="canal-txt">
+              <h4>Horário de Funcionamento</h4>
+              <p>Segunda a Sexta: 08:00 às 20:00<br>Sábados: 09:00 às 15:00</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3>Envie uma Mensagem</h3>
+          <br>
+          <form id="contactForm" onsubmit="event.preventDefault(); enviarMensagemSuporte();">
+            <div class="field">
+              <label for="cNome">Seu Nome Completo</label>
+              <input id="cNome" type="text" placeholder="Digite seu nome" required>
+            </div>
+            <div class="field">
+              <label for="cEmail">Seu E-mail</label>
+              <input id="cEmail" type="email" placeholder="seuemail@exemplo.com" required>
+            </div>
+            <div class="field">
+              <label for="cAssunto">Assunto</label>
+              <select id="cAssunto" required>
+                <option value="">Selecione o assunto</option>
+                <option>Dúvida sobre Pedido</option>
+                <option>Rastreamento de Entrega</option>
+                <option>Troca ou Devolução</option>
+                <option>Sugestão ou Reclamação</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="cMsg">Mensagem</label>
+              <textarea id="cMsg" rows="4" placeholder="Descreva como podemos ajudar você..." required></textarea>
+            </div>
+            <button type="submit" class="btn-send">Enviar Mensagem 🚀</button>
+            <div id="toastSuporte" class="toast-msg">✅ Sua mensagem foi enviada com sucesso! Responderemos em até 2 horas úteis.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: TROCAS & ENTREGAS -->
+  <div id="trocas" class="inst-section">
+    <div class="card">
+      <h2><span>📦</span> Políticas de Trocas, Devoluções e Entregas</h2>
+      <p>Na <strong>JM Variedades</strong>, a satisfação do cliente é prioridade. Garantimos um processo simples, ágil e transparente para trocas e entregas.</p>
+
+      <h3>🔄 Política de Troca e Devolução (7 Dias)</h3>
+      <p>De acordo com o Código de Defesa do Consumidor, você tem até <strong>7 (sete) dias corridos</strong> após o recebimento do produto para solicitar a devolução ou troca por arrependimento, com frete de devolução por nossa conta.</p>
+      
+      <ul class="policy-list">
+        <li><strong>Produto com Defeito:</strong> Troca garantida em até 30 dias corridos para itens não duráveis e 90 dias para itens duráveis.</li>
+        <li><strong>Como solicitar:</strong> Entre em contato com nosso suporte informando o número do pedido e fotos/vídeo do item.</li>
+        <li><strong>Reembolso:</strong> O estorno no cartão ocorre em até 2 faturas, ou via PIX imediato em até 24 horas após o recebimento no centro de distribuição.</li>
+      </ul>
+
+      <br>
+      <h3>🚚 Opções e Prazos de Entrega</h3>
+      <p>Entregamos em 100% do território nacional com código de rastreamento enviado via e-mail e WhatsApp em até 24h após a confirmação do pagamento.</p>
+
+      <div style="margin: 16px 0;">
+        <a href="frete.html" style="display:inline-flex; align-items:center; gap:8px; background:var(--dourado); color:var(--preto); padding:12px 20px; border-radius:12px; font-weight:800; font-size:13px; text-decoration:none;">
+          🚚 Abrir Simulador de Frete & Logística em Tempo Real ➔
+        </a>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-header" onclick="toggleFaq(this)"><span>🚚 SEDEX — Expressa (1 a 3 dias úteis)</span><span>▼</span></div>
+        <div class="faq-body">Ideal para quem precisa de máxima urgência. Rastreamento prioritário e prioridade no despacho logístico.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-header" onclick="toggleFaq(this)"><span>📦 PAC — Convencional (4 a 10 dias úteis)</span><span>▼</span></div>
+        <div class="faq-body">Modalidade econômica ideal para compras do dia a dia com excelente custo-benefício.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-header" onclick="toggleFaq(this)"><span>⚡ JM Express — Capitais e Regiões Metropolitanas</span><span>▼</span></div>
+        <div class="faq-body">Entrega expressa exclusiva para capitais com despacho em até 24h úteis após aprovação do pedido.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: PRIVACIDADE -->
+  <div id="privacidade" class="inst-section">
+    <div class="card">
+      <h2><span>🔒</span> Política de Privacidade & Proteção de Dados (LGPD)</h2>
+      <p>A <strong>JM Variedades</strong> assume o compromisso público de proteger a privacidade e os dados pessoais de todos os usuários, operando em total conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
+
+      <h3>1. Coleta de Informações</h3>
+      <p>Coletamos apenas os dados necessários para o processamento e entrega do seu pedido: nome completo, CPF, endereço de entrega, e-mail e telefone de contato.</p>
+
+      <h3>2. Segurança dos Dados Financeiros</h3>
+      <p>Dados de cartão de crédito não são armazenados em nossos servidores. As transações financeiras são criptografadas via protocolo SSL 256-bit e processadas diretamente por adquirentes bancárias homologadas.</p>
+
+      <h3>3. Compartilhamento Restrito</h3>
+      <p>Seus dados são compartilhados exclusivamente com parceiros essenciais para a operação (como transportadoras e emissoras de Nota Fiscal). Jamais vendemos ou cedemos informações para terceiros para fins publicitários.</p>
+
+      <h3>4. Seus Direitos</h3>
+      <p>Você pode a qualquer momento solicitar a alteração, exportação ou exclusão definitiva dos seus dados cadastrais através do e-mail <code>privacidade@jmvariedades.com.br</code>.</p>
+    </div>
+  </div>
+
+  <!-- SECTION: TERMOS DE USO -->
+  <div id="termos" class="inst-section">
+    <div class="card">
+      <h2><span>📜</span> Termos e Condições de Uso</h2>
+      <p>Ao navegar e realizar compras na plataforma <strong>JM Variedades</strong>, você concorda expressamente com os seguintes termos de serviço:</p>
+
+      <h3>1. Cadastro e Responsabilidade</h3>
+      <p>O usuário é responsável pela veracidade dos dados informados no momento do cadastro. Contas com dados falsos ou inconsistentes poderão ser suspensas sem aviso prévio.</p>
+
+      <h3>2. Preços e Disponibilidade de Estoque</h3>
+      <p>Os preços e promoções exibidos são válidos enquanto durarem os estoques e podem sofrer alterações sem aviso prévio. A inclusão de um item no carrinho não garante a reserva do produto.</p>
+
+      <h3>3. Cancelamentos e Recusas</h3>
+      <p>A JM Variedades se reserva o direito de cancelar pedidos em casos de inconsistência de dados cadastrais, suspeita de fraude bancária ou impossibilidade imprevista de estoque.</p>
+
+      <h3>4. Propriedade Intelectual</h3>
+      <p>Todo o conteúdo do site (marcas, imagens, textos, layouts e código-fonte) é de propriedade exclusiva da JM Variedades ou de seus licenciadores, sendo proibida a reprodução sem autorização prévia por escrito.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="main-footer">
+  <div class="container foot-grid">
+    <div>
+      <div class="logo">
+        <div class="logo-box light"><span class="bag">🛍️</span><span class="jm">J<i>M</i></span></div>
+        <div class="logo-txt"><small>VARIEDADES</small><strong style="color:#fff">JM Variedades</strong></div>
+      </div>
+      <p class="foot-desc">Sua loja de tudo um pouco. Variedade, praticidade e confiança.</p>
+    </div>
+    <div>
+      <h4>Loja</h4>
+      <a href="index.html#produtos">Produtos</a>
+      <a href="index.html#ofertas">Ofertas</a>
+      <a href="index.html">Página Inicial</a>
+    </div>
+    <div>
+      <h4>Atendimento</h4>
+      <a href="institucional.html#atendimento" onclick="showTab('atendimento')">Contato</a>
+      <a href="institucional.html#atendimento" onclick="showTab('atendimento')">Central de Pedidos</a>
+      <a href="institucional.html#trocas" onclick="showTab('trocas')">Trocas e Devoluções</a>
+      <a href="institucional.html#trocas" onclick="showTab('trocas')">Prazos de Entrega</a>
+    </div>
+    <div>
+      <h4>Institucional</h4>
+      <a href="institucional.html#historia" onclick="showTab('historia')">Nossa História</a>
+      <a href="institucional.html#privacidade" onclick="showTab('privacidade')">Privacidade (LGPD)</a>
+      <a href="institucional.html#termos" onclick="showTab('termos')">Termos de Uso</a>
+    </div>
+  </div>
+  <div class="foot-bottom">© 2026 JM Variedades — Todos os direitos reservados</div>
+</footer>
+
+<script>
+function showTab(tabId, btnEl) {
+  document.querySelectorAll('.inst-section').forEach(sec => sec.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+  const targetSec = document.getElementById(tabId);
+  if (targetSec) {
+    targetSec.classList.add('active');
+  }
+
+  if (btnEl) {
+    btnEl.classList.add('active');
+  } else {
+    const btn = Array.from(document.querySelectorAll('.tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+    if (btn) btn.classList.add('active');
+  }
+
+  window.scrollTo({ top: 180, behavior: 'smooth' });
+}
+
+function toggleFaq(headerEl) {
+  const item = headerEl.closest('.faq-item');
+  item.classList.toggle('open');
+}
+
+function enviarMensagemSuporte() {
+  const toast = document.getElementById('toastSuporte');
+  toast.style.display = 'block';
+  document.getElementById('contactForm').reset();
+  setTimeout(() => {
+    toast.style.display = 'none';
+  }, 4000);
+}
+
+// Checar hash na URL ao carregar (ex: institucional.html#privacidade)
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    if (['historia', 'atendimento', 'trocas', 'privacidade', 'termos'].includes(hash)) {
+      showTab(hash);
+    } else if (hash === 'contato') {
+      showTab('atendimento');
+    } else if (hash === 'entrega') {
+      showTab('trocas');
+    }
+  }
+});
+</script>
+</body>
+</html>

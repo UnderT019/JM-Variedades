@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JM Variedades — Checkout | H04.005</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --preto:#070707;
+  --dourado:#F5B52E;
+  --dourado-claro:#FFD66B;
+  --branco:#FFFFFF;
+  --fundo:#F6F6F4;
+  --linha:#E8E8E4;
+  --texto:#161616;
+  --texto-sec:#777777;
+  --vermelho:#C94A4A;
+  --verde:#16875B;
+  --radius-btn:12px;
+  --radius-input:12px;
+  --radius-card:18px;
+  --shadow:0 14px 45px rgba(0,0,0,.09);
+  --font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--fundo);color:var(--texto);line-height:1.5}
+.container{max-width:860px;margin:0 auto;padding:24px}
+header{background:var(--preto);color:var(--branco);text-align:center;padding:18px 0}
+header h1{font-size:18px;font-weight:800;letter-spacing:1px}
+header h1 span{color:var(--dourado)}
+
+.card{background:var(--branco);border:1px solid var(--linha);border-radius:var(--radius-card);padding:24px;margin-bottom:20px}
+.card h3{font-size:16px;font-weight:800;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--linha)}
+
+label.lbl{font-size:13px;font-weight:600;margin-bottom:6px;display:block}
+input,select{width:100%;padding:12px 14px;border:1px solid var(--linha);border-radius:var(--radius-input);font-family:var(--font);font-size:14px}
+input:focus,select:focus{outline:none;border-color:var(--dourado)}
+
+.btn{border:none;border-radius:var(--radius-btn);padding:14px 20px;font-family:var(--font);font-weight:800;font-size:14px;cursor:pointer;transition:200ms}
+.btn-primary{background:var(--dourado);color:var(--texto)}
+.btn-primary:hover{background:var(--dourado-claro)}
+.btn-secondary{background:var(--preto);color:var(--branco)}
+.btn-secondary:hover{background:#2A2A2A}
+.btn-full{width:100%;margin-top:20px}
+
+.opcao{display:flex;align-items:center;gap:12px;border:1px solid var(--linha);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:150ms}
+.opcao:hover{box-shadow:var(--shadow)}
+.opcao.selecionada{border-color:var(--dourado);background:#FFFBEE;box-shadow:var(--shadow)}
+.opcao input{accent-color:var(--preto);width:18px;height:18px}
+.opcao .t{flex:1;font-weight:700;font-size:14px}
+.opcao .p{font-size:12px;color:var(--texto-sec)}
+
+.linha{display:flex;justify-content:space-between;font-size:14px;padding:6px 0}
+.linha.total{border-top:1px solid var(--linha);margin-top:10px;padding-top:14px;font-size:18px;font-weight:900}
+
+.msg{margin-top:12px;font-size:13px;font-weight:600;padding:10px 14px;border-radius:12px;display:none}
+.msg.erro{display:block;background:#FDECEC;color:var(--vermelho);border:1px solid #F3C2C2}
+
+#form-cartao{display:none}
+
+/* ===== MODAL DE PROCESSAMENTO ===== */
+.modal-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.6);
+  z-index:999;
+  align-items:center;justify-content:center;
+  padding:20px;
+}
+.modal-overlay.ativo{display:flex}
+.modal{
+  background:var(--branco);
+  border-radius:var(--radius-card);
+  padding:40px 32px;
+  max-width:420px;width:100%;
+  text-align:center;
+  box-shadow:var(--shadow);
+}
+
+/* Spinner de carregamento */
+.spinner{
+  width:56px;height:56px;
+  border:5px solid var(--linha);
+  border-top-color:var(--dourado);
+  border-radius:50%;
+  margin:0 auto 20px;
+  animation:girar .9s linear infinite;
+}
+@keyframes girar{to{transform:rotate(360deg)}}
+
+.modal h2{font-size:20px;font-weight:800;margin-bottom:8px}
+.modal p{font-size:14px;color:var(--texto-sec);margin-bottom:4px}
+
+/* Ícone de sucesso */
+.check-ok{
+  width:64px;height:64px;
+  background:var(--verde);
+  border-radius:50%;
+  margin:0 auto 20px;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:34px;font-weight:900;
+  animation:aparecer .3s ease;
+}
+@keyframes aparecer{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+
+.info-pedido{
+  background:var(--fundo);
+  border-radius:12px;
+  padding:16px;
+  margin:20px 0;
+  text-align:left;
+}
+.info-pedido .linha{padding:4px 0}
+.status-tag{color:var(--dourado);font-weight:800}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🛒 <span>JM Variedades</span> — Checkout e Pagamento</h1>
+</header>
+
+<div class="container">
+
+  <!-- Resumo do Pedido -->
+  <div class="card">
+    <h3>Resumo do Pedido</h3>
+    <div class="linha"><span>Fone JBL Tune 510BT</span><span>R$ 189,90</span></div>
+    <div class="linha"><span>Carregador Portátil 20.000mAh (x2)</span><span>R$ 119,80</span></div>
+    <div class="linha"><span>Frete (<span id="txtNomeFreteCheckout">PAC</span>)</span><span id="txtValorFreteCheckout">R$ 12,40</span></div>
+    <div class="linha total"><span>Total a pagar</span><span id="txtTotalCheckout">R$ 322,10</span></div>
+  </div>
+
+  <!-- Forma de Pagamento -->
+  <div class="card">
+    <h3>Forma de Pagamento</h3>
+
+    <div class="opcao" onclick="selecionarPagamento('cartao', this)">
+      <input type="radio" name="pagamento" id="cartao">
+      <div class="t">Cartão de Crédito</div>
+    </div>
+
+    <div class="opcao" onclick="selecionarPagamento('boleto', this)">
+      <input type="radio" name="pagamento" id="boleto">
+      <div class="t">Boleto Bancário</div>
+    </div>
+
+    <div class="opcao" onclick="selecionarPagamento('pix', this)">
+      <input type="radio" name="pagamento" id="pix">
+      <div class="t">Pix</div>
+    </div>
+
+    <!-- Formulário do Cartão -->
+    <div id="form-cartao">
+      <div style="margin-top:16px">
+        <label class="lbl">Número do Cartão</label>
+        <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+      </div>
+      <div style="display:flex; gap:12px; margin-top:12px">
+        <div style="flex:1">
+          <label class="lbl">Validade</label>
+          <input type="text" placeholder="MM/AA" maxlength="5">
+        </div>
+        <div style="flex:1">
+          <label class="lbl">CVV</label>
+          <input type="text" placeholder="123" maxlength="4">
+        </div>
+      </div>
+    </div>
+
+    <div id="msg" class="msg"></div>
+
+    <button class="btn btn-primary btn-full" onclick="confirmarPagamento()">CONFIRMAR PEDIDO</button>
+  </div>
+
+  <!-- Endereço -->
+  <div class="card">
+    <h3>Endereço de Entrega</h3>
+    <div id="enderecoEntregaCheckout" style="font-size:14px; line-height:1.6">
+      Thiago Silva<br>
+      Rua das Palmeiras, 245 - Apto 12B<br>
+      São Paulo - SP<br>
+      CEP: 01234-567
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== MODAL DE PROCESSAMENTO ===== -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+
+    <!-- Etapa 1: Checando -->
+    <div id="etapa-checando">
+      <div class="spinner"></div>
+      <h2>Verificando pagamento...</h2>
+      <p id="txt-metodo">Processando sua forma de pagamento</p>
+      <p>Aguarde um instante</p>
+    </div>
+
+    <!-- Etapa 2: Sucesso -->
+    <div id="etapa-sucesso" style="display:none">
+      <div class="check-ok">✓</div>
+      <h2>Pedido Confirmado!</h2>
+      <p>Seu pedido foi recebido com sucesso.</p>
+
+      <div class="info-pedido">
+        <div class="linha"><span>Número do Pedido</span><span><b>#JM-28491</b></span></div>
+        <div class="linha"><span>Status</span><span class="status-tag" id="status-final">Aguardando Pagamento</span></div>
+      </div>
+
+      <button class="btn btn-secondary btn-full" onclick="fecharModal()">Voltar para a Loja</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/store.js"></script>
+<script>
+let metodoSelecionado = '';
+
+function selecionarPagamento(tipo, elemento) {
+  metodoSelecionado = tipo;
+  document.querySelectorAll('.opcao').forEach(el => el.classList.remove('selecionada'));
+  elemento.classList.add('selecionada');
+
+  const form = document.getElementById('form-cartao');
+  form.style.display = (tipo === 'cartao') ? 'block' : 'none';
+}
+
+function confirmarPagamento() {
+  const msg = document.getElementById('msg');
+  const selecionado = document.querySelector('input[name="pagamento"]:checked');
+
+  if (!selecionado) {
+    msg.innerHTML = '❌ Selecione uma forma de pagamento.';
+    msg.className = 'msg erro';
+    return;
+  }
+  msg.className = 'msg'; // limpa erro
+
+  // Textos por método de pagamento
+  const textos = {
+    cartao: 'Validando dados do cartão de crédito...',
+    boleto: 'Gerando boleto bancário...',
+    pix: 'Gerando código Pix...'
+  };
+  document.getElementById('txt-metodo').textContent = textos[metodoSelecionado];
+
+  // Abre o modal na etapa de checagem
+  document.getElementById('etapa-checando').style.display = 'block';
+  document.getElementById('etapa-sucesso').style.display = 'none';
+  document.getElementById('modal').classList.add('ativo');
+
+  // Após 2.5 segundos, mostra o resultado
+  setTimeout(() => {
+    document.getElementById('etapa-checando').style.display = 'none';
+    document.getElementById('etapa-sucesso').style.display = 'block';
+
+    // Status conforme o método (cartão = Pago / boleto e pix = Aguardando)
+    const status = document.getElementById('status-final');
+    if (metodoSelecionado === 'cartao') {
+      status.textContent = 'Pago';
+      status.style.color = 'var(--verde)';
+    } else {
+      status.textContent = 'Aguardando Pagamento';
+      status.style.color = 'var(--dourado)';
+    }
+  }, 2500);
+}
+
+function fecharModal() {
+  document.getElementById('modal').classList.remove('ativo');
+  alert('Pedido concluído com sucesso!');
+  window.location.href = 'index.html';
+}
+
+// Sincroniza frete e endereço com o módulo logístico
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('form-cartao').style.display = 'none';
+
+  if (typeof store !== 'undefined') {
+    const frete = store.getFreteSelecionado();
+    const cotacao = store.getFreteCotacao();
+    if (frete) {
+      const nomeEl = document.getElementById('txtNomeFreteCheckout');
+      const valEl = document.getElementById('txtValorFreteCheckout');
+      const totEl = document.getElementById('txtTotalCheckout');
+      if (nomeEl) nomeEl.textContent = frete.nome;
+      if (valEl) valEl.textContent = frete.valor === 0 ? '🎉 Grátis' : 'R$ ' + frete.valor.toFixed(2).replace('.', ',');
+      if (totEl) totEl.textContent = 'R$ ' + (309.70 + frete.valor).toFixed(2).replace('.', ',');
+    }
+    if (cotacao && cotacao.endereco) {
+      const endEl = document.getElementById('enderecoEntregaCheckout');
+      if (endEl) {
+        endEl.innerHTML = `
+          Thiago Silva<br>
+          ${cotacao.endereco.logradouro || 'Rua das Palmeiras, 245'}<br>
+          ${cotacao.endereco.cidade} - ${cotacao.endereco.uf}<br>
+          CEP: ${cotacao.cep}
+        `;
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

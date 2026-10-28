@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JM Variedades - Sistema E-Commerce & ERP Manager</title>
+  
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+   
+  <!-- Estilos CSS do Projeto -->
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <!-- Chart.js para os Gráficos e Canvas-Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- ===== TOPBAR ===== -->
+  <div class="topbar">
+    <div class="topbar-item">🚚 <span>Frete Grátis</span> em compras qualificadas</div>
+    <div class="topbar-item">🛡️ <span>Garantia de 30 Dias</span> ou seu dinheiro de volta</div>
+    <div class="topbar-item">🎧 Atendimento ao Cliente <span class="highlight">24/7</span></div>
+  </div>
+
+  <!-- ===== HEADER PRINCIPAL ===== -->
+  <header class="site">
+    <div class="container header-main">
+      <!-- Logo Oficial da Loja -->
+      <div class="logo-brand" onclick="navigateTo('page-home')">
+        <img src="Logo JM Variedades E-commerce.png" alt="JM Variedades" class="logo-img">
+      </div>
+
+      <!-- Barra de Busca Global estilo Amazon -->
+      <div class="busca">
+        <span class="ico">🔍</span>
+        <input type="text" id="globalSearchInput" placeholder="O que você procura? (Nome, Categoria ou Cód. Barras)..." autocomplete="off">
+        <div id="searchSuggestionsDropdown" class="search-suggestions-box"></div>
+      </div>
+
+      <!-- Menu de Navegação Superior -->
+      <nav class="nav-links">
+        <button class="nav-btn active" id="nav-home" onclick="navigateTo('page-home')">
+          🛍️ Loja
+        </button>
+
+        <button class="nav-btn cart-link" id="nav-carrinho" onclick="navigateTo('page-carrinho')">
+          🛒 Carrinho <span class="cart-count" id="cartCount">0</span>
+        </button>
+
+        <button class="nav-btn" id="nav-frete" onclick="window.location.href='frete.html'">
+          🚚 Frete
+        </button>
+
+        <button class="nav-btn" id="nav-historico" onclick="navigateTo('page-historico')">
+          🏷️ Histórico (EAN)
+        </button>
+
+        <button class="nav-btn" id="nav-login" onclick="abrirModalLogin()">
+          👤 Entrar
+        </button>
+
+        <button class="nav-btn btn-admin" id="nav-admin" style="display:inline-flex;" onclick="navigateTo('page-admin')">
+          🔐 Gerente <span class="badge-alert" id="adminStockAlertBadge" style="display:none">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =======================================================
+       PAGE 1: LOJA / CATÁLOGO DE PRODUTOS
+       ======================================================= -->
+  <div id="page-home" class="page active">
+    <div class="container">
+      
+      <!-- Seção Hero Inspirada na Referência FAMSWORLD -->
+      <div class="hero-banner">
+        <div>
+          <span class="hero-tag">BEM-VINDO À JM VARIEDADES</span>
+          <h1 class="hero-title">PRODUTOS DE QUALIDADE.<br><span>CONFIADO POR MILHARES.</span></h1>
+          <p class="hero-desc">Descubra uma grande variedade de mais de 100 produtos de alta qualidade, cuidadosamente selecionados para o seu estilo de vida com entregas rápidas em todo o Brasil.</p>
+          <div class="hero-btns">
+            <button class="btn btn-primary" onclick="document.getElementById('secaoCategorias').scrollIntoView({behavior:'smooth'})">COMPRAR AGORA ➔</button>
+            <button class="btn btn-outline" onclick="document.getElementById('secaoProdutos').scrollIntoView({behavior:'smooth'})">EXPLORAR CATÁLOGO</button>
+          </div>
+        </div>
+        <div class="hero-icon-wrap">🛍️</div>
+      </div>
+
+      <!-- Barra de Vantagens (Why Shop With Us) -->
+      <div class="advantages-grid">
+        <div class="advantage-card">
+          <div class="advantage-icon">🌟</div>
+          <div class="advantage-title">Qualidade Premium</div>
+          <div class="advantage-desc">Produtos 100% selecionados</div>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-icon">🔒</div>
+          <div class="advantage-title">Pagamento Seguro</div>
+          <div class="advantage-desc">Pix, Cartão e Boleto</div>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-icon">↩️</div>
+          <div class="advantage-title">Troca & Devolução</div>
+          <div class="advantage-desc">Garantia sem complicação</div>
+        </div>
+        <div class="advantage-card">
+          <div class="advantage-icon">🎧</div>
+          <div class="advantage-title">Suporte 24/7</div>
+          <div class="advantage-desc">Atendimento humanizado</div>
+        </div>
+      </div>
+
+      <!-- Seção de Categorias Circulares (Shop By Category) -->
+      <div class="section-header" id="secaoCategorias">
+        <div class="section-subtitle">EXPLORE POR CATEGORIA</div>
+        <h2 class="section-title">Encontre o que você precisa</h2>
+      </div>
+
+      <div class="categorias-circular-grid">
+        <div class="cat-circle-item active" onclick="filtrarCategoria('', this)">
+          <div class="cat-circle-icon">✨</div>
+          <div class="cat-circle-label">Todos</div>
+          <div class="cat-circle-badge">100+ itens</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Brinquedos e Jogos', this)">
+          <div class="cat-circle-icon">🏎️</div>
+          <div class="cat-circle-label">Brinquedos & Jogos</div>
+          <div class="cat-circle-badge">BRINQ20</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Casa e Cozinha', this)">
+          <div class="cat-circle-icon">🍳</div>
+          <div class="cat-circle-label">Casa & Cozinha</div>
+          <div class="cat-circle-badge">CASA15</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Limpeza', this)">
+          <div class="cat-circle-icon">🧹</div>
+          <div class="cat-circle-label">Limpeza</div>
+          <div class="cat-circle-badge">LIMPA20</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Eletrônicos e Acessórios', this)">
+          <div class="cat-circle-icon">💻</div>
+          <div class="cat-circle-label">Eletrônicos</div>
+          <div class="cat-circle-badge">TECNO12</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Papelaria e Escritório', this)">
+          <div class="cat-circle-icon">📝</div>
+          <div class="cat-circle-label">Papelaria</div>
+          <div class="cat-circle-badge">PAPEL10</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Beleza e Cuidados Pessoais', this)">
+          <div class="cat-circle-icon">💄</div>
+          <div class="cat-circle-label">Beleza</div>
+          <div class="cat-circle-badge">BELEZA15</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Pet Shop', this)">
+          <div class="cat-circle-icon">🐶</div>
+          <div class="cat-circle-label">Pet Shop</div>
+          <div class="cat-circle-badge">PET10</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Ferramentas e Utilidades', this)">
+          <div class="cat-circle-icon">🛠️</div>
+          <div class="cat-circle-label">Ferramentas</div>
+          <div class="cat-circle-badge">FERRAMENTA12</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Organização e Decoração', this)">
+          <div class="cat-circle-icon">📦</div>
+          <div class="cat-circle-label">Organização</div>
+          <div class="cat-circle-badge">ORGANIZA20</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Acessórios Automotivos', this)">
+          <div class="cat-circle-icon">🚗</div>
+          <div class="cat-circle-label">Automotivo</div>
+          <div class="cat-circle-badge">AUTO15</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Lazer e Esportes', this)">
+          <div class="cat-circle-icon">⚽</div>
+          <div class="cat-circle-label">Esportes</div>
+          <div class="cat-circle-badge">LAZER10</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Moda e Acessórios', this)">
+          <div class="cat-circle-icon">👕</div>
+          <div class="cat-circle-label">Moda</div>
+          <div class="cat-circle-badge">MODA15</div>
+        </div>
+        <div class="cat-circle-item" onclick="filtrarCategoria('Infantil', this)">
+          <div class="cat-circle-icon">🧸</div>
+          <div class="cat-circle-label">Infantil</div>
+          <div class="cat-circle-badge">KIDS20</div>
+        </div>
+      </div>
+
+      <!-- Título dos Produtos e Filtros -->
+      <div class="linha-titulo" id="secaoProdutos">
+        <div>
+          <span class="section-subtitle">MAIS VENDIDOS & DESTAQUES</span>
+          <h2 class="section-title">Produtos em Destaque</h2>
+        </div>
+        <div class="filtro-tags">
+          <button class="tag-btn active" onclick="filtrarTag('', this)">Todos os Produtos</button>
+          <button class="tag-btn" onclick="filtrarTag('oferta', this)">🔥 Em Oferta</button>
+          <button class="tag-btn" onclick="filtrarTag('novidade', this)">🆕 Novidades</button>
+        </div>
+      </div>
+
+      <!-- Grid Dinâmico dos Produtos de 100 Itens -->
+      <div class="produtos-grid" id="listaProdutosGrid"></div>
+
+      <!-- Seção Banner Promocional (Promo Banner) -->
+      <div class="promo-banner">
+        <div>
+          <span class="hero-tag" style="background:var(--laranja-principal); color:#fff;">OFERTA IMPERDÍVEL</span>
+          <h2 class="promo-title">APROVEITE ATÉ <span>40% OFF</span> EM PRODUTOS SELECIONADOS</h2>
+          <p class="promo-desc">Use o cupom <b>FLASH25</b> no carrinho para economizar 25% extra em itens promocionais por tempo limitado.</p>
+        </div>
+        <button class="btn btn-primary" onclick="window.scrollTo({top: 400, behavior:'smooth'})">APROVEITAR AGORA ➔</button>
+      </div>
+
+      <!-- Barra de Newsletter (Inscrição) -->
+      <div class="newsletter-bar">
+        <div class="newsletter-text">
+          <h3>FAÇA PARTE DA FAMÍLIA JM VARIEDADES</h3>
+          <p>Inscreva-se para receber ofertas exclusivas, cupons VIP e novidades em primeira mão.</p>
+        </div>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Obrigado por se inscrever na nossa lista VIP!', 'success');">
+          <input type="email" placeholder="Digite seu e-mail aqui..." required>
+          <button type="submit" class="btn btn-primary">INSCREVER-SE ➔</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =======================================================
+       PAGE 2: CARRINHO DE COMPRAS
+       ======================================================= -->
+  <div id="page-carrinho" class="page">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:16px;">
+        <div class="breadcrumb" style="margin-bottom:0;">
+          <a onclick="navigateTo('page-home')">Início</a> &nbsp;›&nbsp; Carrinho de Compras
+        </div>
+        <button class="btn btn-outline btn-sm btn-back-catalog" onclick="navigateTo('page-home')">
+          ← Voltar ao Catálogo
+        </button>
+      </div>
+
+      <h1 style="font-size: 26px; font-weight: 900; color:var(--azul-principal); margin-bottom: 4px;">Carrinho de compras</h1>
+      <p style="font-size: 14px; color: var(--texto-secundario); margin-bottom: 24px;">Confira os itens selecionados e aplique seu cupom de desconto por categoria.</p>
+
+      <div class="grid-carrinho">
+        <section>
+          <div class="card">
+            <h3>Itens Selecionados no Pedido</h3>
+            <div id="itensCarrinhoContainer"></div>
+          </div>
+        </section>
+
+        <aside>
+          <!-- Caixa de Cupons de Desconto -->
+          <div class="card">
+            <h3>🏷️ Cupom de Desconto</h3>
+            <p style="font-size: 12px; color: var(--texto-secundario); line-height:1.5;">Cupons ativos: <b>BEMVINDO10</b>, <b>CASA15</b>, <b>LIMPA20</b>, <b>TECNO12</b>, <b>FRETEGRATIS</b>, <b>PIX5</b>, <b>20REAIS</b>, <b>FLASH25</b></p>
+            
+            <div class="cupom-input-group">
+              <input type="text" id="inputCupom" placeholder="Digite o cupom...">
+              <button class="btn btn-secondary btn-sm" onclick="aplicarCupomDigitado()">Aplicar</button>
+            </div>
+            
+            <div id="cupomAplicadoBox"></div>
+          </div>
+
+          <!-- Caixa de Cálculo de Frete e Prazo (User Story H004) -->
+          <div class="card card-frete" id="cardFreteCarrinho">
+            <h3>📦 Calcular Frete e Prazo</h3>
+            <label class="lbl" for="cepCarrinho">CEP de entrega</label>
+            <div class="frete-row">
+              <input type="text" id="cepCarrinho" maxlength="9" placeholder="00000-000">
+              <button type="button" class="btn btn-secondary" onclick="calcularFreteCarrinho()">Calcular</button>
+            </div>
+            <a class="link-cep" href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" rel="noopener">Não sei meu CEP ↗</a>
+
+            <div id="msgFreteCarrinho" class="msg-frete"></div>
+
+            <div id="opcoesFreteCarrinho" class="opcoes-frete-container"></div>
+          </div>
+
+          <!-- Resumo Financeiro do Carrinho -->
+          <div class="card">
+            <h3>Resumo do Pedido</h3>
+            <div class="linha-resumo">
+              <span>Subtotal (<span id="qtdItens">0</span> itens)</span>
+              <span id="subtotal">R$ 0,00</span>
+            </div>
+            <div class="linha-resumo">
+              <span>Peso total</span>
+              <span id="pesoTotalCarrinho">0,0 kg</span>
+            </div>
+            <div class="linha-resumo desconto" style="display:none">
+              <span>Desconto de Cupom</span>
+              <span id="valorDesconto">- R$ 0,00</span>
+            </div>
+            <div class="linha-resumo">
+              <span>Frete</span>
+              <span id="valorFreteCarrinho">A calcular</span>
+            </div>
+            <div class="linha-resumo total">
+              <span>Total Estimado</span>
+              <span id="totalCarrinho">R$ 0,00</span>
+            </div>
+
+            <button class="btn btn-primary btn-full" style="margin-top: 20px;" onclick="navigateTo('page-checkout')">
+              CONTINUAR PARA O CHECKOUT ➔
+            </button>
+            
+            <button class="btn btn-outline btn-full" style="margin-top: 10px;" onclick="navigateTo('page-home')">
+              Continuar Comprando
+            </button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       PAGE 3: CHECKOUT & FINALIZAR PEDIDO (USER STORY H003)
+       ======================================================= -->
+  <div id="page-checkout" class="page">
+    <div class="container" style="max-width: 1000px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:16px;">
+        <div class="breadcrumb" style="margin-bottom:0;">
+          <a onclick="navigateTo('page-home')">Início</a> &nbsp;›&nbsp;
+          <a onclick="navigateTo('page-carrinho')">Carrinho</a> &nbsp;›&nbsp;
+          Finalizar Pedido
+        </div>
+        <button class="btn btn-outline btn-sm btn-back-catalog" onclick="navigateTo('page-home')">
+          ← Voltar ao Catálogo
+        </button>
+      </div>
+
+      <h1 style="font-size: 26px; font-weight: 900; color:var(--azul-principal); margin-bottom: 24px;">Finalização da Compra</h1>
+
+      <div class="grid-carrinho" style="grid-template-columns: 1.4fr 1fr;">
+        <!-- Formulários de Dados e Pagamento -->
+        <div>
+          <!-- 1. Dados Pessoais do Cliente -->
+          <div class="card">
+            <h3>1. Identificação do Cliente</h3>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="clientNome">Nome Completo <span>*</span></label>
+                <input type="text" id="clientNome" value="" placeholder="Seu nome completo">
+              </div>
+              <div class="field">
+                <label for="clientEmail">E-mail <span>*</span></label>
+                <input type="email" id="clientEmail" value="" placeholder="seu@email.com">
+              </div>
+              <div class="field">
+                <label for="clientCPF">CPF <span>*</span></label>
+                <input type="text" id="clientCPF" value="" placeholder="000.000.000-00">
+              </div>
+              <div class="field full">
+                <label for="clientTelefone">Telefone / WhatsApp <span>*</span></label>
+                <input type="tel" id="clientTelefone" value="" placeholder="(00) 00000-0000">
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Endereço de Entrega & Busca de CEP via API pública ViaCEP -->
+          <div class="card">
+            <h3>2. Endereço de Entrega & CEP</h3>
+            <div class="form-grid">
+              <div class="field full">
+                <label for="cepFrete">CEP de Entrega <span>*</span></label>
+                <div class="cep-inline">
+                  <input type="text" id="cepFrete" value="" placeholder="00000-000" maxlength="9">
+                  <button type="button" class="btn btn-secondary" onclick="consultarCEP()">🔍 Buscar CEP</button>
+                </div>
+              </div>
+              <div class="field full">
+                <label for="checkoutRua">Logradouro / Rua <span>*</span></label>
+                <input type="text" id="checkoutRua" value="" placeholder="Nome da rua">
+              </div>
+              <div class="field">
+                <label for="checkoutNumero">Número <span>*</span></label>
+                <input type="text" id="checkoutNumero" value="" placeholder="123">
+              </div>
+              <div class="field">
+                <label for="checkoutBairro">Bairro <span>*</span></label>
+                <input type="text" id="checkoutBairro" value="" placeholder="Bairro">
+              </div>
+              <div class="field">
+                <label for="checkoutCidade">Cidade <span>*</span></label>
+                <input type="text" id="checkoutCidade" value="" placeholder="Cidade">
+              </div>
+              <div class="field">
+                <label for="checkoutUF">Estado (UF) <span>*</span></label>
+                <input type="text" id="checkoutUF" value="" placeholder="SP">
+              </div>
+            </div>
+
+            <!-- Seleção de Modalidade de Frete -->
+            <div id="opcoesFrete" style="margin-top: 20px;">
+              <label style="font-size: 13px; font-weight: 800; color:var(--azul-principal); display: block; margin-bottom: 10px;">Selecione a Modalidade de Frete:</label>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                <div class="opcao-card selected" onclick="selecionarOpcaoFrete('SEDEX', 22.90, this)">
+                  <div style="font-size:18px;">⚡</div>
+                  <div class="title">SEDEX</div>
+                  <small style="color:var(--texto-secundario);">2 dias úteis</small>
+                  <div style="font-weight:900; color:var(--laranja-principal); margin-top:4px;">R$ 22,90</div>
+                </div>
+                <div class="opcao-card" onclick="selecionarOpcaoFrete('PAC', 12.40, this)">
+                  <div style="font-size:18px;">📦</div>
+                  <div class="title">PAC</div>
+                  <small style="color:var(--texto-secundario);">7 dias úteis</small>
+                  <div style="font-weight:900; color:var(--laranja-principal); margin-top:4px;">R$ 12,40</div>
+                </div>
+                <div class="opcao-card" onclick="selecionarOpcaoFrete('JM Express', 35.50, this)">
+                  <div style="font-size:18px;">🚀</div>
+                  <div class="title">JM Express</div>
+                  <small style="color:var(--texto-secundario);">Entrega Rápida</small>
+                  <div style="font-weight:900; color:var(--laranja-principal); margin-top:4px;">R$ 35,50</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Formas de Pagamento -->
+          <div class="card">
+            <h3>3. Forma de Pagamento</h3>
+            <div class="opcoes-pag">
+              <div class="opcao-card selected" id="opt-pag-pix" onclick="selecionarFormaPagamento('pix')">
+                <div class="icon">✨</div>
+                <div class="title">Pix (Desconto)</div>
+              </div>
+              <div class="opcao-card" id="opt-pag-cartao" onclick="selecionarFormaPagamento('cartao')">
+                <div class="icon">💳</div>
+                <div class="title">Cartão de Crédito</div>
+              </div>
+              <div class="opcao-card" id="opt-pag-boleto" onclick="selecionarFormaPagamento('boleto')">
+                <div class="icon">📄</div>
+                <div class="title">Boleto Bancário</div>
+              </div>
+            </div>
+
+            <!-- Detalhes do Pagamento Selecionado -->
+            <div id="pag-detalhe-pix" class="pag-box-detalhe">
+              <div style="text-align:center;">
+                <div style="font-weight:800; font-size:14px; margin-bottom:8px; color:var(--azul-principal);">Aprovação Instantânea via Pix</div>
+                <div style="background:#fff; border:2px solid var(--cinza-borda); border-radius:12px; padding:16px; display:inline-block; margin-bottom:12px;">
+                  <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=00020126580014br.gov.bcb.pix0136jmvariedades-chave-pix-fake123456789" alt="QR Code Pix" style="width:140px; height:140px;">
+                </div>
+                <div style="font-size:12px; color:var(--texto-secundario);">Chave Pix Copia e Cola:</div>
+                <code style="font-size:11px; background:#E2E8F0; padding:6px 12px; border-radius:6px; display:inline-block; margin-top:4px; max-width:100%; word-break:break-all; color:var(--azul-principal); font-weight:700;">00020126580014br.gov.bcb.pix0136jmvariedades-chave-pix-fake123456789</code>
+              </div>
+            </div>
+
+            <div id="pag-detalhe-cartao" class="pag-box-detalhe" style="display:none">
+              <div class="form-grid">
+                <div class="field full">
+                  <label>Número do Cartão</label>
+                  <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+                </div>
+                <div class="field full">
+                  <label>Nome Impresso no Cartão</label>
+                  <input type="text" placeholder="Nome como está no cartão">
+                </div>
+                <div class="field">
+                  <label>Validade</label>
+                  <input type="text" placeholder="MM/AA" maxlength="5">
+                </div>
+                <div class="field">
+                  <label>Código CVV</label>
+                  <input type="text" placeholder="123" maxlength="4">
+                </div>
+                <div class="field full">
+                  <label>Parcelamento</label>
+                  <select>
+                    <option>1x Sem Juros</option>
+                    <option>2x Sem Juros</option>
+                    <option>3x Sem Juros</option>
+                    <option>6x com acréscimo</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div id="pag-detalhe-boleto" class="pag-box-detalhe" style="display:none; text-align:center;">
+              <div style="font-size:32px;">📄</div>
+              <div style="font-weight:800; color:var(--azul-principal); margin-top:4px;">Boleto Bancário</div>
+              <p style="font-size:12px; color:var(--texto-secundario); margin-top:4px;">Vencimento em 3 dias úteis. O pedido é liberado após a compensação.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumo Lateral do Pedido -->
+        <aside>
+          <div class="card" style="position:sticky; top:90px;">
+            <h3>Resumo da Compra</h3>
+            <div id="itensCheckoutContainer"></div>
+            
+            <hr style="margin: 16px 0; border:none; border-top: 2px solid var(--cinza-borda);">
+            
+            <div class="linha-resumo">
+              <span>Subtotal Itens:</span>
+              <span id="checkoutSubtotal">R$ 0,00</span>
+            </div>
+            <div class="linha-resumo desconto">
+              <span>Desconto de Cupom:</span>
+              <span id="checkoutDesconto">- R$ 0,00</span>
+            </div>
+            <div class="linha-resumo">
+              <span>Valor do Frete:</span>
+              <span id="checkoutFrete">R$ 0,00</span>
+            </div>
+            <div class="linha-resumo total">
+              <span>Total do Pedido:</span>
+              <span id="checkoutTotal">R$ 0,00</span>
+            </div>
+
+            <button class="btn btn-primary btn-full" style="margin-top: 24px; padding: 16px;" onclick="confirmarPedidoCheckout()">
+              ✓ CONFIRMAR E FINALIZAR COMPRA
+            </button>
+            <div style="font-size: 11px; text-align: center; color: var(--texto-secundario); margin-top: 10px;">
+              🔒 Transação 100% Protegida · Baixa Automática de Estoque
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       PAGE 4: HISTÓRICO DO PRODUTO POR CÓDIGO DE BARRAS
+       ======================================================= -->
+  <div id="page-historico" class="page">
+    <div class="container" style="max-width: 900px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:16px;">
+        <div class="breadcrumb" style="margin-bottom:0;">
+          <a onclick="navigateTo('page-home')">Início</a> &nbsp;›&nbsp; Histórico por Código de Barras
+        </div>
+        <button class="btn btn-outline btn-sm btn-back-catalog" onclick="navigateTo('page-home')">
+          ← Voltar ao Catálogo
+        </button>
+      </div>
+
+      <h1 style="font-size: 26px; font-weight: 900; color:var(--azul-principal); margin-bottom: 8px;">🏷️ Consulta de Histórico por Código de Barras</h1>
+      <p style="font-size: 14px; color: var(--texto-secundario); margin-bottom: 24px;">Digite o código EAN-13 do produto ou acione a simulação do leitor óptico a laser para consultar todas as movimentações e entradas de estoque.</p>
+
+      <div class="card">
+        <div class="search-barcode-box">
+          <input type="text" id="barcodeSearchInput" placeholder="Ex: 7890001000001" value="7890001000001">
+          <button class="btn btn-primary" onclick="consultarHistoricoCodigo()">🔎 Buscar Histórico</button>
+          <button class="btn btn-secondary" onclick="simularLeitorLaser()">📷 Simular Leitor Laser</button>
+        </div>
+
+        <!-- Animação do Scanner Laser -->
+        <div id="scannerLaserBox" class="scanner-laser-container" style="display:none;">
+          <div class="scanner-line"></div>
+          <div>🔴 ESCANEANDO CÓDIGO DE BARRAS...</div>
+        </div>
+      </div>
+
+      <!-- Container de Resultados do Histórico -->
+      <div id="historicoResultadoContainer"></div>
+    </div>
+  </div>
+
+  <!-- =======================================================
+       PAGE 5: PAINEL DO GERENTE (DASHBOARD & ESTOQUE)
+       ======================================================= -->
+  <div id="page-admin" class="page">
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:16px;">
+        <div class="breadcrumb" style="margin-bottom:0;">
+          <a onclick="navigateTo('page-home')">Início</a> &nbsp;›&nbsp; Painel do Gerente
+        </div>
+        <button class="btn btn-outline btn-sm btn-back-catalog" onclick="navigateTo('page-home')">
+          ← Voltar ao Catálogo
+        </button>
+      </div>
+
+      <!-- Dashboard Completo e Controle de Estoque (Restrito ao Gerente Logado) -->
+      <div id="adminDashboardView">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:16px;">
+          <div>
+            <h1 style="font-size: 26px; font-weight: 900; color:var(--azul-principal);">Painel Administrativo & Dashboard</h1>
+            <p style="font-size: 14px; color: var(--texto-secundario);">Métricas em tempo real de vendas, faturamento e controle de estoque.</p>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="efetuarLogoutAdmin()">🔒 Sair / Logout</button>
+        </div>
+
+        <!-- Módulo de Personalização da Tarja de Anúncios / Banner Superior -->
+        <div class="card" style="border-left: 5px solid var(--laranja-principal);">
+          <h3>📢 Personalizar Tarja de Anúncios (Banner do Topo)</h3>
+          <p style="font-size: 12px; color: var(--texto-secundario); margin-bottom: 12px;">Altere a mensagem em destaque exibida no topo da loja em tempo real.</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+            <input type="text" id="inputTarjaTexto" class="field" style="flex:1; padding:12px 16px; border:2px solid var(--cinza-borda); border-radius:10px; font-weight:700;" placeholder="Ex: 🚚 Frete Grátis em compras qualificadas | 💥 Ofertas Especiais da Semana">
+            <button class="btn btn-primary" onclick="salvarTarjaAnuncio()">Salvar Tarja ➔</button>
+          </div>
+        </div>
+
+        <!-- Cards de KPIs -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-title">Total de Vendas</div>
+            <div class="kpi-value" id="kpiTotalVendas">R$ 0,00</div>
+            <div class="kpi-sub">↑ Valor bruto acumulado</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-title">Pedidos Realizados</div>
+            <div class="kpi-value" id="kpiQtdPedidos">0</div>
+            <div class="kpi-sub">✓ Pedidos efetuados</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-title">Produtos Cadastrados</div>
+            <div class="kpi-value" id="kpiQtdProdutos">0</div>
+            <div class="kpi-sub">📦 Itens no catálogo</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-title">Clientes Cadastrados</div>
+            <div class="kpi-value" id="kpiQtdClientes">0</div>
+            <div class="kpi-sub">👤 Clientes únicos</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-title">Faturamento do Dia</div>
+            <div class="kpi-value" id="kpiFatDia">R$ 0,00</div>
+            <div class="kpi-sub">📅 Vendas de hoje</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-title">Faturamento do Mês</div>
+            <div class="kpi-value" id="kpiFatMes">R$ 0,00</div>
+            <div class="kpi-sub">🗓️ Mês vigente</div>
+          </div>
+        </div>
+
+        <!-- Gráficos Visuais com Chart.js -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h3 style="font-size:15px; font-weight:800; margin-bottom:16px;">📈 Desempenho de Vendas Por Período</h3>
+            <canvas id="chartSalesCanvas" height="110"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3 style="font-size:15px; font-weight:800; margin-bottom:16px;">🍩 Faturamento Por Categoria</h3>
+            <canvas id="chartCategoryCanvas" height="180"></canvas>
+          </div>
+        </div>
+
+        <!-- Gestão de Estoque em Tempo Real -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:12px;">
+            <h3>📦 Gestão de Estoque & Alertas Rápidos</h3>
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-primary btn-sm" onclick="abrirModalNovoProduto()">+ Novo Produto</button>
+              <button class="btn btn-outline btn-sm" onclick="restaurarCatalogoInicial()" title="Restaura os 100+ produtos originais do catálogo de fábrica">🔄 Restaurar Catálogo (100 Itens)</button>
+            </div>
+          </div>
+
+          <!-- Filtros e Busca em Tempo Real na Tabela de Estoque -->
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:16px;">
+            <div class="filtro-tags" id="filtrosEstoqueBar" style="margin-bottom:0;">
+              <button class="tag-btn active" onclick="setFiltroEstoque('todos', this)">Todos os Produtos</button>
+              <button class="tag-btn" onclick="setFiltroEstoque('baixo', this)">🟡 Estoque Baixo (≤ 5)</button>
+              <button class="tag-btn" onclick="setFiltroEstoque('zerado', this)">🔴 Estoque Zerado (0)</button>
+            </div>
+            
+            <div class="busca" style="max-width:320px; width:100%;">
+              <span class="ico">🔍</span>
+              <input type="text" id="inputBuscaEstoque" placeholder="Buscar no estoque..." oninput="renderTabelaEstoque()">
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table-estoque">
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Cód. Barras (EAN-13)</th>
+                  <th>Preço Unit.</th>
+                  <th>Status do Estoque</th>
+                  <th>Quantidade</th>
+                  <th>Ações de Gerente</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaEstoqueBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL DE LOGIN & CADASTRO (CLIENTE & GERENTE) ===== -->
+  <div class="modal-overlay" id="modalLoginWindow">
+    <div class="modal-card" style="max-width: 460px; text-align: left;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 style="font-size:20px; font-weight:900; color:var(--azul-principal);">👤 Minha Conta</h2>
+        <button style="background:none; border:none; font-size:20px; cursor:pointer;" onclick="fecharModalLogin()">✕</button>
+      </div>
+
+      <!-- Abas de Alternância entre Entrar e Criar Conta -->
+      <div style="display:flex; gap:10px; margin-bottom:20px; border-bottom:2px solid var(--cinza-borda); padding-bottom:10px;">
+        <button id="tabBtnLogin" class="btn btn-sm btn-primary" onclick="alternarAbaAuth('login')">🔓 Entrar</button>
+        <button id="tabBtnCadastro" class="btn btn-sm btn-outline" onclick="alternarAbaAuth('cadastro')">📝 Criar Conta de Cliente</button>
+      </div>
+
+      <!-- PAINEL 1: LOGIN -->
+      <div id="authPainelLogin">
+        <p style="font-size:12px; color:var(--texto-secundario); margin-bottom:14px;">
+          Entre com seu usuário ou e-mail cadastrado para acessar sua conta ou o painel administrativo.
+        </p>
+        <form onsubmit="efetuarLoginAdmin(event)">
+          <div class="field" style="margin-bottom:12px;">
+            <label for="loginUserInput">Usuário / E-mail</label>
+            <input type="text" id="loginUserInput" placeholder="Ex: seu usuário ou e-mail" required>
+          </div>
+          <div class="field" style="margin-bottom:20px;">
+            <label for="loginPassInput">Senha</label>
+            <input type="password" id="loginPassInput" placeholder="Sua senha" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">ENTRAR NA CONTA ➔</button>
+        </form>
+        <div style="text-align:center; margin-top:16px; font-size:13px; color:var(--texto-secundario);">
+          Não possui uma conta? <a href="#" style="color:var(--laranja-escuro); font-weight:900;" onclick="alternarAbaAuth('cadastro'); return false;">Criar conta agora</a>
+        </div>
+      </div>
+
+      <!-- PAINEL 2: CADASTRO DE CLIENTE -->
+      <div id="authPainelCadastro" style="display:none;">
+        <p style="font-size:12px; color:var(--texto-secundario); margin-bottom:14px;">
+          Cadastre seus dados para agilizar suas compras e acompanhar seus pedidos.
+        </p>
+        <form onsubmit="efetuarCadastroCliente(event)">
+          <div class="field" style="margin-bottom:10px;">
+            <label for="cadNome">Nome Completo <span>*</span></label>
+            <input type="text" id="cadNome" placeholder="Digite seu nome completo" required>
+          </div>
+          <div class="field" style="margin-bottom:10px;">
+            <label for="cadEmail">E-mail <span>*</span></label>
+            <input type="email" id="cadEmail" placeholder="seuemail@exemplo.com" required>
+          </div>
+          <div class="form-grid" style="margin-bottom:10px;">
+            <div class="field">
+              <label for="cadCPF">CPF</label>
+              <input type="text" id="cadCPF" placeholder="000.000.000-00">
+            </div>
+            <div class="field">
+              <label for="cadTelefone">Telefone</label>
+              <input type="tel" id="cadTelefone" placeholder="(00) 00000-0000">
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:20px;">
+            <label for="cadSenha">Senha <span>*</span></label>
+            <input type="password" id="cadSenha" placeholder="Mínimo 6 caracteres" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">CRIAR MINHA CONTA ➔</button>
+        </form>
+        <div style="text-align:center; margin-top:16px; font-size:13px; color:var(--texto-secundario);">
+          Já tem uma conta? <a href="#" style="color:var(--laranja-escuro); font-weight:900;" onclick="alternarAbaAuth('login'); return false;">Fazer login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL DE CONFIRMAÇÃO DO PEDIDO & RECIBO ===== -->
+  <div class="modal-overlay" id="modalConfirmação">
+    <div class="modal-card">
+      <div class="check-icon-anim">✓</div>
+      <h2 style="font-size: 22px; font-weight: 900; color:var(--azul-principal);">Pedido Realizado com Sucesso!</h2>
+      <p style="font-size: 13px; color: var(--texto-secundario);">Sua compra foi confirmada. O estoque dos produtos comprados foi atualizado automaticamente.</p>
+
+      <div class="recibo-box" id="reciboDetalhes"></div>
+
+      <div style="display:flex; gap:12px;">
+        <button class="btn btn-secondary btn-full" onclick="fecharReciboEVoltar()">Voltar para a Loja</button>
+        <button class="btn btn-outline" onclick="window.print()">🖨️ Imprimir Recibo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL NOVO PRODUTO (GERENTE) ===== -->
+  <div class="modal-overlay" id="modalNovoProduto">
+    <div class="modal-card" style="max-width: 580px; text-align: left;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+        <h2 style="font-size:20px; font-weight:900; color:var(--azul-principal);">📦 Cadastrar Novo Produto</h2>
+        <button style="background:none; border:none; font-size:20px; cursor:pointer;" onclick="fecharModalNovoProduto()">✕</button>
+      </div>
+
+      <form onsubmit="salvarNovoProdutoModal(event)">
+        <div class="form-grid">
+          <div class="field full">
+            <label for="prodModalNome">Nome do Produto <span>*</span></label>
+            <input type="text" id="prodModalNome" placeholder="Ex: LEGO Speed Champions Ferrari SF-24" required>
+          </div>
+
+          <div class="field">
+            <label for="prodModalCat">Categoria <span>*</span></label>
+            <select id="prodModalCat" onchange="autoSugerirEmojiPorCategoria()" required>
+              <option value="">Selecione a categoria</option>
+              <option value="Brinquedos e Jogos">Brinquedos e Jogos</option>
+              <option value="Casa e Cozinha">Casa e Cozinha</option>
+              <option value="Limpeza">Limpeza</option>
+              <option value="Eletrônicos e Acessórios">Eletrônicos e Acessórios</option>
+              <option value="Papelaria e Escritório">Papelaria e Escritório</option>
+              <option value="Beleza e Cuidados Pessoais">Beleza e Cuidados Pessoais</option>
+              <option value="Pet Shop">Pet Shop</option>
+              <option value="Ferramentas e Utilidades">Ferramentas e Utilidades</option>
+              <option value="Organização e Decoração">Organização e Decoração</option>
+              <option value="Acessórios Automotivos">Acessórios Automotivos</option>
+              <option value="Lazer e Esportes">Lazer e Esportes</option>
+              <option value="Moda e Acessórios">Moda e Acessórios</option>
+              <option value="Infantil">Infantil</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="prodModalEmoji">Emoji / Ícone Selecionado</label>
+            <input type="text" id="prodModalEmoji" placeholder="Ex: 🏎️, 📱, 📦" value="📦">
+          </div>
+
+          <!-- Barra de Seleção Rápida de Emojis por Categoria -->
+          <div class="field full emoji-picker-container">
+            <label style="font-size:12px; font-weight:700; color:var(--azul-principal); margin-bottom:6px; display:block;">
+              ✨ Clique em um emoji abaixo para aplicar ao produto:
+            </label>
+            <div class="emoji-picker-bar">
+              <div class="emoji-picker-group">
+                <span class="emoji-picker-tag">🧸 Infantil / Jogos:</span>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🧸')">🧸</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🏎️')">🏎️</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🧩')">🧩</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🎲')">🎲</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🪀')">🪀</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('👶')">👶</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🍼')">🍼</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🪁')">🪁</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🎈')">🎈</button>
+              </div>
+              <div class="emoji-picker-group">
+                <span class="emoji-picker-tag">💻 Eletrônicos:</span>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('💻')">💻</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('📱')">📱</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🎧')">🎧</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🎮')">🎮</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('⌚')">⌚</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🔌')">🔌</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('📸')">📸</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('💡')">💡</button>
+              </div>
+              <div class="emoji-picker-group">
+                <span class="emoji-picker-tag">🍳 Casa & Cozinha:</span>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🍳')">🍳</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('☕')">☕</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🧹')">🧹</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🍽️')">🍽️</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🛋️')">🛋️</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🕯️')">🕯️</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🪴')">🪴</button>
+              </div>
+              <div class="emoji-picker-group">
+                <span class="emoji-picker-tag">💄 Beleza & Moda:</span>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('💄')">💄</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('👕')">👕</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('👟')">👟</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🎒')">🎒</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🕶️')">🕶️</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🧴')">🧴</button>
+              </div>
+              <div class="emoji-picker-group">
+                <span class="emoji-picker-tag">🛠️ Ferramentas & Auto:</span>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🛠️')">🛠️</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🚗')">🚗</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🔧')">🔧</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🧰')">🧰</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('⚡')">⚡</button>
+              </div>
+              <div class="emoji-picker-group">
+                <span class="emoji-picker-tag">🐶 Pet & Esportes:</span>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🐶')">🐶</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🐱')">🐱</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🦴')">🦴</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('⚽')">⚽</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('📦')">📦</button>
+                <button type="button" class="emoji-chip" onclick="selecionarEmojiModal('🌟')">🌟</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upload de imagens do produto -->
+          <div class="field full">
+            <label>📷 Imagens do Produto <small style="font-weight:600; color:var(--texto-secundario);">(opcional · até 4 imagens · a 1ª é a principal)</small></label>
+            <label for="prodModalImagens" class="upload-box" id="uploadBox">
+              <span class="upload-icon">📷</span>
+              <span><strong>Clique para escolher</strong> ou arraste as imagens aqui</span>
+              <small>JPG, PNG ou WebP — são reduzidas automaticamente</small>
+            </label>
+            <input type="file" id="prodModalImagens" accept="image/*" multiple style="display:none" onchange="selecionarImagensProduto(this.files)">
+            <div id="prodModalPreviewImagens" class="upload-previews"></div>
+          </div>
+
+          <div class="field">
+            <label for="prodModalPreco">Preço Atual (R$) <span>*</span></label>
+            <input type="number" step="0.01" id="prodModalPreco" placeholder="148.29" required>
+          </div>
+
+          <div class="field">
+            <label for="prodModalAntigo">Preço Antigo (R$)</label>
+            <input type="number" step="0.01" id="prodModalAntigo" placeholder="249.99">
+          </div>
+
+          <div class="field">
+            <label for="prodModalEstoque">Estoque Inicial <span>*</span></label>
+            <input type="number" id="prodModalEstoque" value="25" placeholder="10" required>
+          </div>
+
+          <div class="field">
+            <label for="prodModalBarcode">Código EAN-13</label>
+            <div style="display:flex; gap:6px;">
+              <input type="text" id="prodModalBarcode" placeholder="789..." maxlength="13">
+              <button type="button" class="btn btn-outline btn-sm" onclick="gerarNovoEANModal()">⚡ Gerar</button>
+            </div>
+          </div>
+
+          <div class="field full">
+            <label for="prodModalDesc">Descrição Detalhada do Produto</label>
+            <textarea id="prodModalDesc" rows="3" placeholder="Descrição completa, especificações, peças, garantia..."></textarea>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-top:24px;">
+          <button type="button" class="btn btn-outline btn-full" onclick="fecharModalNovoProduto()">Cancelar</button>
+          <button type="submit" class="btn btn-primary btn-full">SALVAR PRODUTO ➔</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== MODAL CONFIRMAR EXCLUSÃO DE PRODUTO ===== -->
+  <div class="modal-overlay" id="modalConfirmarExclusao">
+    <div class="modal-card" style="max-width: 440px; text-align: center;">
+      <div style="font-size:48px; margin-bottom:12px;">🗑️</div>
+      <h2 style="font-size:20px; font-weight:900; color:var(--azul-principal); margin-bottom:8px;">Excluir Produto do Catálogo?</h2>
+      <p style="font-size:13px; color:var(--texto-secundario); margin-bottom:20px;" id="txtConfirmarExclusao">
+        Tem certeza que deseja remover este produto? Esta ação não poderá ser desfeita.
+      </p>
+      <div style="display:flex; gap:12px;">
+        <button class="btn btn-outline btn-full" onclick="fecharModalConfirmarExclusao()">Cancelar</button>
+        <button class="btn btn-danger btn-full" id="btnConfirmarExcluirAcao">Sim, Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL INSTITUCIONAL (POLÍTICAS E ATENDIMENTO) ===== -->
+  <div class="modal-overlay" id="modalInstitucional">
+    <div class="modal-card" style="max-width: 650px; text-align: left; padding:32px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; border-bottom:1px solid var(--cinza-borda); padding-bottom:12px;">
+        <h2 style="font-size:20px; font-weight:900; color:var(--azul-principal);" id="modalInstitucionalTitulo">🚚 Política de Frete</h2>
+        <button style="background:none; border:none; font-size:20px; cursor:pointer;" onclick="fecharModalInstitucional()">✕</button>
+      </div>
+      <div id="modalInstitucionalConteudo" style="font-size:14px; color:var(--texto-principal); line-height:1.7;"></div>
+      <div style="margin-top:24px; text-align:right;">
+        <button class="btn btn-secondary" onclick="fecharModalInstitucional()">Entendido</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL DETALHES DO PRODUTO (REFERÊNCIA AMAZON / LEGO) ===== -->
+  <div class="modal-overlay" id="modalDetalhesProduto">
+    <div class="modal-card" style="max-width: 780px; text-align: left; padding:32px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid var(--cinza-borda); padding-bottom:12px;">
+        <span class="prod-cat" id="modalDetCat">Brinquedos & Jogos</span>
+        <button style="background:none; border:none; font-size:22px; cursor:pointer;" onclick="fecharModalDetalhes()">✕</button>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 240px 1fr; gap:28px;">
+        <div>
+          <div style="background:var(--creme); border-radius:18px; border:2px solid var(--cinza-borda); height:220px; display:grid; place-items:center; font-size:90px;" id="modalDetEmoji">
+            🏎️
+          </div>
+          <div id="modalDetMiniaturas" class="mini-galeria"></div>
+          <div style="margin-top:14px; background:var(--verde-fundo); border:1px solid var(--verde); padding:10px; border-radius:12px; font-size:12px; text-align:center; font-weight:800; color:var(--verde);" id="modalDetEstoqueStatus">
+            ✓ Em Estoque (Pronta Entrega)
+          </div>
+        </div>
+
+        <div>
+          <h2 style="font-size:22px; font-weight:900; color:var(--azul-principal); margin-bottom:8px; line-height:1.3;" id="modalDetNome">
+            LEGO Speed Champions Carro de Corrida Ferrari SF-24 F1® 77242
+          </h2>
+
+          <div style="display:flex; align-items:center; gap:12px; font-size:13px; margin-bottom:14px;">
+            <span style="color:var(--laranja-principal); font-weight:900;" id="modalDetNota">4.9 ★★★★★</span>
+            <span style="color:var(--texto-secundario);" id="modalDetAvaliacoes">(3.547 avaliações de compradores)</span>
+          </div>
+
+          <div style="background:var(--cinza-muito-claro); border-radius:14px; padding:16px; margin-bottom:16px; border:1px solid var(--cinza-borda);">
+            <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;">
+              <span style="font-size:32px; font-weight:900; color:var(--laranja-principal);" id="modalDetPreco">R$ 148,29</span>
+              <span style="font-size:14px; color:var(--texto-secundario); text-decoration:line-through;" id="modalDetAntigo">De: R$ 249,99</span>
+              <span class="prod-badge badge-oferta" id="modalDetDescontoBadge">-40% MENOR PREÇO</span>
+            </div>
+            <div style="font-size:13px; font-weight:700; color:var(--verde); margin-top:6px;" id="modalDetParcelas">
+              Em até 4x de R$ 37,08 sem juros no cartão
+            </div>
+            <div style="font-size:12px; color:var(--laranja-escuro); margin-top:6px; font-weight:700;">
+              🎟️ Cupons Aplicáveis: COMPRANOAPP (R$ 20 off) | FLASH25 (25% off)
+            </div>
+          </div>
+
+          <div style="font-size:13px; color:var(--texto-principal); line-height:1.6; margin-bottom:20px;">
+            <strong>Descrição do Produto:</strong>
+            <p id="modalDetDesc" style="color:var(--texto-secundario); margin-top:4px;">
+              Modelo oficial licenciado com piloto Ferrari F1.
+            </p>
+          </div>
+
+          <div style="display:flex; gap:8px; font-size:11px; color:var(--texto-secundario); margin-bottom:16px;">
+            <span>🏷️ Código EAN: <code id="modalDetBarcode" style="font-weight:800; color:var(--azul-principal);">78900010077242</code></span>
+          </div>
+
+          <!-- Simulador de Frete no Modal do Produto -->
+          <div class="card-frete-produto">
+            <label class="lbl" for="cepModalProduto">🚚 Calcular Frete e Prazo para este produto:</label>
+            <div class="frete-row">
+              <input type="text" id="cepModalProduto" maxlength="9" placeholder="00000-000">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="calcularFreteProdutoModal()">Calcular</button>
+            </div>
+            <a class="link-cep" href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" rel="noopener">Não sei meu CEP ↗</a>
+            <div id="resultadoFreteModalProduto"></div>
+          </div>
+
+          <div style="display:flex; gap:12px;">
+            <button class="btn btn-primary btn-full" id="btnModalAddCarrinho">🛒 ADICIONAR AO CARRINHO</button>
+            <button class="btn btn-secondary btn-full" id="btnModalComprarAgora">COMPRAR AGORA ➔</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL REPOR ESTOQUE (APRESENTÁVEL) ===== -->
+  <div class="modal-overlay" id="modalReporEstoque">
+    <div class="modal-card" style="max-width: 480px; text-align: left; padding: 28px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2 style="font-size:18px; font-weight:900; color:var(--azul-principal);">📦 Atualizar Estoque do Produto</h2>
+        <button style="background:none; border:none; font-size:20px; cursor:pointer;" onclick="fecharModalReporEstoque()">✕</button>
+      </div>
+
+      <div style="background:var(--creme); border-radius:14px; padding:16px; margin-bottom:20px; border:1px solid var(--cinza-borda); display:flex; align-items:center; gap:14px;">
+        <div style="font-size:42px;" id="reporModalEmoji">📦</div>
+        <div>
+          <div style="font-size:15px; font-weight:800; color:var(--azul-principal);" id="reporModalNome">Nome do Produto</div>
+          <div style="font-size:12px; color:var(--texto-secundario);" id="reporModalCat">Categoria</div>
+          <div style="font-size:12px; font-weight:800; color:var(--laranja-escuro); margin-top:2px;" id="reporModalEstoqueAtual">Estoque Atual: 10 unid.</div>
+        </div>
+      </div>
+
+      <form onsubmit="salvarReposicaoEstoqueModal(event)">
+        <div class="field" style="margin-bottom:16px;">
+          <label for="reporModalQtd">Quantidade a Adicionar ao Estoque <span>*</span></label>
+          <input type="number" id="reporModalQtd" min="1" value="10" placeholder="Ex: 10, 20, 50..." required style="font-size:16px; font-weight:800; padding:12px 16px;">
+        </div>
+
+        <div style="display:flex; gap:8px; margin-bottom:20px;">
+          <button type="button" class="btn btn-outline btn-sm" onclick="setQtdReporRapido(5)">+5</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="setQtdReporRapido(10)">+10</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="setQtdReporRapido(25)">+25</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="setQtdReporRapido(50)">+50</button>
+          <button type="button" class="btn btn-outline btn-sm" onclick="setQtdReporRapido(100)">+100</button>
+        </div>
+
+        <div style="display:flex; gap:12px;">
+          <button type="button" class="btn btn-outline btn-full" onclick="fecharModalReporEstoque()">Cancelar</button>
+          <button type="submit" class="btn btn-primary btn-full">CONFIRMAR REPOSIÇÃO ➔</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===== MODAL CONFIRMAR LOGOUT (APRESENTÁVEL) ===== -->
+  <div class="modal-overlay" id="modalConfirmarLogout">
+    <div class="modal-card" style="max-width: 420px; text-align: center; padding: 28px;">
+      <div style="font-size:48px; margin-bottom:12px;">🔒</div>
+      <h2 style="font-size:20px; font-weight:900; color:var(--azul-principal); margin-bottom:8px;">Encerrar Sessão?</h2>
+      <p style="font-size:13px; color:var(--texto-secundario); margin-bottom:20px;" id="txtConfirmarLogoutMsg">
+        Deseja realmente sair da sua conta de Gerente?
+      </p>
+      <div style="display:flex; gap:12px;">
+        <button class="btn btn-outline btn-full" onclick="fecharModalConfirmarLogout()">Cancelar</button>
+        <button class="btn btn-danger btn-full" onclick="executarLogoutAcao()">Sim, Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER INSPIRADO NA REFERÊNCIA FAMSWORLD ===== -->
+  <footer class="main-footer">
+    <div class="container foot-grid">
+      <div>
+        <div class="logo-brand" onclick="navigateTo('page-home')" style="margin-bottom:12px;">
+          <img src="Logo JM Variedades E-commerce.png" alt="JM Variedades" class="logo-img" style="filter: brightness(0) invert(1);">
+        </div>
+        <p class="foot-desc">Sua loja completa de variedades com mais de 100 produtos selecionados de alta qualidade. Entrega rápida, suporte humanizado e compras 100% seguras.</p>
+      </div>
+      <div>
+        <h4>Catálogo</h4>
+        <a onclick="filtrarCategoria('Brinquedos e Jogos'); navigateTo('page-home');">Brinquedos & Jogos</a>
+        <a onclick="filtrarCategoria('Casa e Cozinha'); navigateTo('page-home');">Casa & Cozinha</a>
+        <a onclick="filtrarCategoria('Eletrônicos e Acessórios'); navigateTo('page-home');">Eletrônicos & Acessórios</a>
+        <a onclick="filtrarCategoria('Ferramentas e Utilidades'); navigateTo('page-home');">Ferramentas & Utilidades</a>
+        <a onclick="filtrarCategoria('Moda e Acessórios'); navigateTo('page-home');">Moda & Acessórios</a>
+      </div>
+      <div>
+        <h4>Recursos</h4>
+        <a onclick="navigateTo('page-carrinho')">Carrinho de Compras</a>
+        <a href="frete.html">🚚 Simulador de Frete & Logística</a>
+        <a onclick="navigateTo('page-historico')">Consulta por Código EAN-13</a>
+        <a onclick="navigateTo('page-admin')">Painel Administrativo</a>
+      </div>
+      <div>
+        <h4>Atendimento & Políticas</h4>
+        <a onclick="abrirModalInstitucional('frete')">🚚 Política de Frete e Entregas</a>
+        <a onclick="abrirModalInstitucional('trocas')">🔄 Trocas e Devoluções (CDC)</a>
+        <a onclick="abrirModalInstitucional('termos')">📜 Termos de Uso</a>
+        <a onclick="abrirModalInstitucional('privacidade')">🔒 Política de Privacidade (LGPD)</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      © 2026 JM Variedades — Todos os direitos reservados. Projeto de E-Commerce & ERP Manager
+    </div>
+  </footer>
+
+  <!-- Container de Mensagens Toast -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Carregamento dos Scripts da Aplicação -->
+  <script src="js/store.js"></script>
+  <script src="js/frete.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

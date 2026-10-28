@@ -1,0 +1,1164 @@
+LOJA DE VARIEDADES — CATÁLOGO FICTÍCIO
+========================================================================================================================
+Todos os dados são fictícios e destinados a testes de cadastro, estoque e vendas.
+Os códigos de barras seguem um formato numérico fictício inspirado em EAN-13.
+
+ITENS DA LOJA
+========================================================================================================================
+ITEM 001
+Código de barras: 7890001000001
+Produto: Jogo de Potes Herméticos 5 peças
+Categoria: Casa e Cozinha
+Descrição: Conjunto de potes transparentes com tampas de fechamento hermético.
+Preço: R$ 106.00
+Quantidade em estoque: 78 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 83
+------------------------------------------------------------------------------------------------------------------------
+ITEM 002
+Código de barras: 7890001000002
+Produto: Frigideira Antiaderente 20cm
+Categoria: Casa e Cozinha
+Descrição: Frigideira compacta com revestimento antiaderente e cabo ergonômico.
+Preço: R$ 49.90
+Quantidade em estoque: 159 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 27
+------------------------------------------------------------------------------------------------------------------------
+ITEM 003
+Código de barras: 7890001000003
+Produto: Panela de Pressão 4,5L
+Categoria: Casa e Cozinha
+Descrição: Panela de pressão de alumínio para preparo rápido de carnes, feijão e legumes.
+Preço: R$ 99.90
+Quantidade em estoque: 137 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 299
+------------------------------------------------------------------------------------------------------------------------
+ITEM 004
+Código de barras: 7890001000004
+Produto: Escorredor de Louça
+Categoria: Casa e Cozinha
+Descrição: Escorredor de pratos e copos com bandeja coletora de água.
+Preço: R$ 42.99
+Quantidade em estoque: 64 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 154
+------------------------------------------------------------------------------------------------------------------------
+ITEM 005
+Código de barras: 7890001000005
+Produto: Tábua de Corte de Bambu
+Categoria: Casa e Cozinha
+Descrição: Tábua resistente para cortar carnes, frutas, verduras e pães.
+Preço: R$ 131.00
+Quantidade em estoque: 48 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 186
+------------------------------------------------------------------------------------------------------------------------
+ITEM 006
+Código de barras: 7890001000006
+Produto: Garrafa Térmica 1L
+Categoria: Casa e Cozinha
+Descrição: Garrafa térmica para manter bebidas quentes ou frias por mais tempo.
+Preço: R$ 59.90
+Quantidade em estoque: 94 unidades
+Avaliação: 3.9/5,0
+Quantidade de avaliações: 206
+------------------------------------------------------------------------------------------------------------------------
+ITEM 007
+Código de barras: 7890001000007
+Produto: Kit 6 Copos de Vidro
+Categoria: Casa e Cozinha
+Descrição: Conjunto de seis copos transparentes para uso diário.
+Preço: R$ 27.90
+Quantidade em estoque: 162 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 34
+------------------------------------------------------------------------------------------------------------------------
+ITEM 008
+Código de barras: 7890001000008
+Produto: Caneca Cerâmica 350ml
+Categoria: Casa e Cozinha
+Descrição: Caneca de cerâmica para café, chá e outras bebidas.
+Preço: R$ 120.00
+Quantidade em estoque: 104 unidades
+Avaliação: 3.9/5,0
+Quantidade de avaliações: 162
+------------------------------------------------------------------------------------------------------------------------
+ITEM 009
+Código de barras: 7890001000009
+Produto: Pano de Prato Kit 5
+Categoria: Casa e Cozinha
+Descrição: Kit com cinco panos de prato de algodão para uso doméstico.
+Preço: R$ 134.90
+Quantidade em estoque: 155 unidades
+Avaliação: 4.0/5,0
+Quantidade de avaliações: 47
+------------------------------------------------------------------------------------------------------------------------
+ITEM 010
+Código de barras: 7890001000010
+Produto: Kit Esponjas Multiuso 10 un.
+Categoria: Limpeza
+Descrição: Pacote com esponjas para limpeza geral de louças e superfícies.
+Preço: R$ 10.50
+Quantidade em estoque: 82 unidades
+Avaliação: 5.0/5,0
+Quantidade de avaliações: 449
+------------------------------------------------------------------------------------------------------------------------
+ITEM 011
+Código de barras: 7890001000011
+Produto: Rodo 40cm
+Categoria: Limpeza
+Descrição: Rodo com borracha dupla para limpeza de pisos.
+Preço: R$ 26.00
+Quantidade em estoque: 105 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 337
+------------------------------------------------------------------------------------------------------------------------
+ITEM 012
+Código de barras: 7890001000012
+Produto: Vassoura Multiuso
+Categoria: Limpeza
+Descrição: Vassoura de cerdas resistentes para áreas internas e externas.
+Preço: R$ 76.50
+Quantidade em estoque: 102 unidades
+Avaliação: 4.2/5,0
+Quantidade de avaliações: 355
+------------------------------------------------------------------------------------------------------------------------
+ITEM 013
+Código de barras: 7890001000013
+Produto: Balde 12L
+Categoria: Limpeza
+Descrição: Balde plástico com alça reforçada para limpeza doméstica.
+Preço: R$ 29.00
+Quantidade em estoque: 163 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 285
+------------------------------------------------------------------------------------------------------------------------
+ITEM 014
+Código de barras: 7890001000014
+Produto: Pano de Microfibra Kit 5
+Categoria: Limpeza
+Descrição: Panos reutilizáveis de microfibra para remover poeira e sujeira.
+Preço: R$ 67.50
+Quantidade em estoque: 126 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 339
+------------------------------------------------------------------------------------------------------------------------
+ITEM 015
+Código de barras: 7890001000015
+Produto: Luva de Limpeza M
+Categoria: Limpeza
+Descrição: Luva doméstica reutilizável para proteger as mãos durante a limpeza.
+Preço: R$ 64.50
+Quantidade em estoque: 91 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 409
+------------------------------------------------------------------------------------------------------------------------
+ITEM 016
+Código de barras: 7890001000016
+Produto: Escova Sanitária
+Categoria: Limpeza
+Descrição: Escova para limpeza interna de vasos sanitários com suporte.
+Preço: R$ 11.00
+Quantidade em estoque: 88 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 45
+------------------------------------------------------------------------------------------------------------------------
+ITEM 017
+Código de barras: 7890001000017
+Produto: Flanela Multiuso Kit 3
+Categoria: Limpeza
+Descrição: Kit com três flanelas para móveis, vidros e superfícies delicadas.
+Preço: R$ 24.90
+Quantidade em estoque: 62 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 214
+------------------------------------------------------------------------------------------------------------------------
+ITEM 018
+Código de barras: 7890001000018
+Produto: Mop Giratório
+Categoria: Limpeza
+Descrição: Mop com balde e sistema de centrifugação para facilitar a limpeza.
+Preço: R$ 79.90
+Quantidade em estoque: 44 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 138
+------------------------------------------------------------------------------------------------------------------------
+ITEM 019
+Código de barras: 7890001000019
+Produto: Fone Bluetooth TWS
+Categoria: Eletrônicos e Acessórios
+Descrição: Fone sem fio compacto com estojo de carregamento.
+Preço: R$ 79.90
+Quantidade em estoque: 59 unidades
+Avaliação: 4.9/5,0
+Quantidade de avaliações: 216
+------------------------------------------------------------------------------------------------------------------------
+ITEM 020
+Código de barras: 7890001000020
+Produto: Caixa de Som Bluetooth
+Categoria: Eletrônicos e Acessórios
+Descrição: Caixa de som portátil com conexão Bluetooth e bateria recarregável.
+Preço: R$ 119.90
+Quantidade em estoque: 68 unidades
+Avaliação: 3.9/5,0
+Quantidade de avaliações: 36
+------------------------------------------------------------------------------------------------------------------------
+ITEM 021
+Código de barras: 7890001000021
+Produto: Carregador USB-C 20W
+Categoria: Eletrônicos e Acessórios
+Descrição: Carregador compacto com saída USB-C para smartphones e acessórios.
+Preço: R$ 59.90
+Quantidade em estoque: 25 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 228
+------------------------------------------------------------------------------------------------------------------------
+ITEM 022
+Código de barras: 7890001000022
+Produto: Cabo USB-C 1m
+Categoria: Eletrônicos e Acessórios
+Descrição: Cabo USB-C para carregamento e transferência de dados.
+Preço: R$ 19.90
+Quantidade em estoque: 64 unidades
+Avaliação: 4.4/5,0
+Quantidade de avaliações: 295
+------------------------------------------------------------------------------------------------------------------------
+ITEM 023
+Código de barras: 7890001000023
+Produto: Cabo Lightning 1m
+Categoria: Eletrônicos e Acessórios
+Descrição: Cabo compatível com dispositivos que utilizam conector Lightning.
+Preço: R$ 24.90
+Quantidade em estoque: 73 unidades
+Avaliação: 4.7/5,0
+Quantidade de avaliações: 405
+------------------------------------------------------------------------------------------------------------------------
+ITEM 024
+Código de barras: 7890001000024
+Produto: Power Bank 10.000mAh
+Categoria: Eletrônicos e Acessórios
+Descrição: Bateria portátil para recarregar smartphones e outros dispositivos.
+Preço: R$ 89.90
+Quantidade em estoque: 60 unidades
+Avaliação: 4.0/5,0
+Quantidade de avaliações: 13
+------------------------------------------------------------------------------------------------------------------------
+ITEM 025
+Código de barras: 7890001000025
+Produto: Suporte Veicular para Celular
+Categoria: Eletrônicos e Acessórios
+Descrição: Suporte para fixação de smartphone no painel ou saída de ar do veículo.
+Preço: R$ 153.90
+Quantidade em estoque: 27 unidades
+Avaliação: 4.4/5,0
+Quantidade de avaliações: 66
+------------------------------------------------------------------------------------------------------------------------
+ITEM 026
+Código de barras: 7890001000026
+Produto: Mouse Sem Fio
+Categoria: Eletrônicos e Acessórios
+Descrição: Mouse óptico sem fio com receptor USB para uso em computadores.
+Preço: R$ 141.90
+Quantidade em estoque: 69 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 90
+------------------------------------------------------------------------------------------------------------------------
+ITEM 027
+Código de barras: 7890001000027
+Produto: Teclado USB ABNT2
+Categoria: Eletrônicos e Acessórios
+Descrição: Teclado com layout brasileiro ABNT2 para computadores.
+Preço: R$ 72.50
+Quantidade em estoque: 72 unidades
+Avaliação: 4.9/5,0
+Quantidade de avaliações: 318
+------------------------------------------------------------------------------------------------------------------------
+ITEM 028
+Código de barras: 7890001000028
+Produto: Caderno Universitário 10 matérias
+Categoria: Papelaria e Escritório
+Descrição: Caderno com divisórias para organização de várias disciplinas.
+Preço: R$ 18.00
+Quantidade em estoque: 36 unidades
+Avaliação: 4.9/5,0
+Quantidade de avaliações: 461
+------------------------------------------------------------------------------------------------------------------------
+ITEM 029
+Código de barras: 7890001000029
+Produto: Caderno Espiral 96 folhas
+Categoria: Papelaria e Escritório
+Descrição: Caderno espiral para anotações escolares e profissionais.
+Preço: R$ 49.90
+Quantidade em estoque: 69 unidades
+Avaliação: 3.9/5,0
+Quantidade de avaliações: 461
+------------------------------------------------------------------------------------------------------------------------
+ITEM 030
+Código de barras: 7890001000030
+Produto: Kit Canetas Esferográficas 10
+Categoria: Papelaria e Escritório
+Descrição: Kit com dez canetas esferográficas de escrita suave.
+Preço: R$ 29.00
+Quantidade em estoque: 29 unidades
+Avaliação: 4.7/5,0
+Quantidade de avaliações: 429
+------------------------------------------------------------------------------------------------------------------------
+ITEM 031
+Código de barras: 7890001000031
+Produto: Kit Marca-Texto 6 cores
+Categoria: Papelaria e Escritório
+Descrição: Conjunto com seis marca-textos em cores variadas.
+Preço: R$ 6.50
+Quantidade em estoque: 40 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 293
+------------------------------------------------------------------------------------------------------------------------
+ITEM 032
+Código de barras: 7890001000032
+Produto: Lápis Preto HB Kit 12
+Categoria: Papelaria e Escritório
+Descrição: Doze lápis HB para escrita e desenho.
+Preço: R$ 11.99
+Quantidade em estoque: 62 unidades
+Avaliação: 4.9/5,0
+Quantidade de avaliações: 398
+------------------------------------------------------------------------------------------------------------------------
+ITEM 033
+Código de barras: 7890001000033
+Produto: Borracha Branca Kit 4
+Categoria: Papelaria e Escritório
+Descrição: Quatro borrachas brancas para apagar grafite sem danificar o papel.
+Preço: R$ 37.50
+Quantidade em estoque: 87 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 355
+------------------------------------------------------------------------------------------------------------------------
+ITEM 034
+Código de barras: 7890001000034
+Produto: Apontador com Depósito
+Categoria: Papelaria e Escritório
+Descrição: Apontador compacto com reservatório para aparas.
+Preço: R$ 33.99
+Quantidade em estoque: 140 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 138
+------------------------------------------------------------------------------------------------------------------------
+ITEM 035
+Código de barras: 7890001000035
+Produto: Tesoura Escolar 13cm
+Categoria: Papelaria e Escritório
+Descrição: Tesoura de ponta arredondada indicada para uso escolar.
+Preço: R$ 13.90
+Quantidade em estoque: 13 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 129
+------------------------------------------------------------------------------------------------------------------------
+ITEM 036
+Código de barras: 7890001000036
+Produto: Cola Bastão 20g
+Categoria: Papelaria e Escritório
+Descrição: Cola em bastão para papel, cartolina e trabalhos escolares.
+Preço: R$ 30.00
+Quantidade em estoque: 26 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 42
+------------------------------------------------------------------------------------------------------------------------
+ITEM 037
+Código de barras: 7890001000037
+Produto: Escova de Cabelo Raquete
+Categoria: Beleza e Cuidados Pessoais
+Descrição: Escova com base ampla para desembaraçar cabelos no dia a dia.
+Preço: R$ 24.00
+Quantidade em estoque: 92 unidades
+Avaliação: 3.9/5,0
+Quantidade de avaliações: 133
+------------------------------------------------------------------------------------------------------------------------
+ITEM 038
+Código de barras: 7890001000038
+Produto: Pente de Madeira
+Categoria: Beleza e Cuidados Pessoais
+Descrição: Pente resistente de madeira para desembaraçar e pentear os cabelos.
+Preço: R$ 27.99
+Quantidade em estoque: 62 unidades
+Avaliação: 4.4/5,0
+Quantidade de avaliações: 382
+------------------------------------------------------------------------------------------------------------------------
+ITEM 039
+Código de barras: 7890001000039
+Produto: Espelho de Mesa
+Categoria: Beleza e Cuidados Pessoais
+Descrição: Espelho compacto com apoio para bancada ou penteadeira.
+Preço: R$ 75.99
+Quantidade em estoque: 70 unidades
+Avaliação: 4.7/5,0
+Quantidade de avaliações: 425
+------------------------------------------------------------------------------------------------------------------------
+ITEM 040
+Código de barras: 7890001000040
+Produto: Necessaire Média
+Categoria: Beleza e Cuidados Pessoais
+Descrição: Necessaire com zíper para organizar produtos de higiene e beleza.
+Preço: R$ 37.00
+Quantidade em estoque: 32 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 193
+------------------------------------------------------------------------------------------------------------------------
+ITEM 041
+Código de barras: 7890001000041
+Produto: Kit 3 Lixas de Unha
+Categoria: Beleza e Cuidados Pessoais
+Descrição: Conjunto com três lixas para cuidados básicos das unhas.
+Preço: R$ 38.99
+Quantidade em estoque: 21 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 342
+------------------------------------------------------------------------------------------------------------------------
+ITEM 042
+Código de barras: 7890001000042
+Produto: Kit Pincéis de Maquiagem 8 peças
+Categoria: Beleza e Cuidados Pessoais
+Descrição: Conjunto com oito pincéis para maquiagem facial e dos olhos.
+Preço: R$ 14.99
+Quantidade em estoque: 94 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 67
+------------------------------------------------------------------------------------------------------------------------
+ITEM 043
+Código de barras: 7890001000043
+Produto: Esponja de Maquiagem
+Categoria: Beleza e Cuidados Pessoais
+Descrição: Esponja macia para aplicação e acabamento de maquiagem.
+Preço: R$ 25.50
+Quantidade em estoque: 145 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 228
+------------------------------------------------------------------------------------------------------------------------
+ITEM 044
+Código de barras: 7890001000044
+Produto: Touca de Banho
+Categoria: Beleza e Cuidados Pessoais
+Descrição: Touca reutilizável para proteger os cabelos durante o banho.
+Preço: R$ 21.99
+Quantidade em estoque: 71 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 50
+------------------------------------------------------------------------------------------------------------------------
+ITEM 045
+Código de barras: 7890001000045
+Produto: Pote para Ração 1,5L
+Categoria: Pet Shop
+Descrição: Pote plástico com tampa para armazenar ração seca.
+Preço: R$ 62.00
+Quantidade em estoque: 20 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 288
+------------------------------------------------------------------------------------------------------------------------
+ITEM 046
+Código de barras: 7890001000046
+Produto: Comedouro Inox Médio
+Categoria: Pet Shop
+Descrição: Comedouro de aço inoxidável para cães e gatos.
+Preço: R$ 110.00
+Quantidade em estoque: 68 unidades
+Avaliação: 4.0/5,0
+Quantidade de avaliações: 260
+------------------------------------------------------------------------------------------------------------------------
+ITEM 047
+Código de barras: 7890001000047
+Produto: Bebedouro Plástico 2L
+Categoria: Pet Shop
+Descrição: Recipiente plástico de dois litros para água de pets.
+Preço: R$ 67.99
+Quantidade em estoque: 23 unidades
+Avaliação: 4.0/5,0
+Quantidade de avaliações: 13
+------------------------------------------------------------------------------------------------------------------------
+ITEM 048
+Código de barras: 7890001000048
+Produto: Brinquedo Mordedor de Borracha
+Categoria: Pet Shop
+Descrição: Mordedor resistente para cães de porte pequeno e médio.
+Preço: R$ 128.90
+Quantidade em estoque: 124 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 368
+------------------------------------------------------------------------------------------------------------------------
+ITEM 049
+Código de barras: 7890001000049
+Produto: Bola para Cachorro Média
+Categoria: Pet Shop
+Descrição: Bola de borracha para brincadeiras e exercícios.
+Preço: R$ 124.99
+Quantidade em estoque: 47 unidades
+Avaliação: 4.0/5,0
+Quantidade de avaliações: 123
+------------------------------------------------------------------------------------------------------------------------
+ITEM 050
+Código de barras: 7890001000050
+Produto: Arranhador de Cartão
+Categoria: Pet Shop
+Descrição: Arranhador compacto de papelão para gatos.
+Preço: R$ 126.00
+Quantidade em estoque: 88 unidades
+Avaliação: 3.9/5,0
+Quantidade de avaliações: 311
+------------------------------------------------------------------------------------------------------------------------
+ITEM 051
+Código de barras: 7890001000051
+Produto: Varinha com Pena para Gatos
+Categoria: Pet Shop
+Descrição: Brinquedo interativo com haste e pena para estimular a atividade do gato.
+Preço: R$ 66.50
+Quantidade em estoque: 22 unidades
+Avaliação: 5.0/5,0
+Quantidade de avaliações: 53
+------------------------------------------------------------------------------------------------------------------------
+ITEM 052
+Código de barras: 7890001000052
+Produto: Coleira Ajustável M
+Categoria: Pet Shop
+Descrição: Coleira com regulagem para cães de porte pequeno e médio.
+Preço: R$ 111.00
+Quantidade em estoque: 160 unidades
+Avaliação: 3.9/5,0
+Quantidade de avaliações: 453
+------------------------------------------------------------------------------------------------------------------------
+ITEM 053
+Código de barras: 7890001000053
+Produto: Kit Chaves de Fenda 6 peças
+Categoria: Ferramentas e Utilidades
+Descrição: Conjunto de chaves com diferentes tamanhos para pequenos reparos.
+Preço: R$ 35.00
+Quantidade em estoque: 36 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 32
+------------------------------------------------------------------------------------------------------------------------
+ITEM 054
+Código de barras: 7890001000054
+Produto: Fita Isolante 10m
+Categoria: Ferramentas e Utilidades
+Descrição: Fita isolante para pequenos reparos e organização de fios.
+Preço: R$ 78.99
+Quantidade em estoque: 79 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 173
+------------------------------------------------------------------------------------------------------------------------
+ITEM 055
+Código de barras: 7890001000055
+Produto: Trena 5m
+Categoria: Ferramentas e Utilidades
+Descrição: Trena retrátil de cinco metros com trava.
+Preço: R$ 112.50
+Quantidade em estoque: 45 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 214
+------------------------------------------------------------------------------------------------------------------------
+ITEM 056
+Código de barras: 7890001000056
+Produto: Alicate Universal 8
+Categoria: Ferramentas e Utilidades
+Descrição: Alicate para cortes e pequenos trabalhos de manutenção.
+Preço: R$ 24.90
+Quantidade em estoque: 45 unidades
+Avaliação: 4.9/5,0
+Quantidade de avaliações: 49
+------------------------------------------------------------------------------------------------------------------------
+ITEM 057
+Código de barras: 7890001000057
+Produto: Martelo de Unha 25mm
+Categoria: Ferramentas e Utilidades
+Descrição: Martelo para trabalhos domésticos e montagem.
+Preço: R$ 10.00
+Quantidade em estoque: 73 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 147
+------------------------------------------------------------------------------------------------------------------------
+ITEM 058
+Código de barras: 7890001000058
+Produto: Estilete Reforçado
+Categoria: Ferramentas e Utilidades
+Descrição: Estilete com trava de segurança e lâmina substituível.
+Preço: R$ 24.90
+Quantidade em estoque: 36 unidades
+Avaliação: 4.2/5,0
+Quantidade de avaliações: 92
+------------------------------------------------------------------------------------------------------------------------
+ITEM 059
+Código de barras: 7890001000059
+Produto: Kit Buchas e Parafusos 50
+Categoria: Ferramentas e Utilidades
+Descrição: Kit com buchas e parafusos para fixações domésticas.
+Preço: R$ 58.90
+Quantidade em estoque: 72 unidades
+Avaliação: 3.8/5,0
+Quantidade de avaliações: 430
+------------------------------------------------------------------------------------------------------------------------
+ITEM 060
+Código de barras: 7890001000060
+Produto: Lanterna LED
+Categoria: Ferramentas e Utilidades
+Descrição: Lanterna portátil de LED para iluminação em emergências e atividades externas.
+Preço: R$ 70.00
+Quantidade em estoque: 38 unidades
+Avaliação: 3.9/5,0
+Quantidade de avaliações: 66
+------------------------------------------------------------------------------------------------------------------------
+ITEM 061
+Código de barras: 7890001000061
+Produto: Caixa Organizadora 15L
+Categoria: Organização e Decoração
+Descrição: Caixa plástica empilhável para guardar objetos diversos.
+Preço: R$ 107.50
+Quantidade em estoque: 77 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 119
+------------------------------------------------------------------------------------------------------------------------
+ITEM 062
+Código de barras: 7890001000062
+Produto: Cesto Organizador Grande
+Categoria: Organização e Decoração
+Descrição: Cesto para roupas, brinquedos, acessórios e itens domésticos.
+Preço: R$ 104.50
+Quantidade em estoque: 170 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 270
+------------------------------------------------------------------------------------------------------------------------
+ITEM 063
+Código de barras: 7890001000063
+Produto: Cabides Kit 10
+Categoria: Organização e Decoração
+Descrição: Kit com dez cabides plásticos para organização de roupas.
+Preço: R$ 74.00
+Quantidade em estoque: 31 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 436
+------------------------------------------------------------------------------------------------------------------------
+ITEM 064
+Código de barras: 7890001000064
+Produto: Colmeia Organizadora
+Categoria: Organização e Decoração
+Descrição: Organizador com divisórias para gavetas e roupas pequenas.
+Preço: R$ 48.00
+Quantidade em estoque: 93 unidades
+Avaliação: 4.7/5,0
+Quantidade de avaliações: 338
+------------------------------------------------------------------------------------------------------------------------
+ITEM 065
+Código de barras: 7890001000065
+Produto: Almofada Decorativa 45x45
+Categoria: Organização e Decoração
+Descrição: Almofada macia para sofá, cama ou poltrona.
+Preço: R$ 137.50
+Quantidade em estoque: 121 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 230
+------------------------------------------------------------------------------------------------------------------------
+ITEM 066
+Código de barras: 7890001000066
+Produto: Cortina Blackout 1,40x2,20
+Categoria: Organização e Decoração
+Descrição: Cortina com tecido que reduz a entrada de luz no ambiente.
+Preço: R$ 84.00
+Quantidade em estoque: 27 unidades
+Avaliação: 4.9/5,0
+Quantidade de avaliações: 365
+------------------------------------------------------------------------------------------------------------------------
+ITEM 067
+Código de barras: 7890001000067
+Produto: Tapete Antiderrapante 60x90
+Categoria: Organização e Decoração
+Descrição: Tapete para banheiro, quarto ou entrada com base antiderrapante.
+Preço: R$ 127.00
+Quantidade em estoque: 102 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 87
+------------------------------------------------------------------------------------------------------------------------
+ITEM 068
+Código de barras: 7890001000068
+Produto: Vaso Decorativo 20cm
+Categoria: Organização e Decoração
+Descrição: Vaso de acabamento simples para decoração de ambientes.
+Preço: R$ 67.00
+Quantidade em estoque: 86 unidades
+Avaliação: 4.2/5,0
+Quantidade de avaliações: 419
+------------------------------------------------------------------------------------------------------------------------
+ITEM 069
+Código de barras: 7890001000069
+Produto: Suporte de Celular para Painel
+Categoria: Acessórios Automotivos
+Descrição: Suporte ajustável para smartphone com base adesiva.
+Preço: R$ 146.00
+Quantidade em estoque: 99 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 139
+------------------------------------------------------------------------------------------------------------------------
+ITEM 070
+Código de barras: 7890001000070
+Produto: Flanela Automotiva Kit 3
+Categoria: Acessórios Automotivos
+Descrição: Kit de panos macios para limpeza e acabamento do veículo.
+Preço: R$ 103.90
+Quantidade em estoque: 151 unidades
+Avaliação: 4.9/5,0
+Quantidade de avaliações: 220
+------------------------------------------------------------------------------------------------------------------------
+ITEM 071
+Código de barras: 7890001000071
+Produto: Aromatizador Automotivo
+Categoria: Acessórios Automotivos
+Descrição: Aromatizador compacto para deixar o interior do carro perfumado.
+Preço: R$ 146.50
+Quantidade em estoque: 68 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 421
+------------------------------------------------------------------------------------------------------------------------
+ITEM 072
+Código de barras: 7890001000072
+Produto: Lixeira Veicular
+Categoria: Acessórios Automotivos
+Descrição: Pequena lixeira para manter o interior do veículo organizado.
+Preço: R$ 123.99
+Quantidade em estoque: 14 unidades
+Avaliação: 4.0/5,0
+Quantidade de avaliações: 182
+------------------------------------------------------------------------------------------------------------------------
+ITEM 073
+Código de barras: 7890001000073
+Produto: Cabo de Transferência de Bateria
+Categoria: Acessórios Automotivos
+Descrição: Par de cabos para auxiliar em partidas emergenciais de veículos.
+Preço: R$ 119.99
+Quantidade em estoque: 179 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 427
+------------------------------------------------------------------------------------------------------------------------
+ITEM 074
+Código de barras: 7890001000074
+Produto: Kit Limpa Vidros Automotivo
+Categoria: Acessórios Automotivos
+Descrição: Conjunto básico para limpeza de vidros automotivos.
+Preço: R$ 44.50
+Quantidade em estoque: 35 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 31
+------------------------------------------------------------------------------------------------------------------------
+ITEM 075
+Código de barras: 7890001000075
+Produto: Organizador de Porta-Malas
+Categoria: Acessórios Automotivos
+Descrição: Organizador dobrável com divisórias para objetos e ferramentas.
+Preço: R$ 130.50
+Quantidade em estoque: 59 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 247
+------------------------------------------------------------------------------------------------------------------------
+ITEM 076
+Código de barras: 7890001000076
+Produto: Capa para Volante Universal
+Categoria: Acessórios Automotivos
+Descrição: Capa de tamanho universal para proteção e conforto no volante.
+Preço: R$ 58.50
+Quantidade em estoque: 65 unidades
+Avaliação: 3.8/5,0
+Quantidade de avaliações: 110
+------------------------------------------------------------------------------------------------------------------------
+ITEM 077
+Código de barras: 7890001000077
+Produto: Bola de Futebol Campo
+Categoria: Lazer e Esportes
+Descrição: Bola para partidas recreativas de futebol em campo.
+Preço: R$ 69.90
+Quantidade em estoque: 25 unidades
+Avaliação: 5.0/5,0
+Quantidade de avaliações: 154
+------------------------------------------------------------------------------------------------------------------------
+ITEM 078
+Código de barras: 7890001000078
+Produto: Bola de Vôlei
+Categoria: Lazer e Esportes
+Descrição: Bola para prática recreativa de vôlei.
+Preço: R$ 48.99
+Quantidade em estoque: 145 unidades
+Avaliação: 4.2/5,0
+Quantidade de avaliações: 26
+------------------------------------------------------------------------------------------------------------------------
+ITEM 079
+Código de barras: 7890001000079
+Produto: Corda de Pular
+Categoria: Lazer e Esportes
+Descrição: Corda ajustável para exercícios aeróbicos e recreação.
+Preço: R$ 22.90
+Quantidade em estoque: 53 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 147
+------------------------------------------------------------------------------------------------------------------------
+ITEM 080
+Código de barras: 7890001000080
+Produto: Garrafa Esportiva 750ml
+Categoria: Lazer e Esportes
+Descrição: Garrafa reutilizável para hidratação durante treinos e atividades.
+Preço: R$ 14.99
+Quantidade em estoque: 96 unidades
+Avaliação: 4.7/5,0
+Quantidade de avaliações: 172
+------------------------------------------------------------------------------------------------------------------------
+ITEM 081
+Código de barras: 7890001000081
+Produto: Kit Peteca 2 un.
+Categoria: Lazer e Esportes
+Descrição: Duas petecas para brincadeiras e atividades ao ar livre.
+Preço: R$ 57.00
+Quantidade em estoque: 106 unidades
+Avaliação: 4.9/5,0
+Quantidade de avaliações: 109
+------------------------------------------------------------------------------------------------------------------------
+ITEM 082
+Código de barras: 7890001000082
+Produto: Baralho Tradicional 54 cartas
+Categoria: Lazer e Esportes
+Descrição: Baralho com cinquenta e quatro cartas para jogos clássicos.
+Preço: R$ 37.99
+Quantidade em estoque: 8 unidades
+Avaliação: 4.4/5,0
+Quantidade de avaliações: 424
+------------------------------------------------------------------------------------------------------------------------
+ITEM 083
+Código de barras: 7890001000083
+Produto: Jogo de Dominó 28 peças
+Categoria: Lazer e Esportes
+Descrição: Conjunto tradicional de dominó com vinte e oito peças.
+Preço: R$ 69.50
+Quantidade em estoque: 101 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 352
+------------------------------------------------------------------------------------------------------------------------
+ITEM 084
+Código de barras: 7890001000084
+Produto: Quebra-Cabeça 500 peças
+Categoria: Lazer e Esportes
+Descrição: Quebra-cabeça com quinhentas peças para entretenimento.
+Preço: R$ 39.90
+Quantidade em estoque: 177 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 380
+------------------------------------------------------------------------------------------------------------------------
+ITEM 085
+Código de barras: 7890001000085
+Produto: Boné Unissex
+Categoria: Moda e Acessórios
+Descrição: Boné de modelo casual com regulagem traseira.
+Preço: R$ 81.90
+Quantidade em estoque: 178 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 218
+------------------------------------------------------------------------------------------------------------------------
+ITEM 086
+Código de barras: 7890001000086
+Produto: Cinto Casual Masculino
+Categoria: Moda e Acessórios
+Descrição: Cinto sintético com fivela metálica para uso diário.
+Preço: R$ 65.50
+Quantidade em estoque: 57 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 206
+------------------------------------------------------------------------------------------------------------------------
+ITEM 087
+Código de barras: 7890001000087
+Produto: Carteira Masculina
+Categoria: Moda e Acessórios
+Descrição: Carteira compacta com divisórias para cartões e dinheiro.
+Preço: R$ 64.50
+Quantidade em estoque: 165 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 219
+------------------------------------------------------------------------------------------------------------------------
+ITEM 088
+Código de barras: 7890001000088
+Produto: Carteira Feminina
+Categoria: Moda e Acessórios
+Descrição: Carteira compacta com compartimentos para cartões, documentos e notas.
+Preço: R$ 53.00
+Quantidade em estoque: 85 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 232
+------------------------------------------------------------------------------------------------------------------------
+ITEM 089
+Código de barras: 7890001000089
+Produto: Óculos de Sol Casual
+Categoria: Moda e Acessórios
+Descrição: Óculos de sol de estilo básico para uso cotidiano.
+Preço: R$ 72.90
+Quantidade em estoque: 127 unidades
+Avaliação: 4.3/5,0
+Quantidade de avaliações: 357
+------------------------------------------------------------------------------------------------------------------------
+ITEM 090
+Código de barras: 7890001000090
+Produto: Guarda-Chuva Compacto
+Categoria: Moda e Acessórios
+Descrição: Guarda-chuva dobrável para carregar na mochila ou bolsa.
+Preço: R$ 29.90
+Quantidade em estoque: 51 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 157
+------------------------------------------------------------------------------------------------------------------------
+ITEM 091
+Código de barras: 7890001000091
+Produto: Meias Cano Médio Kit 3
+Categoria: Moda e Acessórios
+Descrição: Kit com três pares de meias de cano médio.
+Preço: R$ 51.90
+Quantidade em estoque: 31 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 396
+------------------------------------------------------------------------------------------------------------------------
+ITEM 092
+Código de barras: 7890001000092
+Produto: Chaveiro Metálico
+Categoria: Moda e Acessórios
+Descrição: Chaveiro simples com argola metálica resistente.
+Preço: R$ 28.90
+Quantidade em estoque: 65 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 87
+------------------------------------------------------------------------------------------------------------------------
+ITEM 093
+Código de barras: 7890001000093
+Produto: Caderno de Desenho
+Categoria: Infantil
+Descrição: Caderno com folhas para desenhos e atividades criativas.
+Preço: R$ 8.50
+Quantidade em estoque: 129 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 405
+------------------------------------------------------------------------------------------------------------------------
+ITEM 094
+Código de barras: 7890001000094
+Produto: Kit Lápis de Cor 12
+Categoria: Infantil
+Descrição: Conjunto com doze lápis de cor para atividades escolares e artísticas.
+Preço: R$ 11.99
+Quantidade em estoque: 169 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 379
+------------------------------------------------------------------------------------------------------------------------
+ITEM 095
+Código de barras: 7890001000095
+Produto: Massinha de Modelar 6 cores
+Categoria: Infantil
+Descrição: Kit com seis potes de massinha colorida para modelagem.
+Preço: R$ 50.99
+Quantidade em estoque: 110 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 347
+------------------------------------------------------------------------------------------------------------------------
+ITEM 096
+Código de barras: 7890001000096
+Produto: Quebra-Cabeça Infantil 60 peças
+Categoria: Infantil
+Descrição: Quebra-cabeça com peças maiores indicado para crianças.
+Preço: R$ 50.00
+Quantidade em estoque: 116 unidades
+Avaliação: 4.1/5,0
+Quantidade de avaliações: 423
+------------------------------------------------------------------------------------------------------------------------
+ITEM 097
+Código de barras: 7890001000097
+Produto: Jogo da Memória Animais
+Categoria: Infantil
+Descrição: Jogo de memória com ilustrações de animais.
+Preço: R$ 67.99
+Quantidade em estoque: 20 unidades
+Avaliação: 4.5/5,0
+Quantidade de avaliações: 446
+------------------------------------------------------------------------------------------------------------------------
+ITEM 098
+Código de barras: 7890001000098
+Produto: Carrinho Miniatura
+Categoria: Infantil
+Descrição: Carrinho de brinquedo em escala pequena para brincar e colecionar.
+Preço: R$ 14.50
+Quantidade em estoque: 126 unidades
+Avaliação: 4.6/5,0
+Quantidade de avaliações: 298
+------------------------------------------------------------------------------------------------------------------------
+ITEM 099
+Código de barras: 7890001000099
+Produto: Kit Bolhas de Sabão
+Categoria: Infantil
+Descrição: Frascos com solução para produzir bolhas de sabão.
+Preço: R$ 44.99
+Quantidade em estoque: 164 unidades
+Avaliação: 4.8/5,0
+Quantidade de avaliações: 468
+------------------------------------------------------------------------------------------------------------------------
+ITEM 100
+Código de barras: 7890001000100
+Produto: Pipa Infantil
+Categoria: Infantil
+Descrição: Pipa leve para atividades recreativas ao ar livre.
+Preço: R$ 38.99
+Quantidade em estoque: 48 unidades
+Avaliação: 4.7/5,0
+Quantidade de avaliações: 255
+------------------------------------------------------------------------------------------------------------------------
+
+CUPONS DA LOJA
+========================================================================================================================
+Código: BEMVINDO10
+Benefício: 10% OFF
+Aplicação: Todas as categorias
+Condição: Compra mínima de R$ 80,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: CASA15
+Benefício: 15% OFF
+Aplicação: Casa e Cozinha
+Condição: Compra mínima de R$ 100,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: LIMPA20
+Benefício: 20% OFF
+Aplicação: Limpeza
+Condição: Compra mínima de R$ 60,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: TECNO12
+Benefício: 12% OFF
+Aplicação: Eletrônicos e Acessórios
+Condição: Compra mínima de R$ 120,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: PAPEL10
+Benefício: 10% OFF
+Aplicação: Papelaria e Escritório
+Condição: Compra mínima de R$ 40,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: BELEZA15
+Benefício: 15% OFF
+Aplicação: Beleza e Cuidados Pessoais
+Condição: Compra mínima de R$ 70,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: PET10
+Benefício: 10% OFF
+Aplicação: Pet Shop
+Condição: Compra mínima de R$ 80,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: FERRAMENTA12
+Benefício: 12% OFF
+Aplicação: Ferramentas e Utilidades
+Condição: Compra mínima de R$ 90,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: ORGANIZA20
+Benefício: 20% OFF
+Aplicação: Organização e Decoração
+Condição: Compra mínima de R$ 100,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: AUTO15
+Benefício: 15% OFF
+Aplicação: Acessórios Automotivos
+Condição: Compra mínima de R$ 100,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: LAZER10
+Benefício: 10% OFF
+Aplicação: Lazer e Esportes
+Condição: Compra mínima de R$ 50,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: MODA15
+Benefício: 15% OFF
+Aplicação: Moda e Acessórios
+Condição: Compra mínima de R$ 60,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: KIDS20
+Benefício: 20% OFF
+Aplicação: Infantil
+Condição: Compra mínima de R$ 50,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: FRETEGRATIS
+Benefício: Frete grátis
+Aplicação: Todas as categorias
+Condição: Compra mínima de R$ 150,00
+Limite de uso: 1 uso por pedido
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: PIX5
+Benefício: 5% OFF
+Aplicação: Todas as categorias
+Condição: Pagamento via PIX + compra mínima de R$ 50,00
+Limite de uso: 1 uso por pedido
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: 20REAIS
+Benefício: R$ 20,00 OFF
+Aplicação: Todas as categorias
+Condição: Compra mínima de R$ 180,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: FLASH25
+Benefício: 25% OFF
+Aplicação: Produtos selecionados
+Condição: Somente produtos participantes da promoção
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+Código: VOLTA10
+Benefício: 10% OFF
+Aplicação: Todas as categorias
+Condição: Cliente sem compra há 60 dias + mínimo de R$ 100,00
+Limite de uso: 1 uso por cliente
+Regra de acúmulo: Não cumulativo
+------------------------------------------------------------------------------------------------------------------------
+
+PRODUTOS PARTICIPANTES DO CUPOM FLASH25
+========================================================================================================================
+- Caderno Espiral 96 folhas
+- Bloco Adesivo 4 cores
+- Caneca Cerâmica 350ml
+- Pano de Prato Kit 5
+- Kit Esponjas Multiuso 10 un.
+- Flanela Multiuso Kit 3
+- Pente de Madeira
+- Necessaire Média
+- Chaveiro Metálico
+- Kit Bolhas de Sabão
+
+REGRAS GERAIS DOS CUPONS
+========================================================================================================================
+1. Por padrão, somente um cupom de desconto pode ser aplicado em cada pedido.
+2. O cupom FRETEGRATIS é aplicado ao frete, respeitando o valor mínimo informado.
+3. O cupom PIX5 exige pagamento via PIX.
+4. Cupons não são convertidos em dinheiro.
+5. Datas de validade podem ser definidas pelo administrador da loja.
+6. Todos os preços, estoques, avaliações e códigos de barras são fictícios.
+
+RESUMO DO CATÁLOGO
+========================================================================================================================
+Total de itens: 100
+Total de categorias: 12
+Total de cupons: 18

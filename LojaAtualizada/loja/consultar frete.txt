@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JM Variedades — Cálculo de Frete | H004</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --preto:#070707;
+  --dourado:#F5B52E;
+  --dourado-claro:#FFD66B;
+  --dourado-escuro:#8A5F00;
+  --branco:#FFFFFF;
+  --fundo:#F6F6F4;
+  --linha:#E8E8E4;
+  --texto:#161616;
+  --texto-sec:#777777;
+  --vermelho:#C94A4A;
+  --verde:#16875B;
+  --verde-fundo:#E6F4ED;
+  --radius-btn:12px;
+  --radius-input:12px;
+  --radius-card:18px;
+  --shadow:0 14px 45px rgba(0,0,0,.09);
+  --font:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--fundo);color:var(--texto);line-height:1.5}
+.container{max-width:760px;margin:0 auto;padding:24px}
+a{text-decoration:none;color:inherit}
+
+header{background:var(--preto);color:var(--branco);text-align:center;padding:18px 0}
+header h1{font-size:18px;font-weight:800;letter-spacing:1px}
+header h1 span{color:var(--dourado)}
+
+.card{background:var(--branco);border:1px solid var(--linha);border-radius:var(--radius-card);padding:24px;margin-bottom:20px}
+.card h3{font-size:16px;font-weight:800;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--linha)}
+
+.origem-box{background:#FAF9F6;border:1.5px dashed var(--linha);border-radius:12px;padding:12px 16px;margin-bottom:18px;display:flex;align-items:center;gap:12px;font-size:12px}
+
+label.lbl{font-size:13px;font-weight:600;margin-bottom:6px;display:block}
+.frete-row{display:flex;gap:12px;flex-wrap:wrap}
+.frete-row input{flex:1;min-width:180px;padding:12px 14px;border:1px solid var(--linha);border-radius:var(--radius-input);font-family:var(--font);font-size:14px}
+.frete-row input:focus{outline:none;border-color:var(--dourado)}
+.link{font-size:12px;color:var(--texto-sec);font-weight:600;margin-top:8px;display:inline-block}
+
+.simulador-params{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#F9F9F7;border-radius:12px;padding:14px;margin:14px 0;border:1px solid var(--linha)}
+.simulador-params input{width:100%;padding:8px 12px;border:1px solid var(--linha);border-radius:8px;font-family:var(--font);font-size:13px;font-weight:700}
+
+.msg{margin-top:12px;font-size:13px;font-weight:600;padding:10px 14px;border-radius:12px;display:none}
+.msg.erro{display:block;background:#FDECEC;color:var(--vermelho);border:1px solid #F3C2C2}
+.msg.aviso{display:block;background:#FFF6DE;color:#7A5A00;border:1px solid #F0DB9B}
+.msg.sucesso{display:block;background:#E6F4ED;color:var(--verde);border:1px solid #B9DCC8}
+
+.opcoes{margin-top:16px;display:none}
+.opcao{display:flex;align-items:center;gap:12px;border:1px solid var(--linha);border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:150ms}
+.opcao:hover{box-shadow:var(--shadow)}
+.opcao.selecionada{border-color:var(--dourado);background:#FFFBEE;box-shadow:var(--shadow)}
+.opcao input{accent-color:var(--preto);width:18px;height:18px}
+.opcao .t{flex:1;font-weight:700;font-size:14px}
+.opcao .p{font-size:12px;color:var(--texto-sec)}
+.opcao .v{font-weight:900;font-size:15px}
+.badge{font-size:10px;font-weight:800;background:var(--preto);color:var(--dourado);padding:3px 8px;border-radius:20px;letter-spacing:.5px}
+.badge.badge-gratis{background:var(--verde);color:#fff}
+
+.btn{border:none;border-radius:var(--radius-btn);padding:14px 20px;font-family:var(--font);font-weight:800;font-size:14px;cursor:pointer;transition:200ms}
+.btn-secondary{background:var(--preto);color:var(--branco)}
+.btn-secondary:hover{background:#2A2A2A}
+.btn-primary{background:var(--dourado);color:var(--texto)}
+.btn-primary:hover{background:var(--dourado-claro)}
+.btn-full{width:100%;margin-top:20px}
+
+.resumo{background:var(--branco);border:1px solid var(--linha);border-radius:var(--radius-card);padding:24px}
+.resumo h3{font-size:16px;font-weight:800;margin-bottom:16px}
+.linha{display:flex;justify-content:space-between;font-size:14px;padding:6px 0}
+.linha.total{border-top:1px solid var(--linha);margin-top:10px;padding-top:14px;font-size:18px;font-weight:900}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📦 <span>JM Variedades</span> — Cálculo de Frete</h1>
+</header>
+
+<div class="container">
+
+  <!-- Origem Logística Oficial -->
+  <div class="origem-box">
+    <div style="font-size:24px;">🏢</div>
+    <div>
+      <b>Origem: Centro de Distribuição Central JM Variedades</b><br>
+      São Paulo / SP · CEP Origem: 01001-000 · Logística integrada nacional
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📦 Calcular frete e prazo</h3>
+    <label class="lbl" for="cep">CEP de entrega</label>
+    <div class="frete-row">
+      <input id="cep" maxlength="9" placeholder="00000-000" autofocus>
+      <button class="btn btn-secondary" onclick="calcularFrete()">Calcular frete</button>
+    </div>
+    <a class="link" href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" rel="noopener">Não sei meu CEP ↗</a>
+
+    <!-- Parâmetros de Simulação de Carga -->
+    <div class="simulador-params">
+      <div>
+        <label class="lbl" for="pesoSimulacao">Peso do Pacote (kg)</label>
+        <input type="number" id="pesoSimulacao" min="0.1" step="0.1" value="1.3">
+      </div>
+      <div>
+        <label class="lbl" for="subtotalSimulacao">Subtotal dos Itens (R$)</label>
+        <input type="number" id="subtotalSimulacao" min="0" step="0.5" value="107.80">
+      </div>
+    </div>
+
+    <div id="msg" class="msg"></div>
+
+    <div id="opcoes" class="opcoes">
+      <!-- Opções geradas pelo motor logístico -->
+    </div>
+
+    <button class="btn btn-primary btn-full" onclick="finalizar()">CONTINUAR PARA PAGAMENTO</button>
+  </div>
+
+  <div class="resumo">
+    <h3>Resumo da entrega</h3>
+    <div class="linha"><span>Subtotal</span><span id="subtotal">R$ 107,80</span></div>
+    <div class="linha"><span>Peso total</span><span id="peso">1,3 kg</span></div>
+    <div class="linha"><span>Frete</span><span id="valorFrete">—</span></div>
+    <div class="linha total"><span>Total</span><span id="total">R$ 107,80</span></div>
+  </div>
+
+</div>
+
+<!-- Motor Logístico Oficial JM Variedades -->
+<script src="js/frete.js"></script>
+<script>
+// ===== SCRIPT DE CÁLCULO DE FRETE LOGÍSTICO =====
+let freteSelecionado = 0;
+let cotacaoLogistica = null;
+
+function moeda(v){ return 'R$ ' + Number(v || 0).toFixed(2).replace('.',','); }
+
+function mostrarMsg(t, tipo){
+  let m = document.getElementById('msg');
+  m.innerHTML = t;
+  m.className = 'msg ' + tipo;
+}
+
+function invalidar(msg){
+  freteSelecionado = 0;
+  document.getElementById('valorFrete').textContent = '—';
+  document.getElementById('opcoes').style.display = 'none';
+  document.querySelectorAll('input[name="frete_opcao"]').forEach(r => r.checked = false);
+  document.querySelectorAll('.opcao').forEach(o => o.classList.remove('selecionada'));
+  atualizarResumo();
+  mostrarMsg(msg, 'aviso');
+}
+
+async function calcularFrete(){
+  let cep = document.getElementById('cep').value.replace(/\D/g,'');
+  if(cep.length !== 8){
+    document.getElementById('opcoes').style.display = 'none';
+    mostrarMsg('❌ CEP inválido. Digite 8 dígitos (ex.: 01001-000).', 'erro');
+    return;
+  }
+
+  const pesoKg = parseFloat(document.getElementById('pesoSimulacao').value) || 1.3;
+  const subtotal = parseFloat(document.getElementById('subtotalSimulacao').value) || 107.80;
+
+  mostrarMsg('⏳ Consultando prazos e tarifas para o CEP <b>' + cep.replace(/(\d{5})(\d{3})/,'$1-$2') + '</b>...', 'aviso');
+
+  const cotacao = await FreteLogistica.calcularCotacao({
+    cep: cep,
+    pesoKg: pesoKg,
+    subtotal: subtotal
+  });
+
+  if(!cotacao.sucesso){
+    document.getElementById('opcoes').style.display = 'none';
+    mostrarMsg(`❌ ${cotacao.msg}`, 'erro');
+    return;
+  }
+
+  cotacaoLogistica = cotacao;
+
+  const end = cotacao.endereco;
+  const localTxt = (end && end.cidade) ? `${end.cidade} - ${end.uf}` : cotacao.regiao;
+  const ruaTxt = (end && end.logradouro) ? `${end.logradouro} · ` : '';
+
+  mostrarMsg(`
+    ✅ Opções para o CEP <b>${cotacao.cep}</b> (${localTxt}):<br>
+    <small style="opacity:0.9;">${ruaTxt}Distância aprox.: ~${cotacao.distanciaKm} km | Peso: ${cotacao.pesoFormatado}</small>
+    ${cotacao.elegivelFreteGratis ? `<div style="color:var(--verde); font-weight:800; margin-top:2px;">🎉 Frete Grátis disponível no PAC!</div>` : ''}
+  `, 'sucesso');
+
+  const containerOpcoes = document.getElementById('opcoes');
+  let optPadrao = cotacao.opcoes.find(o => o.isGratis) || cotacao.opcoes[0];
+  freteSelecionado = optPadrao.valor;
+
+  containerOpcoes.innerHTML = FreteLogistica.gerarHtmlOpcoes(cotacao, optPadrao.id, 'selecionarFrete');
+  containerOpcoes.style.display = 'block';
+
+  selecionarFrete(optPadrao.id, optPadrao.valor, document.querySelector(`.opcao[data-frete-id="${optPadrao.id}"]`));
+}
+
+function selecionarFrete(id, val, el){
+  freteSelecionado = Number(val) || 0;
+  document.querySelectorAll('.opcao').forEach(o => o.classList.remove('selecionada'));
+  if(el){
+    el.classList.add('selecionada');
+    const radio = el.querySelector('input[type="radio"]');
+    if(radio) radio.checked = true;
+  }
+  document.getElementById('valorFrete').textContent = freteSelecionado === 0 ? '🎉 Grátis' : moeda(freteSelecionado);
+  atualizarResumo();
+}
+
+function atualizarResumo(){
+  const subtotal = parseFloat(document.getElementById('subtotalSimulacao').value) || 0;
+  const peso = parseFloat(document.getElementById('pesoSimulacao').value) || 0;
+  document.getElementById('subtotal').textContent = moeda(subtotal);
+  document.getElementById('peso').textContent = peso.toFixed(1).replace('.',',') + ' kg';
+  document.getElementById('total').textContent = moeda(subtotal + freteSelecionado);
+}
+
+function finalizar(){
+  if(freteSelecionado === 0 && !cotacaoLogistica){
+    mostrarMsg('❌ Calcule e selecione uma opção de frete para continuar.', 'erro');
+    return;
+  }
+  alert('Opção de frete selecionada com sucesso! Redirecionando para o checkout.');
+  window.location.href = 'index.html';
+}
+
+// Máscara automática do CEP
+document.getElementById('cep').addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g,'').slice(0,8);
+  e.target.value = v.replace(/(\d{5})(\d)/,'$1-$2');
+});
+
+document.getElementById('pesoSimulacao').addEventListener('change', () => {
+  if(cotacaoLogistica) calcularFrete();
+  else atualizarResumo();
+});
+document.getElementById('subtotalSimulacao').addEventListener('change', () => {
+  if(cotacaoLogistica) calcularFrete();
+  else atualizarResumo();
+});
+
+atualizarResumo();
+</script>
+</body>
+</html>
