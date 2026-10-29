@@ -14,6 +14,37 @@ const STORAGE_KEYS = {
   ENDERECO_ENTREGA: 'JM_STORE_ENDERECO_ENTREGA_V4'
 };
 
+// ===== BANCO DE DADOS INICIAL: CLIENTES PRÉ-EXISTENTES CADASTRADOS =====
+const CLIENTES_INICIAIS = [
+  {
+    id: 'CLI-100001',
+    nome: 'João da Silva',
+    email: 'joao.silva@email.com',
+    senha: '123456',
+    cpf: '123.456.789-00',
+    telefone: '(11) 98765-4321',
+    dataCadastro: '15/01/2026'
+  },
+  {
+    id: 'CLI-100002',
+    nome: 'Maria Oliveira',
+    email: 'maria.oliveira@email.com',
+    senha: '123456',
+    cpf: '234.567.890-11',
+    telefone: '(21) 97654-3210',
+    dataCadastro: '20/02/2026'
+  },
+  {
+    id: 'CLI-100003',
+    nome: 'Cliente Exemplo',
+    email: 'cliente@jm.com',
+    senha: '123456',
+    cpf: '345.678.901-22',
+    telefone: '(31) 96543-2109',
+    dataCadastro: '10/03/2026'
+  }
+];
+
 // Catalogo completo de 100 itens extraidos do arquivo de catalogo da loja
 const PRODUTOS_INICIAIS = [
   {
@@ -30,7 +61,16 @@ const PRODUTOS_INICIAIS = [
     "nota": 4.9,
     "oferta": true,
     "desconto": "-40%",
-    "novidade": true
+    "novidade": true,
+    "peso": 0.45,
+    "dimensoes": {
+      "altura": 7,
+      "largura": 14,
+      "comprimento": 26
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 102,
@@ -39,13 +79,22 @@ const PRODUTOS_INICIAIS = [
     "nome": "Quebra-Cabeça 1000 Peças Mapa Múndi Vintage",
     "cat": "Brinquedos e Jogos",
     "desc": "Quebra-cabeça panorâmico de alta qualidade com acabamento fosco anti-reflexo e peças de encaixe preciso. Ideal para toda a família.",
-    "preco": 69.90,
-    "antigo": 89.90,
+    "preco": 69.9,
+    "antigo": 89.9,
     "estoque": 30,
     "avaliacoes": 420,
     "nota": 4.8,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.7,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 27,
+      "comprimento": 37
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1585504198199-20277593b31f?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 103,
@@ -54,14 +103,23 @@ const PRODUTOS_INICIAIS = [
     "nome": "Jogo de Tabuleiro Galápagos Catan O Jogo",
     "cat": "Brinquedos e Jogos",
     "desc": "O renomado jogo de estratégia de negociação e colonização. Inclui peças em madeira, cartas de recursos e tabuleiro modular.",
-    "preco": 239.90,
-    "antigo": 289.90,
+    "preco": 239.9,
+    "antigo": 289.9,
     "estoque": 18,
     "avaliacoes": 1280,
-    "nota": 5.0,
+    "nota": 5,
     "oferta": true,
     "desconto": "-17%",
-    "novidade": false
+    "novidade": false,
+    "peso": 1.25,
+    "dimensoes": {
+      "altura": 8,
+      "largura": 30,
+      "comprimento": 30
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1606503153255-59d5e417c0e9?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 104,
@@ -70,13 +128,22 @@ const PRODUTOS_INICIAIS = [
     "nome": "Urso de Pelúcia Gigante 80cm Macio",
     "cat": "Brinquedos e Jogos",
     "desc": "Urso de pelúcia hipoalergênico ultra macio, preenchido com fibra siliconada atóxica.",
-    "preco": 119.90,
-    "antigo": 159.90,
+    "preco": 119.9,
+    "antigo": 159.9,
     "estoque": 22,
     "avaliacoes": 310,
     "nota": 4.7,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 1.8,
+    "dimensoes": {
+      "altura": 40,
+      "largura": 35,
+      "comprimento": 50
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1559454403-b8fb88521f11?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 1,
@@ -91,7 +158,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 83,
     "nota": 4.1,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.85,
+    "dimensoes": {
+      "altura": 15,
+      "largura": 20,
+      "comprimento": 25
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 2,
@@ -106,7 +182,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 27,
     "nota": 4.3,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.6,
+    "dimensoes": {
+      "altura": 8,
+      "largura": 22,
+      "comprimento": 38
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 3,
@@ -121,7 +206,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 299,
     "nota": 4.5,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 1.7,
+    "dimensoes": {
+      "altura": 22,
+      "largura": 24,
+      "comprimento": 40
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1585515320310-259814833e62?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 4,
@@ -136,7 +230,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 154,
     "nota": 4.3,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.95,
+    "dimensoes": {
+      "altura": 18,
+      "largura": 35,
+      "comprimento": 45
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1588854337236-6889d631faa8?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 5,
@@ -151,7 +254,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 186,
     "nota": 4.6,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.75,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 25,
+      "comprimento": 35
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1590794056226-79ef3a8147e1?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 6,
@@ -166,7 +278,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 206,
     "nota": 3.9,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.65,
+    "dimensoes": {
+      "altura": 30,
+      "largura": 12,
+      "comprimento": 12
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 7,
@@ -181,7 +302,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 34,
     "nota": 4.1,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 1.1,
+    "dimensoes": {
+      "altura": 14,
+      "largura": 16,
+      "comprimento": 24
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1577937927133-66ef06acdf18?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 8,
@@ -196,7 +326,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 162,
     "nota": 3.9,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.35,
+    "dimensoes": {
+      "altura": 11,
+      "largura": 10,
+      "comprimento": 13
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 9,
@@ -211,7 +350,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 47,
     "nota": 4,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.25,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 18,
+      "comprimento": 25
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1607344645866-009c320c5ab8?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 10,
@@ -226,7 +374,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 449,
     "nota": 5,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.12,
+    "dimensoes": {
+      "altura": 8,
+      "largura": 12,
+      "comprimento": 20
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 11,
@@ -241,7 +398,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 337,
     "nota": 4.1,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.45,
+    "dimensoes": {
+      "altura": 120,
+      "largura": 42,
+      "comprimento": 8
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 12,
@@ -256,7 +422,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 355,
     "nota": 4.2,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.55,
+    "dimensoes": {
+      "altura": 130,
+      "largura": 28,
+      "comprimento": 8
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 13,
@@ -271,7 +446,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 285,
     "nota": 4.6,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.5,
+    "dimensoes": {
+      "altura": 32,
+      "largura": 30,
+      "comprimento": 30
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 14,
@@ -286,7 +470,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 339,
     "nota": 4.3,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.18,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 16,
+      "comprimento": 20
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 15,
@@ -301,7 +494,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 409,
     "nota": 4.8,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.08,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 12,
+      "comprimento": 22
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1584744982491-665216d95f8b?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 16,
@@ -316,7 +518,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 45,
     "nota": 4.3,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.25,
+    "dimensoes": {
+      "altura": 38,
+      "largura": 12,
+      "comprimento": 12
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 17,
@@ -331,7 +542,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 214,
     "nota": 4.6,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.1,
+    "dimensoes": {
+      "altura": 3,
+      "largura": 15,
+      "comprimento": 20
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1563453392212-326f5e854473?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 18,
@@ -346,7 +566,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 138,
     "nota": 4.1,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 1.9,
+    "dimensoes": {
+      "altura": 30,
+      "largura": 28,
+      "comprimento": 48
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 19,
@@ -361,7 +590,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 216,
     "nota": 4.9,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.15,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 9,
+      "comprimento": 11
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 20,
@@ -376,7 +614,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 36,
     "nota": 3.9,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.45,
+    "dimensoes": {
+      "altura": 9,
+      "largura": 9,
+      "comprimento": 18
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 21,
@@ -391,7 +638,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 228,
     "nota": 4.8,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.1,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 8,
+      "comprimento": 10
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 22,
@@ -406,7 +662,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 295,
     "nota": 4.4,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.06,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 6,
+      "comprimento": 15
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1588508065123-287b28e013da?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 23,
@@ -421,7 +686,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 405,
     "nota": 4.7,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.06,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 6,
+      "comprimento": 15
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1588508065123-287b28e013da?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 24,
@@ -436,7 +710,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 13,
     "nota": 4,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.28,
+    "dimensoes": {
+      "altura": 3,
+      "largura": 8,
+      "comprimento": 16
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1609592424361-b4dcf3a89e47?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 25,
@@ -451,7 +734,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 66,
     "nota": 4.4,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.14,
+    "dimensoes": {
+      "altura": 8,
+      "largura": 10,
+      "comprimento": 12
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 26,
@@ -466,7 +758,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 90,
     "nota": 4.5,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.12,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 8,
+      "comprimento": 13
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 27,
@@ -481,7 +782,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 318,
     "nota": 4.9,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.55,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 15,
+      "comprimento": 45
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 28,
@@ -496,7 +806,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 461,
     "nota": 4.9,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.48,
+    "dimensoes": {
+      "altura": 3,
+      "largura": 21,
+      "comprimento": 28
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 29,
@@ -511,7 +830,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 461,
     "nota": 3.9,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.32,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 21,
+      "comprimento": 28
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 30,
@@ -526,7 +854,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 429,
     "nota": 4.7,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.12,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 8,
+      "comprimento": 16
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1585336261026-41ff36081e7d?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 31,
@@ -541,7 +878,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 293,
     "nota": 4.6,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.14,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 9,
+      "comprimento": 15
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 32,
@@ -556,7 +902,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 398,
     "nota": 4.9,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.1,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 6,
+      "comprimento": 20
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1585336261026-41ff36081e7d?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 33,
@@ -571,7 +926,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 355,
     "nota": 4.3,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.08,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 5,
+      "comprimento": 10
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1596495578065-6e0763fa1178?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 34,
@@ -586,7 +950,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 138,
     "nota": 4.3,
     "oferta": true,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.05,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 4,
+      "comprimento": 5
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 35,
@@ -601,7 +974,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 129,
     "nota": 4.5,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.06,
+    "dimensoes": {
+      "altura": 1,
+      "largura": 7,
+      "comprimento": 14
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1503792501406-2c40da09e1e2?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 36,
@@ -616,7 +998,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 42,
     "nota": 4.6,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.04,
+    "dimensoes": {
+      "altura": 10,
+      "largura": 3,
+      "comprimento": 3
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 37,
@@ -631,7 +1022,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 133,
     "nota": 3.9,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.18,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 9,
+      "comprimento": 25
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 38,
@@ -646,7 +1046,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 382,
     "nota": 4.4,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.08,
+    "dimensoes": {
+      "altura": 1,
+      "largura": 5,
+      "comprimento": 18
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1590159763121-7c9ff3149e0a?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 39,
@@ -661,7 +1070,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 425,
     "nota": 4.7,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.35,
+    "dimensoes": {
+      "altura": 22,
+      "largura": 18,
+      "comprimento": 5
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1618220179428-22790b461013?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 40,
@@ -676,7 +1094,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 193,
     "nota": 4.6,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.15,
+    "dimensoes": {
+      "altura": 12,
+      "largura": 14,
+      "comprimento": 22
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 41,
@@ -691,7 +1118,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 342,
     "nota": 4.6,
     "oferta": true,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.04,
+    "dimensoes": {
+      "altura": 1,
+      "largura": 4,
+      "comprimento": 18
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1632345031435-8727f6897d53?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 42,
@@ -706,7 +1142,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 67,
     "nota": 4.8,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.16,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 12,
+      "comprimento": 20
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 43,
@@ -721,7 +1166,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 228,
     "nota": 4.3,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.03,
+    "dimensoes": {
+      "altura": 7,
+      "largura": 5,
+      "comprimento": 5
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 44,
@@ -736,7 +1190,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 50,
     "nota": 4.8,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.03,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 10,
+      "comprimento": 10
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 45,
@@ -751,7 +1214,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 288,
     "nota": 4.6,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.4,
+    "dimensoes": {
+      "altura": 20,
+      "largura": 15,
+      "comprimento": 15
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 46,
@@ -766,7 +1238,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 260,
     "nota": 4,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.3,
+    "dimensoes": {
+      "altura": 7,
+      "largura": 20,
+      "comprimento": 20
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1541599540903-216a46ca1dc0?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 47,
@@ -781,7 +1262,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 13,
     "nota": 4,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.38,
+    "dimensoes": {
+      "altura": 22,
+      "largura": 18,
+      "comprimento": 18
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 48,
@@ -796,7 +1286,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 368,
     "nota": 4.1,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.22,
+    "dimensoes": {
+      "altura": 8,
+      "largura": 8,
+      "comprimento": 15
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1576201836106-db1758fd1c97?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 49,
@@ -811,7 +1310,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 123,
     "nota": 4,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.15,
+    "dimensoes": {
+      "altura": 9,
+      "largura": 9,
+      "comprimento": 9
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1535294435445-d7249524ef2e?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 50,
@@ -826,7 +1334,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 311,
     "nota": 3.9,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.65,
+    "dimensoes": {
+      "altura": 6,
+      "largura": 24,
+      "comprimento": 46
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1545249390-6880f6233761?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 51,
@@ -841,7 +1358,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 53,
     "nota": 5,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.08,
+    "dimensoes": {
+      "altura": 3,
+      "largura": 5,
+      "comprimento": 55
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 52,
@@ -856,7 +1382,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 453,
     "nota": 3.9,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.12,
+    "dimensoes": {
+      "altura": 3,
+      "largura": 5,
+      "comprimento": 25
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 53,
@@ -871,7 +1406,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 32,
     "nota": 4.5,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.55,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 14,
+      "comprimento": 26
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1581147036324-c17ac41dfa6c?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 54,
@@ -886,7 +1430,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 173,
     "nota": 4.5,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.08,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 7,
+      "comprimento": 7
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 55,
@@ -901,7 +1454,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 214,
     "nota": 4.1,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.26,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 8,
+      "comprimento": 8
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 56,
@@ -916,7 +1478,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 49,
     "nota": 4.9,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.38,
+    "dimensoes": {
+      "altura": 3,
+      "largura": 7,
+      "comprimento": 21
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1586864387789-628af9feed72?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 57,
@@ -931,7 +1502,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 147,
     "nota": 4.1,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.65,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 14,
+      "comprimento": 32
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1586864387967-d02ef85d93e8?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 58,
@@ -946,7 +1526,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 92,
     "nota": 4.2,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.12,
+    "dimensoes": {
+      "altura": 3,
+      "largura": 5,
+      "comprimento": 18
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 59,
@@ -961,7 +1550,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 430,
     "nota": 3.8,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.28,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 10,
+      "comprimento": 16
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 60,
@@ -976,7 +1574,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 66,
     "nota": 3.9,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.22,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 6,
+      "comprimento": 17
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 61,
@@ -991,7 +1598,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 119,
     "nota": 4.1,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.85,
+    "dimensoes": {
+      "altura": 20,
+      "largura": 28,
+      "comprimento": 39
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 62,
@@ -1006,7 +1622,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 270,
     "nota": 4.8,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.75,
+    "dimensoes": {
+      "altura": 35,
+      "largura": 32,
+      "comprimento": 42
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1595079676339-1534801ad6cf?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 63,
@@ -1021,7 +1646,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 436,
     "nota": 4.6,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.6,
+    "dimensoes": {
+      "altura": 12,
+      "largura": 22,
+      "comprimento": 42
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 64,
@@ -1036,7 +1670,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 338,
     "nota": 4.7,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.2,
+    "dimensoes": {
+      "altura": 10,
+      "largura": 16,
+      "comprimento": 36
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1595515106969-1ce29566ff1c?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 65,
@@ -1051,7 +1694,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 230,
     "nota": 4.5,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.45,
+    "dimensoes": {
+      "altura": 15,
+      "largura": 45,
+      "comprimento": 45
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 66,
@@ -1066,7 +1718,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 365,
     "nota": 4.9,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.95,
+    "dimensoes": {
+      "altura": 6,
+      "largura": 26,
+      "comprimento": 34
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 67,
@@ -1081,7 +1742,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 87,
     "nota": 4.5,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.8,
+    "dimensoes": {
+      "altura": 3,
+      "largura": 60,
+      "comprimento": 90
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 68,
@@ -1096,7 +1766,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 419,
     "nota": 4.2,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.65,
+    "dimensoes": {
+      "altura": 22,
+      "largura": 14,
+      "comprimento": 14
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 69,
@@ -1111,7 +1790,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 139,
     "nota": 4.1,
     "oferta": true,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.16,
+    "dimensoes": {
+      "altura": 8,
+      "largura": 10,
+      "comprimento": 12
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 70,
@@ -1126,7 +1814,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 220,
     "nota": 4.9,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.2,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 16,
+      "comprimento": 22
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1607860108855-64acf2078ed9?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 71,
@@ -1141,7 +1838,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 421,
     "nota": 4.8,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.08,
+    "dimensoes": {
+      "altura": 8,
+      "largura": 5,
+      "comprimento": 5
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1595475207225-428b62bda831?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 72,
@@ -1156,7 +1862,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 182,
     "nota": 4,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.14,
+    "dimensoes": {
+      "altura": 22,
+      "largura": 15,
+      "comprimento": 15
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 73,
@@ -1171,7 +1886,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 427,
     "nota": 4.8,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 1.1,
+    "dimensoes": {
+      "altura": 8,
+      "largura": 24,
+      "comprimento": 26
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 74,
@@ -1186,7 +1910,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 31,
     "nota": 4.3,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.6,
+    "dimensoes": {
+      "altura": 24,
+      "largura": 10,
+      "comprimento": 12
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 75,
@@ -1201,7 +1934,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 247,
     "nota": 4.8,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.85,
+    "dimensoes": {
+      "altura": 8,
+      "largura": 32,
+      "comprimento": 50
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1563720223185-11003d516935?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 76,
@@ -1216,7 +1958,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 110,
     "nota": 3.8,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.25,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 38,
+      "comprimento": 38
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 77,
@@ -1231,7 +1982,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 154,
     "nota": 5,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.43,
+    "dimensoes": {
+      "altura": 22,
+      "largura": 22,
+      "comprimento": 22
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1614632537423-1e6c2e7e0aab?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 78,
@@ -1246,7 +2006,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 26,
     "nota": 4.2,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.28,
+    "dimensoes": {
+      "altura": 21,
+      "largura": 21,
+      "comprimento": 21
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1612872087720-bb876e2e67d1?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 79,
@@ -1261,7 +2030,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 147,
     "nota": 4.5,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.18,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 12,
+      "comprimento": 18
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 80,
@@ -1276,7 +2054,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 172,
     "nota": 4.7,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.15,
+    "dimensoes": {
+      "altura": 26,
+      "largura": 8,
+      "comprimento": 8
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 81,
@@ -1291,7 +2078,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 109,
     "nota": 4.9,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.12,
+    "dimensoes": {
+      "altura": 20,
+      "largura": 10,
+      "comprimento": 10
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 82,
@@ -1306,7 +2102,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 424,
     "nota": 4.4,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.1,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 7,
+      "comprimento": 10
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1541278107931-e006523892df?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 83,
@@ -1321,7 +2126,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 352,
     "nota": 4.3,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.35,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 12,
+      "comprimento": 20
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1563941402830-3bf420566373?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 84,
@@ -1336,7 +2150,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 380,
     "nota": 4.8,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.45,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 22,
+      "comprimento": 30
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1585504198199-20277593b31f?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 85,
@@ -1351,7 +2174,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 218,
     "nota": 4.3,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.14,
+    "dimensoes": {
+      "altura": 12,
+      "largura": 20,
+      "comprimento": 26
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 86,
@@ -1366,7 +2198,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 206,
     "nota": 4.3,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.22,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 14,
+      "comprimento": 14
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 87,
@@ -1381,7 +2222,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 219,
     "nota": 4.5,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.12,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 10,
+      "comprimento": 12
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 88,
@@ -1396,7 +2246,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 232,
     "nota": 4.1,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.18,
+    "dimensoes": {
+      "altura": 3,
+      "largura": 11,
+      "comprimento": 20
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1544816155-12df9643f363?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 89,
@@ -1411,7 +2270,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 357,
     "nota": 4.3,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.09,
+    "dimensoes": {
+      "altura": 6,
+      "largura": 8,
+      "comprimento": 17
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 90,
@@ -1426,7 +2294,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 157,
     "nota": 4.6,
     "oferta": false,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.36,
+    "dimensoes": {
+      "altura": 6,
+      "largura": 6,
+      "comprimento": 28
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 91,
@@ -1441,7 +2318,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 396,
     "nota": 4.8,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.14,
+    "dimensoes": {
+      "altura": 6,
+      "largura": 10,
+      "comprimento": 18
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1582966772680-860e372bb558?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 92,
@@ -1456,7 +2342,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 87,
     "nota": 4.8,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.05,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 5,
+      "comprimento": 10
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 93,
@@ -1471,7 +2366,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 405,
     "nota": 4.5,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.25,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 22,
+      "comprimento": 30
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 94,
@@ -1486,7 +2390,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 379,
     "nota": 4.5,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.16,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 10,
+      "comprimento": 18
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 95,
@@ -1501,7 +2414,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 347,
     "nota": 4.1,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.35,
+    "dimensoes": {
+      "altura": 7,
+      "largura": 12,
+      "comprimento": 18
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 96,
@@ -1516,7 +2438,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 423,
     "nota": 4.1,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.22,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 16,
+      "comprimento": 22
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1585504198199-20277593b31f?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 97,
@@ -1531,7 +2462,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 446,
     "nota": 4.5,
     "oferta": true,
-    "novidade": true
+    "novidade": true,
+    "peso": 0.2,
+    "dimensoes": {
+      "altura": 4,
+      "largura": 15,
+      "comprimento": 18
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1541278107931-e006523892df?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 98,
@@ -1546,7 +2486,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 298,
     "nota": 4.6,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.1,
+    "dimensoes": {
+      "altura": 5,
+      "largura": 6,
+      "comprimento": 10
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1594787318286-3d835c1d207f?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 99,
@@ -1561,7 +2510,16 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 468,
     "nota": 4.8,
     "oferta": true,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.18,
+    "dimensoes": {
+      "altura": 14,
+      "largura": 8,
+      "comprimento": 8
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=600&auto=format&fit=crop&q=80"
+    ]
   },
   {
     "id": 100,
@@ -1576,10 +2534,18 @@ const PRODUTOS_INICIAIS = [
     "avaliacoes": 255,
     "nota": 4.7,
     "oferta": false,
-    "novidade": false
+    "novidade": false,
+    "peso": 0.08,
+    "dimensoes": {
+      "altura": 2,
+      "largura": 15,
+      "comprimento": 60
+    },
+    "imagens": [
+      "https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?w=600&auto=format&fit=crop&q=80"
+    ]
   }
 ];
-
 
 // Todos os 18 Cupons com Regras de Negócio e Valores Mínimos de Compra
 const CUPONS_DISPONIVEIS = {
@@ -1626,7 +2592,7 @@ class Store {
 
     // 4. Clientes ZERADOS
     if (!localStorage.getItem(STORAGE_KEYS.CLIENTES)) {
-      localStorage.setItem(STORAGE_KEYS.CLIENTES, JSON.stringify([]));
+      localStorage.setItem(STORAGE_KEYS.CLIENTES, JSON.stringify(CLIENTES_INICIAIS));
     }
 
     // 5. Histórico Inicial de Estoque (Apenas carga dos 100 itens)
@@ -1666,6 +2632,27 @@ class Store {
       if (data) {
         const parsed = JSON.parse(data);
         if (Array.isArray(parsed) && parsed.length > 0) {
+          let modificado = false;
+          parsed.forEach(p => {
+            const inicial = PRODUTOS_INICIAIS.find(item => item.id === p.id);
+            if (inicial) {
+              if (p.peso === undefined && inicial.peso !== undefined) {
+                p.peso = inicial.peso;
+                modificado = true;
+              }
+              if (!p.dimensoes && inicial.dimensoes) {
+                p.dimensoes = inicial.dimensoes;
+                modificado = true;
+              }
+              if ((!p.imagens || p.imagens.length === 0) && inicial.imagens && inicial.imagens.length > 0) {
+                p.imagens = inicial.imagens;
+                modificado = true;
+              }
+            }
+          });
+          if (modificado) {
+            localStorage.setItem(STORAGE_KEYS.PRODUTOS, JSON.stringify(parsed));
+          }
           return parsed;
         }
       }
@@ -1689,13 +2676,45 @@ class Store {
     localStorage.setItem(STORAGE_KEYS.PRODUTOS, JSON.stringify(produtos));
   }
 
-  // --- CARRINHO ---
+  // --- CARRINHO DINÂMICO POR USUÁRIO ---
+  getCartStorageKey() {
+    const user = this.getCurrentUser();
+    if (user && user.id) {
+      return 'JM_STORE_CARRINHO_USER_' + user.id;
+    }
+    if (user && user.email) {
+      const emailSafe = user.email.toLowerCase().replace(/[^a-z0-9]/g, '_');
+      return 'JM_STORE_CARRINHO_USER_' + emailSafe;
+    }
+    return STORAGE_KEYS.CARRINHO;
+  }
+
   getCarrinho() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS.CARRINHO)) || [];
+    const key = this.getCartStorageKey();
+    try {
+      const data = localStorage.getItem(key);
+      if (data) {
+        return JSON.parse(data);
+      }
+      // Se não houver carrinho específico para este usuário, mas houver carrinho global legado, migra:
+      const globalData = localStorage.getItem(STORAGE_KEYS.CARRINHO);
+      if (globalData && this.getCurrentUser()) {
+        const parsed = JSON.parse(globalData);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          localStorage.setItem(key, globalData);
+          localStorage.removeItem(STORAGE_KEYS.CARRINHO);
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.error('Erro ao ler carrinho do usuário:', e);
+    }
+    return [];
   }
 
   saveCarrinho(carrinho) {
-    localStorage.setItem(STORAGE_KEYS.CARRINHO, JSON.stringify(carrinho));
+    const key = this.getCartStorageKey();
+    localStorage.setItem(key, JSON.stringify(carrinho));
   }
 
   adicionarAoCarrinho(produtoId, qtd = 1) {
@@ -2167,6 +3186,76 @@ class Store {
     return { success: true, msg: `Estoque de ${p.nome} atualizado para ${p.estoque} unidades.`, produto: p };
   }
 
+    // --- BANCO DE DADOS DE CLIENTES ---
+  getClientes() {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.CLIENTES);
+      if (data) {
+        const parsed = JSON.parse(data);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          let atualizou = false;
+          parsed.forEach(c => {
+            if (!c.senha) {
+              c.senha = '123456';
+              atualizou = true;
+            }
+          });
+          if (atualizou) {
+            localStorage.setItem(STORAGE_KEYS.CLIENTES, JSON.stringify(parsed));
+          }
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.error('Erro ao ler clientes do banco de dados:', e);
+    }
+    localStorage.setItem(STORAGE_KEYS.CLIENTES, JSON.stringify(CLIENTES_INICIAIS));
+    return CLIENTES_INICIAIS;
+  }
+
+  saveClientes(clientes) {
+    localStorage.setItem(STORAGE_KEYS.CLIENTES, JSON.stringify(clientes));
+  }
+
+  getClienteById(id) {
+    return this.getClientes().find(c => c.id === id);
+  }
+
+  getClienteByEmail(email) {
+    const clean = String(email).trim().toLowerCase();
+    return this.getClientes().find(c => c.email && c.email.toLowerCase() === clean);
+  }
+
+  // --- ATUALIZAÇÃO DE IMAGENS DO PRODUTO (REPOSIÇÃO/EDIÇÃO) ---
+  atualizarImagensProduto(produtoId, imagens) {
+    const produtos = this.getProdutos();
+    const p = produtos.find(item => item.id === Number(produtoId));
+    if (!p) return { success: false, msg: 'Produto não encontrado!' };
+    p.imagens = Array.isArray(imagens) ? imagens : [];
+    this.saveProdutos(produtos);
+    return { success: true, produto: p };
+  }
+
+  // --- ATUALIZAÇÃO DE PESO E DIMENSÕES DO PRODUTO ---
+  atualizarDimensoesProduto(produtoId, peso, dimensoes) {
+    const produtos = this.getProdutos();
+    const p = produtos.find(item => item.id === Number(produtoId));
+    if (!p) return { success: false, msg: 'Produto não encontrado!' };
+    
+    if (typeof peso === 'number' && !isNaN(peso) && peso > 0) {
+      p.peso = peso;
+    }
+    if (dimensoes && typeof dimensoes === 'object') {
+      p.dimensoes = {
+        altura: parseFloat(dimensoes.altura) || (p.dimensoes?.altura || 12),
+        largura: parseFloat(dimensoes.largura) || (p.dimensoes?.largura || 18),
+        comprimento: parseFloat(dimensoes.comprimento) || (p.dimensoes?.comprimento || 22)
+      };
+    }
+    this.saveProdutos(produtos);
+    return { success: true, produto: p };
+  }
+
   // --- SESSÃO E AUTENTICAÇÃO DO USUÁRIO & GERENTE ---
   getCurrentUser() {
     return JSON.parse(localStorage.getItem(STORAGE_KEYS.CURRENT_USER)) || null;
@@ -2181,49 +3270,157 @@ class Store {
     const username = String(user).trim();
     const password = String(pass).trim();
     if (!username) {
-      return { success: false, msg: 'Informe o nome de usuário!' };
+      return { success: false, msg: 'Informe o nome de usuário ou e-mail!' };
+    }
+    if (!password) {
+      return { success: false, msg: 'Informe a senha da sua conta!' };
     }
 
-    // Aceita 'admin' (maiúsculas/minúsculas) com a senha 'admin123' ou aceita senha padrão
-    if (username.toLowerCase() === 'admin' && (password === 'admin123' || password === '')) {
-      const session = { name: 'Gerente (admin)', role: 'admin' };
+    // 1. Validação do Login de Gerente (admin / admin123)
+    if (username.toLowerCase() === 'admin') {
+      if (password !== 'admin123') {
+        return { success: false, msg: 'Senha incorreta para as credenciais de Gerente!' };
+      }
+      const session = { 
+        id: 'ADMIN-01',
+        name: 'Gerente (admin)', 
+        role: 'admin', 
+        email: 'admin@jmvariedades.com.br', 
+        cpf: '000.000.000-00', 
+        telefone: '(11) 99999-9999' 
+      };
       localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(session));
       localStorage.setItem(STORAGE_KEYS.ADMIN_LOGGED, 'true');
-      return { success: true, isManager: true, msg: 'Login de Gerente efetuado com sucesso! O painel do gerente agora está liberado.', user: session };
+      return { success: true, isManager: true, msg: 'Login de Gerente efetuado com sucesso! Acesso do Gerente liberado.', user: session };
     } else {
-      const session = { name: username, role: 'customer' };
+      // 2. Validação do Login de Cliente no Banco de Dados:
+      // REGRA: O usuário só pode logar se possuir uma conta pré-existente
+      const clientes = this.getClientes();
+      const cleanUser = username.toLowerCase();
+      const clienteExistente = clientes.find(c => 
+        (c.email && c.email.toLowerCase() === cleanUser) || 
+        (c.nome && c.nome.toLowerCase() === cleanUser)
+      );
+
+      // Validação estrita: Não cria conta automática, exige conta pré-existente!
+      if (!clienteExistente) {
+        return { 
+          success: false, 
+          msg: 'Conta não encontrada! O login só é permitido para contas pré-existentes. Cadastre-se na aba "Criar Conta de Cliente".' 
+        };
+      }
+
+      // Validação da senha da conta pré-existente
+      if (clienteExistente.senha && password !== clienteExistente.senha) {
+        return { 
+          success: false, 
+          msg: 'Senha incorreta! Verifique sua senha e tente novamente.' 
+        };
+      }
+
+      const session = { 
+        id: clienteExistente.id,
+        name: clienteExistente.nome, 
+        role: 'customer', 
+        email: clienteExistente.email || '', 
+        cpf: clienteExistente.cpf || '', 
+        telefone: clienteExistente.telefone || '' 
+      };
+
       localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(session));
       localStorage.removeItem(STORAGE_KEYS.ADMIN_LOGGED);
-      return { success: true, isManager: false, msg: `Bem-vindo(a), ${username}!`, user: session };
+      return { success: true, isManager: false, msg: 'Bem-vindo(a) de volta, ' + clienteExistente.nome + '!', user: session };
     }
   }
 
   cadastrarCliente(dados) {
-    if (!dados.nome || !dados.email) {
-      return { success: false, msg: 'Preencha os campos obrigatórios (Nome e E-mail)!' };
+    if (!dados.nome || !dados.email || !dados.senha) {
+      return { success: false, msg: 'Preencha os campos obrigatórios (Nome, E-mail e Senha)!' };
     }
 
-    const clientes = JSON.parse(localStorage.getItem(STORAGE_KEYS.CLIENTES)) || [];
+    if (dados.senha.trim().length < 4) {
+      return { success: false, msg: 'A senha deve conter no mínimo 4 caracteres!' };
+    }
+
+    const emailNormalizado = dados.email.trim().toLowerCase();
+    const clientes = this.getClientes();
+    const jaExiste = clientes.some(c => c.email && c.email.toLowerCase() === emailNormalizado);
+
+    if (jaExiste) {
+      return { success: false, msg: 'Este e-mail já está cadastrado no banco de dados! Faça o login ou use outro e-mail.' };
+    }
+
     const novoCliente = {
       id: 'CLI-' + Math.floor(Math.random() * 899999 + 100000),
-      nome: dados.nome,
-      email: dados.email,
-      cpf: dados.cpf || '',
-      telefone: dados.telefone || '',
+      nome: dados.nome.trim(),
+      email: emailNormalizado,
+      senha: dados.senha.trim(),
+      cpf: (dados.cpf || '').trim(),
+      telefone: (dados.telefone || '').trim(),
       dataCadastro: new Date().toLocaleDateString('pt-BR')
     };
 
     clientes.push(novoCliente);
-    localStorage.setItem(STORAGE_KEYS.CLIENTES, JSON.stringify(clientes));
+    this.saveClientes(clientes);
 
-    const session = { name: dados.nome, role: 'customer', email: dados.email };
+    const session = { 
+      id: novoCliente.id,
+      name: novoCliente.nome, 
+      role: 'customer', 
+      email: novoCliente.email, 
+      cpf: novoCliente.cpf, 
+      telefone: novoCliente.telefone 
+    };
     localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(session));
     localStorage.removeItem(STORAGE_KEYS.ADMIN_LOGGED);
 
-    return { success: true, msg: `Conta criada com sucesso! Bem-vindo(a), ${dados.nome}!`, user: session };
+    return { success: true, msg: 'Conta salva no banco de dados com sucesso! Bem-vindo(a), ' + dados.nome + '!', user: session };
   }
 
-  logoutUser() {
+  atualizarDadosCliente(dados) {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      return { success: false, msg: 'Nenhum usuário logado!' };
+    }
+    if (!dados.nome || !dados.email) {
+      return { success: false, msg: 'Nome e E-mail são campos obrigatórios!' };
+    }
+
+    currentUser.name = dados.nome.trim();
+    currentUser.email = dados.email.trim();
+    currentUser.cpf = (dados.cpf || '').trim();
+    currentUser.telefone = (dados.telefone || '').trim();
+    localStorage.setItem(STORAGE_KEYS.CURRENT_USER, JSON.stringify(currentUser));
+
+    const clientes = this.getClientes();
+    const idx = clientes.findIndex(c => 
+      (currentUser.id && c.id === currentUser.id) || 
+      (c.email && c.email.toLowerCase() === currentUser.email.toLowerCase())
+    );
+
+    if (idx !== -1) {
+      clientes[idx].nome = currentUser.name;
+      clientes[idx].email = currentUser.email;
+      clientes[idx].cpf = currentUser.cpf;
+      clientes[idx].telefone = currentUser.telefone;
+      this.saveClientes(clientes);
+    } else {
+      clientes.push({
+        id: currentUser.id || ('CLI-' + Math.floor(Math.random() * 899999 + 100000)),
+        nome: currentUser.name,
+        email: currentUser.email,
+        senha: '123456',
+        cpf: currentUser.cpf,
+        telefone: currentUser.telefone,
+        dataCadastro: new Date().toLocaleDateString('pt-BR')
+      });
+      this.saveClientes(clientes);
+    }
+
+    return { success: true, msg: 'Dados cadastrais atualizados no banco de dados com sucesso!', user: currentUser };
+  }
+
+    logoutUser() {
     localStorage.removeItem(STORAGE_KEYS.CURRENT_USER);
     localStorage.removeItem(STORAGE_KEYS.ADMIN_LOGGED);
   }

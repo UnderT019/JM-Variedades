@@ -17,11 +17,10 @@ function efetuarLoginAdmin(e) {
   if (res.success) {
     showToast(res.msg, 'success');
     updateNavigationState();
+    if (typeof renderCarrinho === 'function') renderCarrinho();
     fecharModalLogin();
 
-    if (res.isManager) {
-      navigateTo('page-admin');
-    }
+    navigateTo('page-central-cliente');
   } else {
     showToast(res.msg, 'error');
   }
@@ -31,6 +30,7 @@ function efetuarLogoutAdmin() {
   store.logoutUser();
   showToast('Sessão encerrada com sucesso.', 'success');
   updateNavigationState();
+  if (typeof renderCarrinho === 'function') renderCarrinho();
   navigateTo('page-home');
 }
 
@@ -286,8 +286,9 @@ function renderTabelaEstoque() {
 }
 
 let produtoReporIdAtual = null;
+let imagensReporProduto = [];
 
-// Modal de Reposição de Estoque Apresentável
+// Modal de Reposição de Estoque & Alteração de Imagem
 function abrirModalReporEstoque(produtoId) {
   const p = store.getProdutoById(produtoId);
   if (!p) return;
@@ -298,9 +299,32 @@ function abrirModalReporEstoque(produtoId) {
 
   document.getElementById('reporModalEmoji').innerHTML = htmlImagemProduto(p);
   document.getElementById('reporModalNome').textContent = p.nome;
-  document.getElementById('reporModalCat').textContent = `Categoria: ${p.cat}`;
-  document.getElementById('reporModalEstoqueAtual').textContent = `Estoque Atual: ${p.estoque} unidades`;
+  document.getElementById('reporModalCat').textContent = 'Categoria: ' + p.cat;
+  document.getElementById('reporModalEstoqueAtual').textContent = 'Estoque Atual: ' + p.estoque + ' unidades';
   document.getElementById('reporModalQtd').value = '10';
+
+  // Carrega peso e dimensões atuais do produto
+  const dim = (typeof store.obterDimensoesProduto === 'function') 
+    ? store.obterDimensoesProduto(p) 
+    : { altura: 12, largura: 18, comprimento: 22, peso: 0.5 };
+  const pesoAtual = (typeof p.peso === 'number' && p.peso > 0) ? p.peso : (dim.peso || 0.5);
+  const altAtual = (p.dimensoes && p.dimensoes.altura) ? p.dimensoes.altura : (dim.altura || 12);
+  const largAtual = (p.dimensoes && p.dimensoes.largura) ? p.dimensoes.largura : (dim.largura || 18);
+  const compAtual = (p.dimensoes && p.dimensoes.comprimento) ? p.dimensoes.comprimento : (dim.comprimento || 22);
+
+  const inpPeso = document.getElementById('reporModalPeso');
+  const inpAlt = document.getElementById('reporModalAltura');
+  const inpLarg = document.getElementById('reporModalLargura');
+  const inpComp = document.getElementById('reporModalComprimento');
+
+  if (inpPeso) inpPeso.value = pesoAtual;
+  if (inpAlt) inpAlt.value = altAtual;
+  if (inpLarg) inpLarg.value = largAtual;
+  if (inpComp) inpComp.value = compAtual;
+
+  // Carrega as imagens atuais do produto para permitir alteração/substituição
+  imagensReporProduto = p.imagens && Array.isArray(p.imagens) ? [...p.imagens] : [];
+  renderPreviewImagensRepor();
 
   modal.classList.add('active');
 }
@@ -309,11 +333,66 @@ function fecharModalReporEstoque() {
   const modal = document.getElementById('modalReporEstoque');
   if (modal) modal.classList.remove('active');
   produtoReporIdAtual = null;
+  imagensReporProduto = [];
+  const input = document.getElementById('reporModalInputImagem');
+  if (input) input.value = '';
 }
 
 function setQtdReporRapido(qtd) {
   const input = document.getElementById('reporModalQtd');
   if (input) input.value = String(qtd);
+}
+
+// Upload e seleção de imagens no modal de reposição
+async function reporSelecionarImagens(fileList) {
+  const arquivos = Array.from(fileList || []);
+  const input = document.getElementById('reporModalInputImagem');
+
+  for (const arquivo of arquivos) {
+    if (imagensReporProduto.length >= MAX_IMAGENS_PRODUTO) {
+      showToast('Limite de ' + MAX_IMAGENS_PRODUTO + ' imagens por produto atingido.', 'error');
+      break;
+    }
+    try {
+      const dataUrl = await reduzirImagemArquivo(arquivo);
+      imagensReporProduto.push(dataUrl);
+    } catch (erro) {
+      showToast(erro.message, 'error');
+    }
+  }
+
+  if (input) input.value = '';
+  renderPreviewImagensRepor();
+}
+
+function renderPreviewImagensRepor() {
+  const box = document.getElementById('reporModalPreviewImagens');
+  if (!box) return;
+
+  if (imagensReporProduto.length === 0) {
+    box.innerHTML = '<span style="font-size:12px; color:var(--texto-secundario); font-style:italic;">Nenhuma foto anexada (usando ícone ou emoji padrão).</span>';
+    return;
+  }
+
+  box.innerHTML = imagensReporProduto.map((src, i) => `
+    <div class="upload-thumb ${i === 0 ? 'principal' : ''}" onclick="tornarImagemPrincipalRepor(${i})" title="${i === 0 ? 'Imagem principal' : 'Clique para tornar principal'}">
+      <img src="${src}" alt="Imagem ${i + 1}">
+      ${i === 0 ? '<span class="tag-principal">PRINCIPAL</span>' : ''}
+      <button type="button" class="btn-remover-img" onclick="event.stopPropagation(); removerImagemRepor(${i})" title="Remover imagem">✕</button>
+    </div>
+  `).join('');
+}
+
+function tornarImagemPrincipalRepor(indice) {
+  if (indice <= 0 || indice >= imagensReporProduto.length) return;
+  const [img] = imagensReporProduto.splice(indice, 1);
+  imagensReporProduto.unshift(img);
+  renderPreviewImagensRepor();
+}
+
+function removerImagemRepor(indice) {
+  imagensReporProduto.splice(indice, 1);
+  renderPreviewImagensRepor();
 }
 
 function salvarReposicaoEstoqueModal(e) {
@@ -330,7 +409,26 @@ function salvarReposicaoEstoqueModal(e) {
 
   const res = store.reporEstoque(produtoReporIdAtual, qtd);
   if (res.success) {
-    showToast(res.msg, 'success');
+    // Atualiza as imagens alteradas do produto no banco de produtos
+    if (typeof store.atualizarImagensProduto === 'function') {
+      store.atualizarImagensProduto(produtoReporIdAtual, imagensReporProduto);
+    }
+
+    // Atualiza peso e dimensões caso informados
+    const reporPeso = parseFloat(document.getElementById('reporModalPeso')?.value);
+    const reporAlt = parseFloat(document.getElementById('reporModalAltura')?.value);
+    const reporLarg = parseFloat(document.getElementById('reporModalLargura')?.value);
+    const reporComp = parseFloat(document.getElementById('reporModalComprimento')?.value);
+
+    if (typeof store.atualizarDimensoesProduto === 'function') {
+      store.atualizarDimensoesProduto(produtoReporIdAtual, reporPeso, {
+        altura: reporAlt,
+        largura: reporLarg,
+        comprimento: reporComp
+      });
+    }
+
+    showToast('Estoque, peso, dimensões e imagens atualizados com sucesso!', 'success');
     fecharModalReporEstoque();
     renderPainelAdmin();
     if (typeof renderProdutosGrid === 'function') renderProdutosGrid();
@@ -365,6 +463,7 @@ function executarLogoutAcao() {
   store.logoutUser();
   showToast('Sessão encerrada com sucesso.', 'success');
   updateNavigationState();
+  if (typeof renderCarrinho === 'function') renderCarrinho();
   navigateTo('page-home');
 }
 
@@ -534,6 +633,10 @@ function abrirModalNovoProduto() {
   document.getElementById('prodModalAntigo').value = '';
   document.getElementById('prodModalEstoque').value = '20';
   document.getElementById('prodModalDesc').value = '';
+  if (document.getElementById('prodModalPeso')) document.getElementById('prodModalPeso').value = '0.50';
+  if (document.getElementById('prodModalAltura')) document.getElementById('prodModalAltura').value = '12';
+  if (document.getElementById('prodModalLargura')) document.getElementById('prodModalLargura').value = '18';
+  if (document.getElementById('prodModalComprimento')) document.getElementById('prodModalComprimento').value = '22';
   gerarNovoEANModal();
   limparImagensNovoProduto();
 
@@ -638,6 +741,10 @@ function salvarNovoProdutoModal(e) {
   const estoque = parseInt(estoqueVal, 10);
   const barcode = document.getElementById('prodModalBarcode')?.value.trim() || ('7891234' + Math.floor(Math.random() * 899999 + 100000));
   const desc = document.getElementById('prodModalDesc')?.value.trim() || `${nome} - Qualidade garantida JM Variedades.`;
+  const peso = parseFloat(document.getElementById('prodModalPeso')?.value) || 0.50;
+  const altura = parseFloat(document.getElementById('prodModalAltura')?.value) || 12;
+  const largura = parseFloat(document.getElementById('prodModalLargura')?.value) || 18;
+  const comprimento = parseFloat(document.getElementById('prodModalComprimento')?.value) || 22;
 
   if (!nome || !cat || isNaN(preco) || preco <= 0 || isNaN(estoque) || estoque < 0) {
     showToast('Preencha os campos obrigatórios (*) com valores válidos!', 'error');
@@ -661,6 +768,8 @@ function salvarNovoProdutoModal(e) {
     nota: 5.0,
     oferta: antigo > preco,
     novidade: true,
+    peso: peso,
+    dimensoes: { altura, largura, comprimento },
     imagens: [...imagensNovoProduto]
   };
 

@@ -7,7 +7,7 @@
   
   <!-- Google Fonts Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
    
   <!-- Estilos CSS do Projeto -->
@@ -51,20 +51,12 @@
           🛒 Carrinho <span class="cart-count" id="cartCount">0</span>
         </button>
 
-        <button class="nav-btn" id="nav-frete" onclick="window.location.href='frete.html'">
-          🚚 Frete
-        </button>
-
         <button class="nav-btn" id="nav-historico" onclick="navigateTo('page-historico')">
           🏷️ Histórico (EAN)
         </button>
 
         <button class="nav-btn" id="nav-login" onclick="abrirModalLogin()">
           👤 Entrar
-        </button>
-
-        <button class="nav-btn btn-admin" id="nav-admin" style="display:inline-flex;" onclick="navigateTo('page-admin')">
-          🔐 Gerente <span class="badge-alert" id="adminStockAlertBadge" style="display:none">0</span>
         </button>
       </nav>
     </div>
@@ -273,20 +265,6 @@
             <div id="cupomAplicadoBox"></div>
           </div>
 
-          <!-- Caixa de Cálculo de Frete e Prazo (User Story H004) -->
-          <div class="card card-frete" id="cardFreteCarrinho">
-            <h3>📦 Calcular Frete e Prazo</h3>
-            <label class="lbl" for="cepCarrinho">CEP de entrega</label>
-            <div class="frete-row">
-              <input type="text" id="cepCarrinho" maxlength="9" placeholder="00000-000">
-              <button type="button" class="btn btn-secondary" onclick="calcularFreteCarrinho()">Calcular</button>
-            </div>
-            <a class="link-cep" href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" rel="noopener">Não sei meu CEP ↗</a>
-
-            <div id="msgFreteCarrinho" class="msg-frete"></div>
-
-            <div id="opcoesFreteCarrinho" class="opcoes-frete-container"></div>
-          </div>
 
           <!-- Resumo Financeiro do Carrinho -->
           <div class="card">
@@ -570,7 +548,222 @@
   </div>
 
   <!-- =======================================================
-       PAGE 5: PAINEL DO GERENTE (DASHBOARD & ESTOQUE)
+       PAGE 5: CENTRAL DO CLIENTE (PORTAL DO USUÁRIO)
+       ======================================================= -->
+  <div id="page-central-cliente" class="page">
+    <div class="container" style="max-width: 960px;">
+      
+      <!-- Breadcrumb -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:16px;">
+        <div class="breadcrumb" style="margin-bottom:0;">
+          <a onclick="navigateTo('page-home')">Início</a> &nbsp;›&nbsp; <span id="centralClienteBreadcrumb">Central do Cliente</span>
+        </div>
+        <button class="btn btn-outline btn-sm btn-back-catalog" onclick="navigateTo('page-home')">
+          ← Voltar à Loja
+        </button>
+      </div>
+
+      <!-- Welcome Card do Usuário -->
+      <div class="card" style="background: linear-gradient(135deg, var(--azul-principal) 0%, var(--azul-secundario) 100%); color: var(--branco); border:none; padding: 32px; border-radius: var(--radius-banner); margin-bottom: 28px; box-shadow: var(--shadow-md); position: relative; overflow: hidden;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; position:relative; z-index:2;">
+          <div style="display:flex; align-items:center; gap:20px;">
+            <div id="centralClienteAvatar" style="width:72px; height:72px; border-radius:50%; background:rgba(255,255,255,0.15); border:3px solid var(--laranja-principal); display:grid; place-items:center; font-size:36px;">
+              👤
+            </div>
+            <div>
+              <span style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:var(--laranja-claro);" id="centralClienteTag">Painel do Cliente</span>
+              <h1 style="font-size:26px; font-weight:900; color:var(--branco); margin: 4px 0;" id="centralClienteNome">Olá, Usuário!</h1>
+              <p style="font-size:13px; color:#CBD5E1;" id="centralClienteEmail">seuemail@exemplo.com</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn btn-outline btn-sm" style="color:var(--branco); border-color:rgba(255,255,255,0.3); background:rgba(255,255,255,0.08);" onclick="efetuarLogoutAdmin()">
+              🚪 Sair da Conta
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção Serviços & Gerenciamento (Visível apenas para Clientes) -->
+      <div id="secaoServicosGerenciamento">
+        <div style="margin-bottom: 16px;">
+          <h2 style="font-size:20px; font-weight:900; color:var(--azul-principal); margin-bottom: 6px;">Serviços & Gerenciamento</h2>
+          <p style="font-size:13px; color:var(--texto-secundario);">Escolha abaixo a opção desejada para gerenciar sua conta na JM Variedades:</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 32px;">
+          
+          <!-- OPÇÃO 1: MEUS DADOS -->
+          <div class="card card-opcao-central" onclick="navigateTo('page-meus-dados')" style="cursor:pointer; display:flex; flex-direction:column; justify-content:space-between; border:2px solid var(--cinza-borda); transition:all 0.25s ease;">
+            <div>
+              <div style="width:56px; height:56px; border-radius:14px; background:var(--creme); border:2px solid var(--laranja-pastel); display:grid; place-items:center; font-size:28px; margin-bottom:16px;">
+                📝
+              </div>
+              <h3 style="font-size:18px; font-weight:900; color:var(--azul-principal); border-bottom:none; margin-bottom:8px; padding-bottom:0;">
+                Meus Dados
+              </h3>
+              <p style="font-size:13px; color:var(--texto-secundario); line-height:1.5; margin-bottom:20px;">
+                Visualize e altere suas informações pessoais de cadastro como Nome Completo, E-mail, CPF e Telefone de contato.
+              </p>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="navigateTo('page-meus-dados')">
+              Acessar Meus Dados ➔
+            </button>
+          </div>
+
+          <!-- OPÇÃO 2: MEUS PEDIDOS -->
+          <div class="card card-opcao-central" onclick="navigateTo('page-meus-pedidos')" style="cursor:pointer; display:flex; flex-direction:column; justify-content:space-between; border:2px solid var(--cinza-borda); transition:all 0.25s ease;">
+            <div>
+              <div style="width:56px; height:56px; border-radius:14px; background:var(--creme); border:2px solid var(--laranja-pastel); display:grid; place-items:center; font-size:28px; margin-bottom:16px;">
+                📦
+              </div>
+              <h3 style="font-size:18px; font-weight:900; color:var(--azul-principal); border-bottom:none; margin-bottom:8px; padding-bottom:0;">
+                Meus Pedidos
+              </h3>
+              <p style="font-size:13px; color:var(--texto-secundario); line-height:1.5; margin-bottom:20px;">
+                Consulte seu histórico de compras, acompanhe status de pagamento e acesse o comprovante dos seus pedidos.
+              </p>
+            </div>
+            <button class="btn btn-secondary btn-full" onclick="navigateTo('page-meus-pedidos')">
+              Ver Meus Pedidos ➔
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Seção Exclusiva para Gerente (Exibida APENAS para o login de Gerente) -->
+      <div id="centralAdminOpcaoBox" style="display:none; margin-top:20px;">
+        <div class="card" style="border:2px solid var(--azul-principal); background:var(--branco); padding:32px; border-radius:var(--radius-card); box-shadow:var(--shadow-md);">
+          <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+            <div style="width:54px; height:54px; border-radius:14px; background:var(--creme); border:2px solid var(--laranja-pastel); display:grid; place-items:center; font-size:26px;">
+              🔐
+            </div>
+            <div>
+              <h3 style="font-size:20px; font-weight:900; color:var(--azul-principal); margin:0; border:none; padding:0;">Acesso do Gerente</h3>
+              <p style="font-size:13px; color:var(--texto-secundario); margin-top:2px;">Controle total do ERP: Dashboard de vendas, faturamento e controle de estoque.</p>
+            </div>
+          </div>
+          <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;">
+            <button class="btn btn-primary" onclick="navigateTo('page-admin')">
+              📊 Abrir Dashboard & Controle de Estoque ➔
+            </button>
+            <button class="btn btn-outline" onclick="navigateTo('page-home')">
+              🛍️ Ver Vitrine da Loja
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =======================================================
+       PAGE 6: MEUS DADOS (VISUALIZAR E ALTERAR DADOS DO USUÁRIO)
+       ======================================================= -->
+  <div id="page-meus-dados" class="page">
+    <div class="container" style="max-width: 800px;">
+      
+      <!-- Breadcrumb -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:16px;">
+        <div class="breadcrumb" style="margin-bottom:0;">
+          <a onclick="navigateTo('page-home')">Início</a> &nbsp;›&nbsp;
+          <a onclick="navigateTo('page-central-cliente')" id="breadcrumbVoltarCentralDados">Central do Cliente</a> &nbsp;›&nbsp;
+          Meus Dados
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="navigateTo('page-central-cliente')">
+          ← Voltar à Central
+        </button>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px; border-bottom:2px solid var(--cinza-borda); padding-bottom:16px;">
+          <div style="width:48px; height:48px; border-radius:12px; background:var(--creme); border:2px solid var(--laranja-pastel); display:grid; place-items:center; font-size:24px;">
+            👤
+          </div>
+          <div>
+            <h1 style="font-size:22px; font-weight:900; color:var(--azul-principal); margin-bottom:2px;">Meus Dados Cadastrais</h1>
+            <p style="font-size:13px; color:var(--texto-secundario);">Consulte e mantenha suas informações de contato atualizadas.</p>
+          </div>
+        </div>
+
+        <form id="formMeusDados" onsubmit="salvarAlteracoesMeusDados(event)">
+          <div class="form-grid">
+            <div class="field full">
+              <label for="perfilNome">Nome Completo <span>*</span></label>
+              <input type="text" id="perfilNome" placeholder="Digite seu nome completo" required>
+            </div>
+
+            <div class="field full">
+              <label for="perfilEmail">E-mail <span>*</span></label>
+              <input type="email" id="perfilEmail" placeholder="seuemail@exemplo.com" required>
+            </div>
+
+            <div class="field">
+              <label for="perfilCPF">CPF</label>
+              <input type="text" id="perfilCPF" placeholder="000.000.000-00" maxlength="14">
+            </div>
+
+            <div class="field">
+              <label for="perfilTelefone">Telefone / WhatsApp</label>
+              <input type="tel" id="perfilTelefone" placeholder="(00) 00000-0000" maxlength="15">
+            </div>
+          </div>
+
+          <div style="background:var(--cinza-muito-claro); border:1px solid var(--cinza-borda); border-radius:12px; padding:14px; margin-top:20px; display:flex; align-items:center; gap:10px;">
+            <span style="font-size:20px;">🛡️</span>
+            <span style="font-size:12px; color:var(--texto-secundario);">Seus dados são protegidos conforme a LGPD e usados exclusivamente para entregas e identificação nos pedidos.</span>
+          </div>
+
+          <div style="display:flex; gap:12px; margin-top:24px; flex-wrap:wrap;">
+            <button type="submit" class="btn btn-primary" style="flex:1;">
+              💾 Salvar Alterações
+            </button>
+            <button type="button" class="btn btn-outline" onclick="navigateTo('page-central-cliente')">
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =======================================================
+       PAGE 7: MEUS PEDIDOS (HISTÓRICO DO CLIENTE)
+       ======================================================= -->
+  <div id="page-meus-pedidos" class="page">
+    <div class="container" style="max-width: 960px;">
+      
+      <!-- Breadcrumb -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; margin-bottom:16px;">
+        <div class="breadcrumb" style="margin-bottom:0;">
+          <a onclick="navigateTo('page-home')">Início</a> &nbsp;›&nbsp;
+          <a onclick="navigateTo('page-central-cliente')" id="breadcrumbVoltarCentralPedidos">Central do Cliente</a> &nbsp;›&nbsp;
+          Meus Pedidos
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="navigateTo('page-central-cliente')">
+          ← Voltar à Central
+        </button>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:12px;">
+        <div>
+          <h1 style="font-size:22px; font-weight:900; color:var(--azul-principal); margin-bottom:2px;">📦 Meus Pedidos</h1>
+          <p style="font-size:13px; color:var(--texto-secundario);">Acompanhe o andamento das suas compras e acesse os comprovantes.</p>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="navigateTo('page-home')">
+          🛍️ Fazer Nova Compra
+        </button>
+      </div>
+
+      <div id="meusPedidosListaContainer"></div>
+
+    </div>
+  </div>
+
+  <!-- =======================================================
+       PAGE 8: PAINEL DO GERENTE (DASHBOARD & ESTOQUE)
        ======================================================= -->
   <div id="page-admin" class="page">
     <div class="container">
@@ -709,8 +902,8 @@
 
       <!-- PAINEL 1: LOGIN -->
       <div id="authPainelLogin">
-        <p style="font-size:12px; color:var(--texto-secundario); margin-bottom:14px;">
-          Entre com seu usuário ou e-mail cadastrado para acessar sua conta ou o painel administrativo.
+        <p style="font-size:12px; color:var(--texto-secundario); margin-bottom:10px;">
+          Entre com seu e-mail e senha cadastrados para acessar sua conta ou o painel administrativo.
         </p>
         <form onsubmit="efetuarLoginAdmin(event)">
           <div class="field" style="margin-bottom:12px;">
@@ -719,7 +912,12 @@
           </div>
           <div class="field" style="margin-bottom:20px;">
             <label for="loginPassInput">Senha</label>
-            <input type="password" id="loginPassInput" placeholder="Sua senha" required>
+            <div style="position:relative; display:flex; align-items:center;">
+              <input type="password" id="loginPassInput" placeholder="Sua senha" required style="padding-right: 110px;">
+              <button type="button" class="btn-toggle-pass" id="btnToggleLoginPass" onclick="toggleVisibilidadeSenha('loginPassInput', this)" title="Exibir ou ocultar a senha">
+                👁️ <span>Exibir</span>
+              </button>
+            </div>
           </div>
           <button type="submit" class="btn btn-primary btn-full">ENTRAR NA CONTA ➔</button>
         </form>
@@ -754,7 +952,12 @@
           </div>
           <div class="field" style="margin-bottom:20px;">
             <label for="cadSenha">Senha <span>*</span></label>
-            <input type="password" id="cadSenha" placeholder="Mínimo 6 caracteres" required>
+            <div style="position:relative; display:flex; align-items:center;">
+              <input type="password" id="cadSenha" placeholder="Mínimo 6 caracteres" required style="padding-right: 110px;">
+              <button type="button" class="btn-toggle-pass" id="btnToggleCadPass" onclick="toggleVisibilidadeSenha('cadSenha', this)" title="Exibir ou ocultar a senha">
+                👁️ <span>Exibir</span>
+              </button>
+            </div>
           </div>
           <button type="submit" class="btn btn-primary btn-full">CRIAR MINHA CONTA ➔</button>
         </form>
@@ -924,6 +1127,31 @@
             </div>
           </div>
 
+          <div class="field">
+            <label for="prodModalPeso">Peso (kg) <span style="color:var(--laranja-principal)">*</span></label>
+            <input type="number" step="0.01" min="0.01" id="prodModalPeso" placeholder="Ex: 0.50 (em kg)">
+          </div>
+
+          <div class="field full" style="margin-top:4px;">
+            <label style="font-weight:700; font-size:13px; color:var(--azul-principal); margin-bottom:6px; display:block;">
+              Dimensões da Embalagem (cm) <span style="font-weight:normal; font-size:12px; color:var(--texto-secundario);">(Altura × Largura × Comprimento)</span>
+            </label>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px;">
+              <div>
+                <label for="prodModalAltura" style="font-size:11px; color:var(--texto-secundario);">Altura (cm)</label>
+                <input type="number" step="0.1" min="1" id="prodModalAltura" placeholder="Ex: 10">
+              </div>
+              <div>
+                <label for="prodModalLargura" style="font-size:11px; color:var(--texto-secundario);">Largura (cm)</label>
+                <input type="number" step="0.1" min="1" id="prodModalLargura" placeholder="Ex: 15">
+              </div>
+              <div>
+                <label for="prodModalComprimento" style="font-size:11px; color:var(--texto-secundario);">Comprimento (cm)</label>
+                <input type="number" step="0.1" min="1" id="prodModalComprimento" placeholder="Ex: 20">
+              </div>
+            </div>
+          </div>
+
           <div class="field full">
             <label for="prodModalDesc">Descrição Detalhada do Produto</label>
             <textarea id="prodModalDesc" rows="3" placeholder="Descrição completa, especificações, peças, garantia..."></textarea>
@@ -1043,14 +1271,14 @@
 
   <!-- ===== MODAL REPOR ESTOQUE (APRESENTÁVEL) ===== -->
   <div class="modal-overlay" id="modalReporEstoque">
-    <div class="modal-card" style="max-width: 480px; text-align: left; padding: 28px;">
+    <div class="modal-card" style="max-width: 520px; text-align: left; padding: 28px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <h2 style="font-size:18px; font-weight:900; color:var(--azul-principal);">📦 Atualizar Estoque do Produto</h2>
+        <h2 style="font-size:18px; font-weight:900; color:var(--azul-principal);">📦 Atualizar Estoque &amp; Imagem</h2>
         <button style="background:none; border:none; font-size:20px; cursor:pointer;" onclick="fecharModalReporEstoque()">✕</button>
       </div>
 
       <div style="background:var(--creme); border-radius:14px; padding:16px; margin-bottom:20px; border:1px solid var(--cinza-borda); display:flex; align-items:center; gap:14px;">
-        <div style="font-size:42px;" id="reporModalEmoji">📦</div>
+        <div style="font-size:42px; min-width:56px; text-align:center;" id="reporModalEmoji">📦</div>
         <div>
           <div style="font-size:15px; font-weight:800; color:var(--azul-principal);" id="reporModalNome">Nome do Produto</div>
           <div style="font-size:12px; color:var(--texto-secundario);" id="reporModalCat">Categoria</div>
@@ -1059,7 +1287,8 @@
       </div>
 
       <form onsubmit="salvarReposicaoEstoqueModal(event)">
-        <div class="field" style="margin-bottom:16px;">
+        <!-- Seção: Reposição de Estoque -->
+        <div class="field" style="margin-bottom:10px;">
           <label for="reporModalQtd">Quantidade a Adicionar ao Estoque <span>*</span></label>
           <input type="number" id="reporModalQtd" min="1" value="10" placeholder="Ex: 10, 20, 50..." required style="font-size:16px; font-weight:800; padding:12px 16px;">
         </div>
@@ -1072,9 +1301,54 @@
           <button type="button" class="btn btn-outline btn-sm" onclick="setQtdReporRapido(100)">+100</button>
         </div>
 
+        <!-- Seção: Peso e Dimensões do Produto -->
+        <div style="border-top:1px solid var(--cinza-borda); padding-top:14px; margin-bottom:16px;">
+          <div style="font-size:13px; font-weight:800; color:var(--azul-principal); margin-bottom:8px;">
+            ⚖️ Peso e Dimensões do Produto
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+            <div class="field" style="margin-bottom:0;">
+              <label for="reporModalPeso" style="font-size:12px;">Peso (kg)</label>
+              <input type="number" step="0.01" min="0.01" id="reporModalPeso" placeholder="Ex: 0.50">
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label for="reporModalAltura" style="font-size:12px;">Altura (cm)</label>
+              <input type="number" step="0.1" min="1" id="reporModalAltura" placeholder="Ex: 12">
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            <div class="field" style="margin-bottom:0;">
+              <label for="reporModalLargura" style="font-size:12px;">Largura (cm)</label>
+              <input type="number" step="0.1" min="1" id="reporModalLargura" placeholder="Ex: 18">
+            </div>
+            <div class="field" style="margin-bottom:0;">
+              <label for="reporModalComprimento" style="font-size:12px;">Comprimento (cm)</label>
+              <input type="number" step="0.1" min="1" id="reporModalComprimento" placeholder="Ex: 22">
+            </div>
+          </div>
+        </div>
+
+        <!-- Seção: Alterar Imagem do Produto -->
+        <div style="border-top:2px solid var(--cinza-borda); padding-top:18px; margin-bottom:20px;">
+          <label style="font-size:13px; font-weight:800; color:var(--azul-principal); display:block; margin-bottom:10px;">
+            📷 Alterar Imagem do Produto <span style="font-size:11px; font-weight:500; color:var(--texto-secundario);">(opcional · até 4 imagens · a 1ª é a principal)</span>
+          </label>
+
+          <!-- Preview das imagens atuais -->
+          <div id="reporModalPreviewImagens" class="upload-previews" style="margin-bottom:10px;"></div>
+
+          <!-- Área de upload -->
+          <label for="reporModalInputImagem" class="upload-box" id="reporUploadBox" style="margin-bottom:0;">
+            <span class="upload-icon">📷</span>
+            <span><strong>Clique para escolher</strong> ou arraste as imagens aqui</span>
+            <small>JPG, PNG ou WebP — reduzidas automaticamente</small>
+          </label>
+          <input type="file" id="reporModalInputImagem" accept="image/*" multiple style="display:none" onchange="reporSelecionarImagens(this.files)">
+        </div>
+
         <div style="display:flex; gap:12px;">
           <button type="button" class="btn btn-outline btn-full" onclick="fecharModalReporEstoque()">Cancelar</button>
-          <button type="submit" class="btn btn-primary btn-full">CONFIRMAR REPOSIÇÃO ➔</button>
+          <button type="submit" class="btn btn-primary btn-full">CONFIRMAR ➔</button>
         </div>
       </form>
     </div>
@@ -1086,7 +1360,7 @@
       <div style="font-size:48px; margin-bottom:12px;">🔒</div>
       <h2 style="font-size:20px; font-weight:900; color:var(--azul-principal); margin-bottom:8px;">Encerrar Sessão?</h2>
       <p style="font-size:13px; color:var(--texto-secundario); margin-bottom:20px;" id="txtConfirmarLogoutMsg">
-        Deseja realmente sair da sua conta de Gerente?
+        Deseja realmente sair da sua conta?
       </p>
       <div style="display:flex; gap:12px;">
         <button class="btn btn-outline btn-full" onclick="fecharModalConfirmarLogout()">Cancelar</button>

@@ -17,9 +17,10 @@ function initApp() {
   renderCarrinho();
   setupBuscaInput();
   updateNavigationState();
+  initMascarasCliente();
 }
 
-// Atualiza o estado visual da barra de navegação superior (Regra de Negócio: Botão Gerente)
+// Atualiza o estado visual da barra de navegação superior
 function updateNavigationState() {
   const navAdminBtn = document.getElementById('nav-admin');
   const navLoginBtn = document.getElementById('nav-login');
@@ -27,21 +28,23 @@ function updateNavigationState() {
   const isManager = store.isAdminLogged();
 
   if (navAdminBtn) {
-    navAdminBtn.style.display = 'inline-flex';
-    if (isManager) {
-      checkLowStockAlertBadge();
-    }
+    navAdminBtn.style.display = 'none'; // botão de gerente removido da nav
   }
 
   if (navLoginBtn) {
     if (currentUser) {
       if (isManager) {
-        navLoginBtn.innerHTML = `👤 Gerente <small style="font-size:10px; opacity:0.8; margin-left:4px;">(Sair)</small>`;
+        navLoginBtn.innerHTML = `🔐 Acesso do Gerente`;
+        navLoginBtn.title = `Acesso do Gerente (${currentUser.name})`;
       } else {
-        navLoginBtn.innerHTML = `👤 ${currentUser.name} <small style="font-size:10px; opacity:0.8; margin-left:4px;">(Sair)</small>`;
+        navLoginBtn.innerHTML = `👤 Central do Cliente`;
+        navLoginBtn.title = `Central do Cliente (${currentUser.name})`;
       }
+      navLoginBtn.onclick = () => navigateTo('page-central-cliente');
     } else {
       navLoginBtn.innerHTML = `👤 Entrar`;
+      navLoginBtn.title = 'Entrar ou Cadastrar';
+      navLoginBtn.onclick = () => abrirModalLogin();
     }
   }
 }
@@ -49,7 +52,7 @@ function updateNavigationState() {
 function abrirModalLogin(abaPadrao = 'login') {
   const currentUser = store.getCurrentUser();
   if (currentUser) {
-    efetuarLogoutAdmin();
+    navigateTo('page-central-cliente');
     return;
   }
 
@@ -63,9 +66,34 @@ function abrirModalLogin(abaPadrao = 'login') {
 function fecharModalLogin() {
   const modal = document.getElementById('modalLoginWindow');
   if (modal) modal.classList.remove('active');
+  resetarCamposSenha();
+}
+
+function resetarCamposSenha() {
+  const loginPass = document.getElementById('loginPassInput');
+  const cadPass = document.getElementById('cadSenha');
+  const btnLoginPass = document.getElementById('btnToggleLoginPass');
+  const btnCadPass = document.getElementById('btnToggleCadPass');
+
+  if (loginPass) loginPass.type = 'password';
+  if (cadPass) cadPass.type = 'password';
+  if (btnLoginPass) btnLoginPass.innerHTML = '👁️ <span>Exibir</span>';
+  if (btnCadPass) btnCadPass.innerHTML = '👁️ <span>Exibir</span>';
+}
+
+function toggleVisibilidadeSenha(inputId, btnEl) {
+  const target = document.getElementById(inputId);
+  if (!target) return;
+  const isPass = target.type === 'password';
+  target.type = isPass ? 'text' : 'password';
+  if (btnEl) {
+    btnEl.innerHTML = isPass ? '👁️ <span>Ocultar</span>' : '👁️ <span>Exibir</span>';
+    btnEl.title = isPass ? 'Ocultar a senha' : 'Exibir a senha';
+  }
 }
 
 function alternarAbaAuth(aba) {
+  resetarCamposSenha();
   const painelLogin = document.getElementById('authPainelLogin');
   const painelCadastro = document.getElementById('authPainelCadastro');
   const btnLogin = document.getElementById('tabBtnLogin');
@@ -90,12 +118,15 @@ function efetuarCadastroCliente(e) {
   const email = document.getElementById('cadEmail')?.value;
   const cpf = document.getElementById('cadCPF')?.value;
   const telefone = document.getElementById('cadTelefone')?.value;
+  const senha = document.getElementById('cadSenha')?.value;
 
-  const res = store.cadastrarCliente({ nome, email, cpf, telefone });
+  const res = store.cadastrarCliente({ nome, email, cpf, telefone, senha });
   if (res.success) {
     showToast(res.msg, 'success');
     updateNavigationState();
+    if (typeof renderCarrinho === 'function') renderCarrinho();
     fecharModalLogin();
+    navigateTo('page-central-cliente');
   } else {
     showToast(res.msg, 'error');
   }
@@ -106,6 +137,13 @@ function navigateTo(pageId) {
   // Proteção da Rota do Painel de Administração (Regra de Negócio)
   if (pageId === 'page-admin' && !store.isAdminLogged()) {
     showToast('Acesso restrito! O Painel do Gerente só está disponível para logins de gerentes autorizados.', 'error');
+    abrirModalLogin();
+    return;
+  }
+
+  // Proteção das Rotas da Central do Cliente
+  if ((pageId === 'page-central-cliente' || pageId === 'page-meus-dados' || pageId === 'page-meus-pedidos') && !store.getCurrentUser()) {
+    showToast('Acesse ou crie sua conta para consultar esta seção.', 'info');
     abrirModalLogin();
     return;
   }
@@ -122,7 +160,10 @@ function navigateTo(pageId) {
     'page-carrinho': 'nav-carrinho',
     'page-checkout': 'nav-carrinho',
     'page-historico': 'nav-historico',
-    'page-admin': 'nav-admin'
+    'page-admin': 'nav-admin',
+    'page-central-cliente': 'nav-login',
+    'page-meus-dados': 'nav-login',
+    'page-meus-pedidos': 'nav-login'
   };
 
   const activeBtnId = navMap[pageId];
@@ -140,6 +181,209 @@ function navigateTo(pageId) {
     renderCheckoutSummary();
   } else if (pageId === 'page-admin') {
     renderPainelAdmin();
+  } else if (pageId === 'page-central-cliente') {
+    renderCentralCliente();
+  } else if (pageId === 'page-meus-dados') {
+    renderMeusDados();
+  } else if (pageId === 'page-meus-pedidos') {
+    renderMeusPedidos();
+  }
+}
+
+// ===== CENTRAL DO CLIENTE, MEUS DADOS E MEUS PEDIDOS =====
+function renderCentralCliente() {
+  const currentUser = store.getCurrentUser();
+  if (!currentUser) return;
+
+  const isManager = store.isAdminLogged();
+
+  const nomeEl = document.getElementById('centralClienteNome');
+  const emailEl = document.getElementById('centralClienteEmail');
+  const tagEl = document.getElementById('centralClienteTag');
+  const secaoServicos = document.getElementById('secaoServicosGerenciamento');
+  const adminBox = document.getElementById('centralAdminOpcaoBox');
+  const crumbEl = document.getElementById('centralClienteBreadcrumb');
+
+  if (isManager) {
+    // Modo Gerente: oculta tag "Painel do Cliente" e seção de serviços do cliente
+    if (tagEl) tagEl.style.display = 'none';
+    if (secaoServicos) secaoServicos.style.display = 'none';
+    if (adminBox) adminBox.style.display = 'block';
+    if (crumbEl) crumbEl.textContent = 'Acesso do Gerente';
+    if (nomeEl) nomeEl.textContent = 'Gerente (admin)';
+    if (emailEl) emailEl.textContent = currentUser.email || 'admin@jmvariedades.com.br';
+  } else {
+    // Modo Cliente: exibe tag, seção de serviços, oculta bloco de gerente
+    if (tagEl) {
+      tagEl.style.display = 'inline-block';
+      tagEl.textContent = 'Painel do Cliente';
+    }
+    if (secaoServicos) secaoServicos.style.display = 'block';
+    if (adminBox) adminBox.style.display = 'none';
+    if (crumbEl) crumbEl.textContent = 'Central do Cliente';
+    if (nomeEl) nomeEl.textContent = `Olá, ${currentUser.name}!`;
+    if (emailEl) emailEl.textContent = currentUser.email || 'Cliente JM Variedades';
+  }
+}
+
+function renderMeusDados() {
+  const currentUser = store.getCurrentUser();
+  if (!currentUser) return;
+
+  const nomeInp = document.getElementById('perfilNome');
+  const emailInp = document.getElementById('perfilEmail');
+  const cpfInp = document.getElementById('perfilCPF');
+  const telInp = document.getElementById('perfilTelefone');
+
+  const clientes = JSON.parse(localStorage.getItem(STORAGE_KEYS.CLIENTES)) || [];
+  const c = clientes.find(item => 
+    (currentUser.id && item.id === currentUser.id) || 
+    (item.email && item.email.toLowerCase() === (currentUser.email || '').toLowerCase())
+  );
+
+  if (nomeInp) nomeInp.value = (c && c.nome) || currentUser.name || '';
+  if (emailInp) emailInp.value = (c && c.email) || currentUser.email || '';
+  if (cpfInp) cpfInp.value = (c && c.cpf) || currentUser.cpf || '';
+  if (telInp) telInp.value = (c && c.telefone) || currentUser.telefone || '';
+
+  initMascarasCliente();
+}
+
+function salvarAlteracoesMeusDados(e) {
+  if (e) e.preventDefault();
+  const nome = document.getElementById('perfilNome')?.value.trim();
+  const email = document.getElementById('perfilEmail')?.value.trim();
+  const cpf = document.getElementById('perfilCPF')?.value.trim();
+  const telefone = document.getElementById('perfilTelefone')?.value.trim();
+
+  if (!nome || !email) {
+    showToast('Nome Completo e E-mail são obrigatórios!', 'error');
+    return;
+  }
+
+  const res = store.atualizarDadosCliente({ nome, email, cpf, telefone });
+  if (res.success) {
+    showToast(res.msg, 'success');
+    updateNavigationState();
+    renderCentralCliente();
+  } else {
+    showToast(res.msg, 'error');
+  }
+}
+
+function renderMeusPedidos() {
+  const container = document.getElementById('meusPedidosListaContainer');
+  if (!container) return;
+
+  const currentUser = store.getCurrentUser();
+  if (!currentUser) return;
+
+  const todosPedidos = store.getPedidos();
+  const pedidosDoUsuario = todosPedidos.filter(p => {
+    if (currentUser.role === 'admin') return true; // Gerente pode auditar todos os pedidos
+    const pEmail = p.cliente && p.cliente.email ? p.cliente.email.toLowerCase() : '';
+    const uEmail = currentUser.email ? currentUser.email.toLowerCase() : '';
+    const pNome = p.cliente && p.cliente.nome ? p.cliente.nome.toLowerCase() : '';
+    const uNome = currentUser.name ? currentUser.name.toLowerCase() : '';
+    return (uEmail && pEmail === uEmail) || (uNome && pNome === uNome);
+  });
+
+  if (pedidosDoUsuario.length === 0) {
+    container.innerHTML = `
+      <div class="card" style="text-align:center; padding: 48px 20px;">
+        <div style="font-size: 56px; margin-bottom: 12px;">📦</div>
+        <h3 style="font-size: 18px; font-weight: 800; color:var(--azul-principal); margin-bottom: 8px;">Você ainda não possui pedidos realizados</h3>
+        <p style="font-size: 14px; color: var(--texto-secundario); margin-bottom: 20px;">Navegue pelos nossos mais de 100 produtos em destaque e aproveite ofertas exclusivas!</p>
+        <button class="btn btn-primary" onclick="navigateTo('page-home')">Explorar Catálogo de Produtos ➔</button>
+      </div>
+    `;
+    return;
+  }
+
+  let html = '';
+  pedidosDoUsuario.forEach(p => {
+    const isPago = p.status === 'Pago';
+    const statusClass = isPago ? 'status-ok' : 'status-baixo';
+    const statusIcon = isPago ? '✓' : '⏳';
+
+    let itensHtml = (p.itens || []).map(item => `
+      <div class="pedido-item-row">
+        <span><b>${item.qtd}x</b> ${item.nome}</span>
+        <span style="font-weight:700;">${formatMoeda(item.subtotal)}</span>
+      </div>
+    `).join('');
+
+    const end = p.endereco;
+    const endTxt = end ? `${end.rua}, ${end.numero} - ${end.bairro}, ${end.cidade}/${end.uf}` : 'Endereço cadastrado';
+
+    html += `
+      <div class="pedido-card-item">
+        <div class="pedido-header">
+          <div>
+            <span class="pedido-id">📦 Pedido #${p.id}</span>
+            <div style="font-size:12px; color:var(--texto-secundario); margin-top:2px;">Realizado em: ${p.data}</div>
+          </div>
+          <div>
+            <span class="badge-status ${statusClass}">${statusIcon} ${p.status}</span>
+          </div>
+        </div>
+
+        <div class="pedido-itens-lista">
+          ${itensHtml}
+        </div>
+
+        <div style="background:var(--cinza-muito-claro); border-radius:10px; padding:12px 14px; margin-bottom:14px; font-size:12px; color:var(--texto-secundario);">
+          <div>📍 <b>Entrega:</b> ${endTxt}</div>
+          <div style="margin-top:4px;">💳 <b>Pagamento:</b> ${p.metodoPagamento ? p.metodoPagamento.toUpperCase() : 'Pix'} | 🚚 <b>Frete:</b> ${p.frete === 0 ? 'Grátis' : formatMoeda(p.frete)}</div>
+        </div>
+
+        <div class="pedido-footer">
+          <div style="font-size:14px; color:var(--texto-secundario);">
+            Total: <span style="font-size:20px; font-weight:900; color:var(--laranja-principal);">${formatMoeda(p.total)}</span>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="abrirReciboDePedido('${p.id}')">
+            🖨️ Ver Comprovante / Imprimir
+          </button>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+function abrirReciboDePedido(pedidoId) {
+  const pedidos = store.getPedidos();
+  const pedido = pedidos.find(p => p.id === pedidoId);
+  if (pedido && typeof exibirModalConfirmação === 'function') {
+    exibirModalConfirmação(pedido);
+  }
+}
+
+function initMascarasCliente() {
+  const cpfInp = document.getElementById('perfilCPF');
+  const telInp = document.getElementById('perfilTelefone');
+
+  if (cpfInp && !cpfInp.dataset.hasMask) {
+    cpfInp.dataset.hasMask = 'true';
+    cpfInp.addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length > 9) v = v.replace(/^(\d{3})(\d{3})(\d{3})(\d{1,2})$/, '$1.$2.$3-$4');
+      else if (v.length > 6) v = v.replace(/^(\d{3})(\d{3})(\d{1,3})$/, '$1.$2.$3');
+      else if (v.length > 3) v = v.replace(/^(\d{3})(\d{1,3})$/, '$1.$2');
+      e.target.value = v;
+    });
+  }
+
+  if (telInp && !telInp.dataset.hasMask) {
+    telInp.dataset.hasMask = 'true';
+    telInp.addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length > 10) v = v.replace(/^(\d{2})(\d{5})(\d{4})$/, '($1) $2-$3');
+      else if (v.length > 6) v = v.replace(/^(\d{2})(\d{4})(\d{0,4})$/, '($1) $2-$3');
+      else if (v.length > 2) v = v.replace(/^(\d{2})(\d{0,5})$/, '($1) $2');
+      e.target.value = v;
+    });
   }
 }
 
@@ -437,6 +681,13 @@ function renderProdutosGrid() {
 }
 
 function adicionarProduto(id) {
+  // Validação: usuário deve estar logado para adicionar ao carrinho
+  if (!store.getCurrentUser()) {
+    showToast('Faça login para prosseguir com a compra.', 'error');
+    abrirModalLogin();
+    return;
+  }
+
   const res = store.adicionarAoCarrinho(id, 1);
   if (res.success) {
     showToast(res.msg, 'success');
