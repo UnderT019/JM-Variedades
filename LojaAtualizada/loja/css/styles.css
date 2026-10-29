@@ -697,3 +697,95 @@ label.lbl {
   background: #070707;
   color: #F5B52E;
 }
+
+
+/* ===== CENTRAL DO CLIENTE, MEUS DADOS E MEUS PEDIDOS ===== */
+.card-opcao-central {
+  background: var(--branco);
+  border: 2px solid var(--cinza-borda);
+  border-radius: var(--radius-card);
+  padding: 28px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+}
+.card-opcao-central:hover {
+  border-color: var(--laranja-principal) !important;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.pedido-card-item {
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+.pedido-card-item:hover {
+  box-shadow: var(--shadow-md);
+  border-color: rgba(255, 107, 0, 0.35);
+}
+.pedido-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--cinza-borda);
+  margin-bottom: 16px;
+}
+.pedido-id {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--azul-principal);
+}
+.pedido-itens-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.pedido-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--texto-principal);
+}
+.pedido-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--cinza-borda);
+}
+
+/* Botão Exibir / Ocultar Senha */
+.btn-toggle-pass {
+  position: absolute;
+  right: 6px;
+  height: 32px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 6px;
+  background: var(--branco);
+  border: 1px solid var(--cinza-borda);
+  color: var(--azul-principal);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.btn-toggle-pass:hover {
+  background: var(--cinza-muito-claro);
+  border-color: var(--laranja-principal);
+  color: var(--laranja-principal);
+}

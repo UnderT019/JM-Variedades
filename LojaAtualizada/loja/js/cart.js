@@ -539,6 +539,18 @@ function sincronizarFreteNoCheckout() {
   const cotacao = store.getFreteCotacao();
   const freteSelecionado = store.getFreteSelecionado();
 
+  const user = store.getCurrentUser();
+  if (user) {
+    const nomeInput = document.getElementById('clientNome');
+    const emailInput = document.getElementById('clientEmail');
+    const cpfInput = document.getElementById('clientCPF');
+    const telInput = document.getElementById('clientTelefone');
+    if (nomeInput && !nomeInput.value) nomeInput.value = user.name || '';
+    if (emailInput && !emailInput.value) emailInput.value = user.email || '';
+    if (cpfInput && !cpfInput.value) cpfInput.value = user.cpf || '';
+    if (telInput && !telInput.value) telInput.value = user.telefone || '';
+  }
+
   if (cotacao && cotacao.cep) {
     if (cepCheckout && !cepCheckout.value) {
       cepCheckout.value = cotacao.cep;
