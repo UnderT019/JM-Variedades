@@ -440,23 +440,23 @@
               <div class="form-grid">
                 <div class="field full">
                   <label>Número do Cartão</label>
-                  <input type="text" placeholder="0000 0000 0000 0000" maxlength="19">
+                  <input type="text" id="inputNumeroCartao" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric" oninput="mascaraNumeroCartao(this)">
                 </div>
                 <div class="field full">
                   <label>Nome Impresso no Cartão</label>
-                  <input type="text" placeholder="Nome como está no cartão">
+                  <input type="text" id="inputNomeCartao" placeholder="Nome como está no cartão">
                 </div>
                 <div class="field">
                   <label>Validade</label>
-                  <input type="text" placeholder="MM/AA" maxlength="5">
+                  <input type="text" id="inputValidadeCartao" placeholder="MM/AA" maxlength="5" inputmode="numeric" oninput="mascaraValidadeCartao(this)">
                 </div>
                 <div class="field">
                   <label>Código CVV</label>
-                  <input type="text" placeholder="123" maxlength="4">
+                  <input type="text" id="inputCVVCartao" placeholder="123" maxlength="4" inputmode="numeric" oninput="mascaraCVVCartao(this)">
                 </div>
                 <div class="field full">
                   <label>Parcelamento</label>
-                  <select>
+                  <select id="selectParcelamento">
                     <option>1x Sem Juros</option>
                     <option>2x Sem Juros</option>
                     <option>3x Sem Juros</option>
@@ -1416,5 +1416,32 @@
   <script src="js/admin.js"></script>
   <script src="js/history.js"></script>
   <script src="js/app.js"></script>
+
+  <!-- ===== MÁSCARAS DO CARTÃO DE CRÉDITO ===== -->
+  <script>
+    // Máscara: Número do cartão → 0000 0000 0000 0000
+    function mascaraNumeroCartao(input) {
+      let v = input.value.replace(/\D/g, '');           // remove não-dígitos
+      v = v.substring(0, 16);                           // limita a 16 dígitos
+      // Insere espaços a cada 4 dígitos
+      v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
+      input.value = v;
+    }
+
+    // Máscara: Validade → MM/AA
+    function mascaraValidadeCartao(input) {
+      let v = input.value.replace(/\D/g, '');           // remove não-dígitos
+      v = v.substring(0, 4);                            // limita a 4 dígitos (MMAA)
+      if (v.length >= 3) {
+        v = v.substring(0, 2) + '/' + v.substring(2);  // insere a barra após o mês
+      }
+      input.value = v;
+    }
+
+    // Máscara: CVV → apenas números, 3-4 dígitos
+    function mascaraCVVCartao(input) {
+      input.value = input.value.replace(/\D/g, '').substring(0, 4);
+    }
+  </script>
 </body>
 </html>

@@ -139,18 +139,56 @@ function renderGraficosAdmin() {
     });
   }
 
-  // --- Gráfico 2: Desempenho de Vendas (Linha) ---
+  // --- Gráfico 2: Desempenho de Vendas (Linha) --- dados reais dos últimos 7 dias ---
   const ctxSales = document.getElementById('chartSalesCanvas');
   if (ctxSales) {
-    const labelsDias = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'];
-    const dataVendasDias = [1200, 1900, 3000, 2500, 4200, 5100, 3800];
+    // Monta array com os últimos 7 dias (do mais antigo ao mais recente)
+    const hoje = new Date();
+    const diasLabels = [];
+    const diasTotais = {};
+
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(hoje);
+      d.setDate(hoje.getDate() - i);
+      // Chave no formato DD/MM para comparação com os pedidos
+      const chave = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+      diasLabels.push(chave);
+      diasTotais[chave] = 0;
+    }
+
+    // Auxiliar: converte string pt-BR "DD/MM/AAAA, HH:MM:SS" → objeto Date
+    function parseDatePtBR(str) {
+      if (!str) return null;
+      // Tenta parse ISO primeiro (caso algum pedido tenha sido salvo em ISO)
+      const iso = new Date(str);
+      if (!isNaN(iso.getTime()) && String(str).includes('-')) return iso;
+      // Parse formato "DD/MM/AAAA, HH:MM:SS" ou "DD/MM/AAAA HH:MM:SS"
+      const match = String(str).match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+      if (match) {
+        const [, dia, mes, ano] = match;
+        return new Date(Number(ano), Number(mes) - 1, Number(dia));
+      }
+      return null;
+    }
+
+    // Soma os pedidos por dia
+    pedidos.forEach(ped => {
+      const dataPed = parseDatePtBR(ped.data);
+      if (!dataPed || isNaN(dataPed.getTime())) return;
+      const chaveP = dataPed.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit' });
+      if (diasTotais.hasOwnProperty(chaveP)) {
+        diasTotais[chaveP] += (ped.total || 0);
+      }
+    });
+
+    const dataVendasDias = diasLabels.map(k => diasTotais[k]);
 
     if (salesChartInstance) salesChartInstance.destroy();
 
     salesChartInstance = new Chart(ctxSales, {
       type: 'line',
       data: {
-        labels: labelsDias,
+        labels: diasLabels,
         datasets: [{
           label: 'Faturamento (R$)',
           data: dataVendasDias,
@@ -158,16 +196,31 @@ function renderGraficosAdmin() {
           backgroundColor: 'rgba(245,181,46,0.15)',
           fill: true,
           tension: 0.4,
-          pointRadius: 5
+          pointRadius: 5,
+          pointHoverRadius: 7
         }]
       },
       options: {
         responsive: true,
         plugins: {
-          legend: { display: false }
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function(ctx) {
+                return 'R$ ' + ctx.parsed.y.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+              }
+            }
+          }
         },
         scales: {
-          y: { beginAtZero: true }
+          y: {
+            beginAtZero: true,
+            ticks: {
+              callback: function(value) {
+                return 'R$ ' + value.toLocaleString('pt-BR');
+              }
+            }
+          }
         }
       }
     });
