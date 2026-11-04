@@ -692,6 +692,8 @@ function adicionarProduto(id) {
   if (res.success) {
     showToast(res.msg, 'success');
     renderCarrinho();
+    // Abre o mini-painel de prévia do carrinho
+    abrirCartPreview();
   } else {
     showToast(res.msg, 'error');
   }
@@ -802,4 +804,98 @@ function checkLowStockAlertBadge() {
       alertEl.style.display = 'none';
     }
   }
+}
+
+// ===== MINI-PAINEL DE PRÉVIA DO CARRINHO =====
+let cartPreviewTimer = null;
+
+function renderCartPreview() {
+  const body = document.getElementById('cartPreviewBody');
+  const totalEl = document.getElementById('cartPreviewTotal');
+  if (!body) return;
+
+  const carrinho = store.getCarrinho ? store.getCarrinho() : [];
+
+  if (!carrinho || carrinho.length === 0) {
+    body.innerHTML = '<div style="text-align:center; padding:24px; color:var(--texto-secundario); font-size:13px;">🛒 Nenhum item no carrinho.</div>';
+    if (totalEl) totalEl.textContent = 'R$ 0,00';
+    return;
+  }
+
+  let total = 0;
+  let html = '';
+
+  carrinho.forEach(item => {
+  const p = store.getProdutoById(item.id);
+  if (!p) return; // produto removido do catálogo
+
+  const qtd = item.qtd || 1;
+  const subtotal = p.preco * qtd;
+  total += subtotal;
+
+  const thumb = p.imagens && p.imagens[0]
+    ? `<img src="${p.imagens[0]}" alt="${p.nome}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;">`
+    : (p.emoji || '📦');
+
+  html += `
+    <div class="cart-preview-item">
+      <div class="cart-preview-item-thumb">${thumb}</div>
+      <div class="cart-preview-item-info">
+        <div class="cart-preview-item-nome">${p.nome}</div>
+        <div class="cart-preview-item-qtd">${qtd} unid. × ${formatMoeda(p.preco)}</div>
+      </div>
+      <div class="cart-preview-item-preco">${formatMoeda(subtotal)}</div>
+    </div>
+  `;
+});
+
+  body.innerHTML = html;
+  if (totalEl) totalEl.textContent = formatMoeda(total);
+}
+
+function abrirCartPreview() {
+  // Injeta o drawer se ainda não existir no DOM
+  if (!document.getElementById('cartPreviewDrawer')) {
+    const html = `
+      <div id="cartPreviewOverlay" class="cart-preview-overlay" onclick="fecharCartPreview()"></div>
+      <div id="cartPreviewDrawer" class="cart-preview-drawer">
+        <div class="cart-preview-header">
+          <h4>🛒 Meu Carrinho</h4>
+          <button class="cart-preview-close" onclick="fecharCartPreview()" title="Fechar">✕</button>
+        </div>
+        <div class="cart-preview-body" id="cartPreviewBody"></div>
+        <div class="cart-preview-footer">
+          <div class="cart-preview-total">
+            <span>Total do Carrinho</span>
+            <span id="cartPreviewTotal">R$ 0,00</span>
+          </div>
+          <button class="cart-preview-btn-ir" onclick="fecharCartPreview(); navigateTo('page-carrinho');">
+            Ver Carrinho Completo →
+          </button>
+        </div>
+      </div>
+    `;
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = html;
+    document.body.appendChild(wrapper);
+  }
+
+  renderCartPreview();
+
+  const overlay = document.getElementById('cartPreviewOverlay');
+  const drawer = document.getElementById('cartPreviewDrawer');
+  if (overlay) overlay.classList.add('active');
+  if (drawer) drawer.classList.add('active');
+
+  // Fecha automaticamente após 6 segundos de inatividade
+  if (cartPreviewTimer) clearTimeout(cartPreviewTimer);
+  cartPreviewTimer = setTimeout(() => fecharCartPreview(), 6000);
+}
+
+function fecharCartPreview() {
+  if (cartPreviewTimer) { clearTimeout(cartPreviewTimer); cartPreviewTimer = null; }
+  const overlay = document.getElementById('cartPreviewOverlay');
+  const drawer = document.getElementById('cartPreviewDrawer');
+  if (overlay) overlay.classList.remove('active');
+  if (drawer) drawer.classList.remove('active');
 }

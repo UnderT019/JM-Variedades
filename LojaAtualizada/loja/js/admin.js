@@ -393,7 +393,10 @@ function fecharModalReporEstoque() {
 
 function setQtdReporRapido(qtd) {
   const input = document.getElementById('reporModalQtd');
-  if (input) input.value = String(qtd);
+  if (!input) return;
+  // Acumula a quantidade: soma ao valor atual em vez de substituir
+  const valorAtual = parseInt(input.value, 10) || 0;
+  input.value = String(valorAtual + qtd);
 }
 
 // Upload e seleção de imagens no modal de reposição
