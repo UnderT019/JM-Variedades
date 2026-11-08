@@ -48,9 +48,9 @@ function renderCarrinho() {
     html += `
       <div class="item-carrinho">
         <div class="item-info">
-          <div class="item-thumb">${htmlImagemProduto(p)}</div>
+          <div class="item-thumb" onclick="abrirPaginaProduto(${p.id})" style="cursor:pointer;" title="Clique para ver o produto">${htmlImagemProduto(p)}</div>
           <div class="item-detalhes">
-            <h4>${p.nome}</h4>
+            <h4 onclick="abrirPaginaProduto(${p.id})" style="cursor:pointer;" title="Clique para ver o produto">${p.nome}</h4>
             <span class="item-cat-tag">Categoria: ${p.cat}</span>
             <div class="item-preco-unit">${formatMoeda(p.preco)} cada</div>
           </div>
@@ -470,6 +470,63 @@ async function calcularFreteProdutoModal() {
     <div class="msg-frete sucesso" style="font-size:12px; padding:10px 12px; margin-bottom:8px;">
       📍 Entrega para <b>${cotacao.cep}</b> (${localTxt})<br>
       <small style="opacity:0.9;">Peso unitário estimado: ${cotacao.pesoFormatado} | Distância aprox.: ~${cotacao.distanciaKm} km</small>
+    </div>
+    <div style="margin-top:8px;">
+      ${htmlOpcoes}
+    </div>
+  `;
+}
+
+// ===== SIMULADOR DE FRETE NA TELA DO PRODUTO (PÁGINA INDEPENDENTE) =====
+async function calcularFreteProdutoPagina() {
+  if (typeof FreteLogistica === 'undefined') return;
+
+  const produtoId = typeof produtoAtualPaginaId !== 'undefined' ? produtoAtualPaginaId : (typeof produtoDetalhesAtualId !== 'undefined' ? produtoDetalhesAtualId : null);
+  const p = produtoId ? store.getProdutoById(produtoId) : null;
+  const input = document.getElementById('cepPaginaProduto');
+  const resContainer = document.getElementById('resultadoFretePaginaProduto');
+  if (!input || !resContainer) return;
+
+  const cepLimpo = FreteLogistica.limparCEP(input.value);
+  if (cepLimpo.length !== 8) {
+    resContainer.innerHTML = '<div class="msg-frete erro" style="font-size:12px; margin-top:8px;">❌ Digite um CEP válido com 8 dígitos (ex: 01001-000).</div>';
+    return;
+  }
+
+  resContainer.innerHTML = '<div class="msg-frete aviso" style="font-size:12px; margin-top:8px;">⏳ Consultando frete e prazos para este produto...</div>';
+
+  const qtd = (typeof qtdAtualPagina !== 'undefined' && qtdAtualPagina > 0) ? qtdAtualPagina : 1;
+  const precoProd = (p ? p.preco : 100) * qtd;
+  const pesoKg = (p ? store.obterPesoProduto(p) : 0.5) * qtd;
+
+  const cotacao = await FreteLogistica.calcularCotacao({
+    cep: cepLimpo,
+    pesoKg: pesoKg,
+    subtotal: precoProd
+  });
+
+  if (!cotacao.sucesso) {
+    resContainer.innerHTML = `<div class="msg-frete erro" style="font-size:12px; margin-top:8px;">❌ ${cotacao.msg}</div>`;
+    return;
+  }
+
+  const end = cotacao.endereco;
+  const localTxt = (end && end.cidade) ? `${end.cidade} - ${end.uf}` : cotacao.regiao;
+
+  let htmlOpcoes = cotacao.opcoes.map(opt => `
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px; background:var(--cinza-muito-claro); border:1.5px solid var(--cinza-borda); border-radius:10px; margin-bottom:6px; font-size:12px;">
+      <div>
+        <div style="font-weight:800; color:var(--azul-principal);">${opt.nome} ${opt.badge ? `<span class="badge ${opt.isGratis ? 'badge-gratis' : ''}" style="font-size:9px; padding:2px 6px;">${opt.badge}</span>` : ''}</div>
+        <div style="color:var(--texto-secundario); font-size:11px;">⏱️ ${opt.prazo}</div>
+      </div>
+      <div style="font-weight:900; font-size:14px; color:${opt.isGratis ? 'var(--verde)' : 'var(--laranja-principal)'};">${opt.valorFormatado}</div>
+    </div>
+  `).join('');
+
+  resContainer.innerHTML = `
+    <div class="msg-frete sucesso" style="font-size:12px; padding:10px 12px; margin: 10px 0 8px 0;">
+      📍 Entrega para <b>${cotacao.cep}</b> (${localTxt})<br>
+      <small style="opacity:0.9;">Peso total estimado: ${cotacao.pesoFormatado} | Distância aprox.: ~${cotacao.distanciaKm} km</small>
     </div>
     <div style="margin-top:8px;">
       ${htmlOpcoes}

@@ -226,6 +226,272 @@
     </div>
   </div>
 
+    <!-- =======================================================
+       PAGE: DETALHES DO PRODUTO (TELA INDEPENDENTE COMPLETA)
+       ======================================================= -->
+  <div id="page-produto" class="page">
+    <div class="container">
+      
+      <!-- Linha superior de navegação / Breadcrumb -->
+      <div class="prod-page-top-nav">
+        <div class="breadcrumb" id="prodPageBreadcrumb">
+          <a onclick="navigateTo('page-home')">Início</a> &nbsp;›&nbsp;
+          <a onclick="filtrarCategoriaBreadcrumb()" id="prodPageBreadCat" style="cursor:pointer;">Categoria</a> &nbsp;›&nbsp;
+          <span id="prodPageBreadNome">Nome do Produto</span> &nbsp;›&nbsp;
+          <span id="prodPageBreadCodigo" class="prod-page-sku">Código: 78900010077243</span>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" onclick="navigateTo('page-home')">
+          ← Continuar comprando
+        </button>
+      </div>
+
+      <!-- Card principal do Produto -->
+      <div class="prod-page-card">
+        <div class="prod-page-grid">
+          
+          <!-- COLUNA 1: GALERIA DE IMAGENS -->
+          <div class="prod-page-gallery-col">
+            <div class="prod-page-gallery">
+              <!-- Miniaturas Verticais -->
+              <div class="prod-page-thumbs" id="prodPageThumbs">
+                <!-- Inserido dinamicamente via JS -->
+              </div>
+
+              <!-- Foto Principal / Preview -->
+              <div class="prod-page-main-photo-wrap" id="prodPageMainPhotoWrap">
+                <div id="prodPageMainPhoto" class="prod-page-main-photo">
+                  <!-- Imagem ou Emoji principal -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Status de Estoque abaixo da foto -->
+            <div class="prod-page-stock-alert" id="prodPageStockAlert">
+              ✓ Em Estoque (30 unidades à pronta entrega)
+            </div>
+
+
+          </div>
+
+          <!-- COLUNA 2: DADOS E INFORMAÇÕES DO PRODUTO -->
+          <div class="prod-page-info-col">
+            <div class="prod-page-info-header">
+              <div class="prod-page-badges-row">
+                <span class="badge-tag-oficial" id="prodPageBadgeOficial">PRODUTO OFICIAL JM VARIEDADES</span>
+                <span class="badge-cat-pill" id="prodPageCatPill" onclick="filtrarCategoriaBreadcrumb()">Brinquedos e Jogos</span>
+              </div>
+              <div class="prod-page-actions-top">
+                <button type="button" class="btn-icon-action" onclick="compartilharProdutoAtual()" title="Compartilhar produto">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                </button>
+                <button type="button" class="btn-icon-action" id="btnFavoritoProd" onclick="toggleFavoritoProdutoAtual()" title="Salvar nos favoritos">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                </button>
+              </div>
+            </div>
+
+            <h1 class="prod-page-title" id="prodPageTitle">Quebra-Cabeça 1000 Peças Mapa Múndi Vintage</h1>
+
+            <div class="prod-page-seller">
+              Vendido e entregue por: <strong>JM Variedades</strong> <span class="seller-verified">✓ Verificado</span>
+            </div>
+
+            <div class="prod-page-rating-row">
+              <span class="prod-page-stars" id="prodPageStars">4.8 ★★★★★</span>
+              <span class="prod-page-reviews" id="prodPageReviewsCount">(420 avaliações de compradores)</span>
+              
+            </div>
+
+            <div class="prod-page-divider"></div>
+
+            <!-- Seção SOBRE O PRODUTO (com Especificações e Descrição Incorporadas) -->
+            <div class="prod-page-specs-section">
+              <div class="prod-page-section-title">SOBRE O PRODUTO</div>
+              <ul class="prod-page-specs-list" id="prodPageSpecsList">
+                <!-- Bullets com ícones e especificações -->
+              </ul>
+
+              <!-- Descrição Detalhada incorporada diretamente em Sobre o Produto -->
+              <div class="prod-page-desc-inline">
+                <div class="prod-page-desc-subtitle">Descrição Detalhada do Produto:</div>
+                <p class="prod-page-description" id="prodPageDescription">
+                  <!-- Descrição preenchida via JS -->
+                </p>
+              </div>
+
+              <!-- Selos Rápidos de Garantia -->
+              <div class="prod-page-trust-pills">
+                <div class="trust-pill-item">🛡️ Garantia Oficial JM</div>
+                <div class="trust-pill-item">📦 Embalagem Reforçada</div>
+                <div class="trust-pill-item">⚡ Pronta Entrega</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUNA 3: BUY BOX / PAINEL DE COMPRA E FRETE -->
+          <div class="prod-page-buybox-col">
+            <div class="prod-page-buybox">
+              
+              <!-- Preços -->
+              <div class="prod-page-price-box">
+                <div class="prod-page-old-price" id="prodPageOldPrice">De: R$ 89,90</div>
+                <div class="prod-page-main-price-row">
+                  <span class="prod-page-price" id="prodPagePrice">R$ 69,90</span>
+                  <span class="prod-page-discount-tag" id="prodPageDiscountTag">-22% OFF</span>
+                </div>
+                <div class="prod-page-pix-badge">
+                  <span>⚡ 10% de desconto à vista no PIX</span>
+                </div>
+                <div class="prod-page-installments" id="prodPageInstallments">
+                  Em até 4x de R$ 17,48 sem juros no cartão
+                </div>
+              </div>
+
+              <!-- Cupons aplicáveis -->
+              <div class="prod-page-coupons-card">
+                <div class="coupons-card-title">🎟️ Cupons Aplicáveis:</div>
+                <div class="coupons-pills">
+                  <span class="coupon-pill" onclick="copiarCupom('COMPRANOAPP')" title="Clique para copiar cupom">COMPRANOAPP <i>(R$ 20 OFF)</i></span>
+                  <span class="coupon-pill" onclick="copiarCupom('FLASH25')" title="Clique para copiar cupom">FLASH25 <i>(25% OFF)</i></span>
+                </div>
+              </div>
+
+              <!-- Seletor de Quantidade -->
+              <div class="prod-page-qty-row">
+                <span class="lbl-qty">Quantidade:</span>
+                <div class="prod-page-qty-selector">
+                  <button type="button" class="btn-qty" onclick="alterarQtdPaginaProduto(-1)">-</button>
+                  <input type="text" id="prodPageQtdInput" value="1" readonly>
+                  <button type="button" class="btn-qty" onclick="alterarQtdPaginaProduto(1)">+</button>
+                </div>
+              </div>
+
+              <!-- Botões de Ação -->
+              <div class="prod-page-cta-group">
+                <button type="button" class="btn btn-secondary btn-full btn-buy-now" id="btnProdPageComprarAgora" onclick="executarComprarAgoraPagina()">
+                  COMPRAR AGORA ➔
+                </button>
+                <button type="button" class="btn btn-primary btn-full btn-add-cart-page" id="btnProdPageAddCarrinho" onclick="executarAdicionarCarrinhoPagina()">
+                  🛒 ADICIONAR AO CARRINHO
+                </button>
+              </div>
+
+
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- =======================================================
+           BLOCO DE PRODUTOS RELACIONADOS (MESMA CATEGORIA)
+           ======================================================= -->
+      <div class="prod-page-related-card" id="prodPageRelatedSection">
+        <div class="related-header-row">
+          <div>
+            <h2 class="related-main-title">🔥 Produtos Relacionados</h2>
+            <p class="related-subtitle" id="relatedCatSubtitle">Outros produtos da mesma categoria que você também pode gostar:</p>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" onclick="filtrarCategoriaBreadcrumb()">
+            Ver toda a categoria ➔
+          </button>
+        </div>
+
+        <div class="related-products-grid" id="prodRelatedGrid">
+          <!-- Renderizado dinamicamente via JS com base na categoria -->
+        </div>
+      </div>
+
+      <!-- =======================================================
+           SEÇÃO DE AVALIAÇÕES E COMENTÁRIOS DOS CLIENTES
+           ======================================================= -->
+      <div class="prod-page-comments-card">
+        <div class="comments-header-row">
+          <div>
+            <h2 class="comments-main-title">💬 Avaliações e Opiniões de Clientes</h2>
+            <p class="comments-subtitle">Veja a experiência e feedback de quem já comprou e testou este produto na JM Variedades.</p>
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" id="btnToggleNovoComentario" onclick="toggleFormComentario()">
+            ✍️ Escrever Avaliação
+          </button>
+        </div>
+
+        <!-- Painel de Resumo das Avaliações (Score Geral + Barras de Distribuição Dinâmicas) -->
+        <div class="comments-summary-grid">
+          <div class="comments-score-box">
+            <div class="comments-score-number" id="commentsScoreNum">0.0</div>
+            <div class="comments-score-stars" id="commentsScoreStars">☆☆☆☆☆</div>
+          </div>
+
+          <div class="comments-bars-box" id="commentsBarsBox">
+            <div class="rating-bar-row">
+              <span class="bar-label">5 estrelas</span>
+              <div class="bar-track"><div class="bar-fill" id="barFill5" style="width: 0%;"></div></div>
+              <span class="bar-percent" id="barPercent5">0%</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">4 estrelas</span>
+              <div class="bar-track"><div class="bar-fill" id="barFill4" style="width: 0%;"></div></div>
+              <span class="bar-percent" id="barPercent4">0%</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">3 estrelas</span>
+              <div class="bar-track"><div class="bar-fill" id="barFill3" style="width: 0%;"></div></div>
+              <span class="bar-percent" id="barPercent3">0%</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">2 estrelas</span>
+              <div class="bar-track"><div class="bar-fill" id="barFill2" style="width: 0%;"></div></div>
+              <span class="bar-percent" id="barPercent2">0%</span>
+            </div>
+            <div class="rating-bar-row">
+              <span class="bar-label">1 estrela</span>
+              <div class="bar-track"><div class="bar-fill" id="barFill1" style="width: 0%;"></div></div>
+              <span class="bar-percent" id="barPercent1">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulário para Enviar Avaliação (Interativo) -->
+        <div class="comments-form-wrap" id="commentsFormWrap" style="display: none;">
+          <h3 class="comments-form-title">Deixe sua opinião sobre este produto</h3>
+          <form onsubmit="salvarNovoComentario(event)">
+            <div class="comments-form-grid">
+              <div class="field" style="margin-bottom: 0;">
+                <label for="comentarioAutor">Seu Nome <span>*</span></label>
+                <input type="text" id="comentarioAutor" placeholder="Ex: Maria Silva" required>
+              </div>
+              <div class="field" style="margin-bottom: 0;">
+                <label for="comentarioNota">Sua Avaliação (Nota) <span>*</span></label>
+                <select id="comentarioNota" required>
+                  <option value="5">⭐⭐⭐⭐⭐ (5 estrelas - Excelente)</option>
+                  <option value="4">⭐⭐⭐⭐ (4 estrelas - Muito Bom)</option>
+                  <option value="3">⭐⭐⭐ (3 estrelas - Bom)</option>
+                  <option value="2">⭐⭐ (2 estrelas - Regular)</option>
+                  <option value="1">⭐ (1 estrela - Ruim)</option>
+                </select>
+              </div>
+            </div>
+            <div class="field" style="margin-top: 14px; margin-bottom: 14px;">
+              <label for="comentarioTexto">Seu Comentário ou Avaliação <span>*</span></label>
+              <textarea id="comentarioTexto" rows="3" placeholder="Conte o que achou da qualidade, acabamento, funcionalidade e entrega deste produto..." required></textarea>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+              <button type="button" class="btn btn-outline btn-sm" onclick="toggleFormComentario()">Cancelar</button>
+              <button type="submit" class="btn btn-primary btn-sm">Publicar Avaliação ➔</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Lista Dinâmica de Comentários dos Compradores -->
+        <div class="comments-list" id="prodCommentsList">
+          <!-- Renderizado dinamicamente via JS -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- =======================================================
        PAGE 2: CARRINHO DE COMPRAS
        ======================================================= -->

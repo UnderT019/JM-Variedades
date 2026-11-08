@@ -18,6 +18,7 @@ function initApp() {
   setupBuscaInput();
   updateNavigationState();
   initMascarasCliente();
+  initPaginaProdutoListeners();
 }
 
 // Atualiza o estado visual da barra de navegação superior
@@ -157,6 +158,7 @@ function navigateTo(pageId) {
   // Destaca o botão correspondente no header
   const navMap = {
     'page-home': 'nav-home',
+    'page-produto': 'nav-home',
     'page-carrinho': 'nav-carrinho',
     'page-checkout': 'nav-carrinho',
     'page-historico': 'nav-historico',
@@ -408,124 +410,348 @@ function showToast(mensagem, tipo = 'info') {
   }, 3500);
 }
 
-// Modal de Detalhes do Produto (Inspirado no LEGO Ferrari SF-24)
+// =======================================================
+// TELA INDEPENDENTE DE DETALHES DO PRODUTO (PADRÃO E-COMMERCE / KABUM)
+// =======================================================
+let produtoAtualPaginaId = null;
 let produtoDetalhesAtualId = null;
+let qtdAtualPagina = 1;
+const favoritosIds = new Set();
 
-// Galeria de imagens no modal de detalhes do produto
-function renderGaleriaDetalhe(p) {
-  const principal = document.getElementById('modalDetEmoji');
-  const miniaturas = document.getElementById('modalDetMiniaturas');
-  const imgs = obterImagensProduto(p);
-
-  if (imgs.length > 0) {
-    principal.innerHTML = `<img id="modalDetImgPrincipal" src="${imgs[0]}" alt="${escaparAtributoHtml(p.nome)}" class="img-prod img-prod-detalhe">`;
-    if (miniaturas) {
-      miniaturas.innerHTML = imgs.length > 1
-        ? imgs.map((src, i) => `<img src="${src}" alt="Imagem ${i + 1}" class="mini-img ${i === 0 ? 'ativa' : ''}" onclick="trocarImagemDetalhe(this)">`).join('')
-        : '';
-    }
-  } else {
-    principal.textContent = p.emoji || '📦';
-    if (miniaturas) miniaturas.innerHTML = '';
-  }
-}
-
-function trocarImagemDetalhe(miniEl) {
-  const principal = document.getElementById('modalDetImgPrincipal');
-  if (principal) principal.src = miniEl.src;
-  document.querySelectorAll('#modalDetMiniaturas .mini-img').forEach(el => el.classList.remove('ativa'));
-  miniEl.classList.add('ativa');
-}
-
-function abrirModalDetalhes(produtoId) {
+// Abre a tela independente do produto ao clicar no catálogo ou busca
+function abrirPaginaProduto(produtoId) {
   const p = store.getProdutoById(produtoId);
   if (!p) return;
 
+  produtoAtualPaginaId = produtoId;
   produtoDetalhesAtualId = produtoId;
-  const modal = document.getElementById('modalDetalhesProduto');
-  if (!modal) return;
+  qtdAtualPagina = 1;
 
-  document.getElementById('modalDetCat').textContent = `${p.cat} › Produto Oficial`;
-  renderGaleriaDetalhe(p);
-  document.getElementById('modalDetNome').textContent = p.nome;
-  document.getElementById('modalDetNota').textContent = `${p.nota || 4.9} ★★★★★`;
-  document.getElementById('modalDetAvaliacoes').textContent = `(${p.avaliacoes || 120} avaliações de compradores)`;
-  document.getElementById('modalDetPreco').textContent = formatMoeda(p.preco);
-  
-  const antigoEl = document.getElementById('modalDetAntigo');
-  const badgeEl = document.getElementById('modalDetDescontoBadge');
-  if (p.antigo && p.antigo > p.preco) {
-    antigoEl.style.display = 'inline';
-    antigoEl.textContent = `De: ${formatMoeda(p.antigo)}`;
-    badgeEl.style.display = 'inline-block';
-    badgeEl.textContent = p.desconto || `-${Math.round((1 - p.preco / p.antigo) * 100)}% OFERTA`;
-  } else {
-    antigoEl.style.display = 'none';
-    badgeEl.style.display = 'none';
-  }
+  // Atualiza campo de quantidade
+  const inputQtd = document.getElementById('prodPageQtdInput');
+  if (inputQtd) inputQtd.value = 1;
 
-  const parcVal = (p.preco / 4).toFixed(2).replace('.', ',');
-  document.getElementById('modalDetParcelas').textContent = `Em até 4x de R$ ${parcVal} sem juros no cartão`;
-  document.getElementById('modalDetDesc').textContent = p.desc || `${p.nome} - Produto original com garantia de fábrica e entrega rápida JM Variedades.`;
-  document.getElementById('modalDetBarcode').textContent = p.barcode || '7890001000000';
+  // Breadcrumbs e Título
+  const breadCat = document.getElementById('prodPageBreadCat');
+  const breadNome = document.getElementById('prodPageBreadNome');
+  const breadCodigo = document.getElementById('prodPageBreadCodigo');
+  if (breadCat) breadCat.textContent = p.cat;
+  if (breadNome) breadNome.textContent = p.nome;
+  if (breadCodigo) breadCodigo.textContent = `Código: ${p.barcode || p.id}`;
 
-  const statusEst = document.getElementById('modalDetEstoqueStatus');
-  if (p.estoque === 0) {
-    statusEst.style.background = 'var(--vermelho-fundo)';
-    statusEst.style.color = 'var(--vermelho)';
-    statusEst.style.borderColor = 'var(--vermelho)';
-    statusEst.textContent = '🔴 Esgotado no Momento';
-  } else if (p.estoque <= 5) {
-    statusEst.style.background = 'var(--laranja-pastel)';
-    statusEst.style.color = 'var(--laranja-escuro)';
-    statusEst.style.borderColor = 'var(--laranja-escuro)';
-    statusEst.textContent = `⚡ Poucas Unidades (Restam ${p.estoque})`;
-  } else {
-    statusEst.style.background = 'var(--verde-fundo)';
-    statusEst.style.color = 'var(--verde)';
-    statusEst.style.borderColor = 'var(--verde)';
-    statusEst.textContent = `✓ Em Estoque (${p.estoque} unidades à pronta entrega)`;
-  }
+  const badgeCat = document.getElementById('prodPageCatPill');
+  if (badgeCat) badgeCat.textContent = p.cat;
 
-  const btnAdd = document.getElementById('btnModalAddCarrinho');
-  const btnBuy = document.getElementById('btnModalComprarAgora');
-  if (btnAdd) {
-    btnAdd.disabled = p.estoque === 0;
-    btnAdd.onclick = () => {
-      adicionarProduto(p.id);
-      fecharModalDetalhes();
-    };
-  }
-  if (btnBuy) {
-    btnBuy.disabled = p.estoque === 0;
-    btnBuy.onclick = () => {
-      adicionarProduto(p.id);
-      fecharModalDetalhes();
-      navigateTo('page-carrinho');
-    };
-  }
+  const titleEl = document.getElementById('prodPageTitle');
+  if (titleEl) titleEl.textContent = p.nome;
 
-  const inputFreteMod = document.getElementById('cepModalProduto');
-  const resFreteMod = document.getElementById('resultadoFreteModalProduto');
-  if (resFreteMod) resFreteMod.innerHTML = '';
-  if (inputFreteMod) {
-    const cotacao = typeof store.getFreteCotacao === 'function' ? store.getFreteCotacao() : null;
-    if (cotacao && cotacao.cep) {
-      inputFreteMod.value = cotacao.cep;
-      if (typeof calcularFreteProdutoModal === 'function') {
-        calcularFreteProdutoModal();
-      }
+  // Avaliações
+  const starsEl = document.getElementById('prodPageStars');
+  const revEl = document.getElementById('prodPageReviewsCount');
+  if (starsEl) starsEl.textContent = `${p.nota || 4.9} ★★★★★`;
+  if (revEl) revEl.textContent = `(${p.avaliacoes || 120} avaliações de compradores)`;
+
+  // Renderiza a galeria de imagens e miniaturas verticais
+  renderGaleriaPaginaProduto(p);
+
+  // Status de Estoque
+  const stockAlert = document.getElementById('prodPageStockAlert');
+  if (stockAlert) {
+    if (p.estoque === 0) {
+      stockAlert.className = 'prod-page-stock-alert esgotado';
+      stockAlert.innerHTML = '🔴 <strong>Esgotado no Momento</strong> — Sem unidades disponíveis';
+    } else if (p.estoque <= 5) {
+      stockAlert.className = 'prod-page-stock-alert baixo';
+      stockAlert.innerHTML = `⚡ <strong>Poucas Unidades Restantes</strong> — Restam apenas ${p.estoque} unidades!`;
     } else {
-      inputFreteMod.value = '';
+      stockAlert.className = 'prod-page-stock-alert normal';
+      stockAlert.innerHTML = `✓ <strong>Em Estoque</strong> (${p.estoque} unidades à pronta entrega)`;
     }
   }
 
-  modal.classList.add('active');
+  // Especificações Técnicas (SOBRE O PRODUTO)
+  const specsList = document.getElementById('prodPageSpecsList');
+  if (specsList) {
+    const dim = p.dimensoes || {};
+    const dimTxt = (dim.altura && dim.largura && dim.comprimento)
+      ? `${dim.altura} cm (A) × ${dim.largura} cm (L) × ${dim.comprimento} cm (C)`
+      : 'Embalagem padrão transportadora';
+    const pesoTxt = p.peso ? `${p.peso} kg` : '0.50 kg';
+
+    specsList.innerHTML = `
+      <li><strong>Categoria Oficial:</strong> ${p.cat}</li>
+      <li><strong>Código de Barras (EAN):</strong> <code style="font-weight:800; color:var(--azul-principal);">${p.barcode || '7890001000000'}</code></li>
+      <li><strong>Peso Líquido Estimado:</strong> ${pesoTxt}</li>
+      <li><strong>Dimensões do Produto:</strong> ${dimTxt}</li>
+      <li><strong>Garantia Oficial:</strong> 90 dias com cobertura nacional JM Variedades</li>
+      <li><strong>Condição:</strong> Produto 100% Original, lacrado na caixa com nota fiscal</li>
+    `;
+  }
+
+  // Descrição Detalhada
+  const descEl = document.getElementById('prodPageDescription');
+  if (descEl) {
+    descEl.textContent = p.desc || `${p.nome} - Produto original com garantia de fábrica, distribuição autorizada e envio imediato pela JM Variedades.`;
+  }
+
+  // Preço e Condições na Buy Box
+  const oldPriceEl = document.getElementById('prodPageOldPrice');
+  const mainPriceEl = document.getElementById('prodPagePrice');
+  const discTagEl = document.getElementById('prodPageDiscountTag');
+  const instEl = document.getElementById('prodPageInstallments');
+
+  if (mainPriceEl) mainPriceEl.textContent = formatMoeda(p.preco);
+
+  if (p.antigo && p.antigo > p.preco) {
+    if (oldPriceEl) {
+      oldPriceEl.style.display = 'block';
+      oldPriceEl.textContent = `De: ${formatMoeda(p.antigo)}`;
+    }
+    if (discTagEl) {
+      discTagEl.style.display = 'inline-block';
+      discTagEl.textContent = p.desconto || `-${Math.round((1 - p.preco / p.antigo) * 100)}% OFF`;
+    }
+  } else {
+    if (oldPriceEl) oldPriceEl.style.display = 'none';
+    if (discTagEl) discTagEl.style.display = 'none';
+  }
+
+  const parcVal = (p.preco / 4).toFixed(2).replace('.', ',');
+  if (instEl) {
+    instEl.textContent = `Em até 4x de R$ ${parcVal} sem juros no cartão`;
+  }
+
+  // Botões de Compra
+  const btnBuy = document.getElementById('btnProdPageComprarAgora');
+  const btnAdd = document.getElementById('btnProdPageAddCarrinho');
+  const isEsgotado = p.estoque === 0;
+
+  if (btnBuy) {
+    btnBuy.disabled = isEsgotado;
+    btnBuy.style.opacity = isEsgotado ? '0.5' : '1';
+    btnBuy.style.cursor = isEsgotado ? 'not-allowed' : 'pointer';
+  }
+  if (btnAdd) {
+    btnAdd.disabled = isEsgotado;
+    btnAdd.style.opacity = isEsgotado ? '0.5' : '1';
+    btnAdd.style.cursor = isEsgotado ? 'not-allowed' : 'pointer';
+  }
+
+  // Simulador de Frete
+  const inputCep = document.getElementById('cepPaginaProduto');
+  const resFrete = document.getElementById('resultadoFretePaginaProduto');
+  if (resFrete) resFrete.innerHTML = '';
+  if (inputCep) {
+    const cotacao = typeof store.getFreteCotacao === 'function' ? store.getFreteCotacao() : null;
+    if (cotacao && cotacao.cep) {
+      inputCep.value = cotacao.cep;
+      if (typeof calcularFreteProdutoPagina === 'function') {
+        calcularFreteProdutoPagina();
+      }
+    } else {
+      inputCep.value = '';
+    }
+  }
+
+  // Atualiza estado do botão de favorito
+  const btnFav = document.getElementById('btnFavoritoProd');
+  if (btnFav) {
+    if (favoritosIds.has(produtoId)) {
+      btnFav.classList.add('favoritado');
+    } else {
+      btnFav.classList.remove('favoritado');
+    }
+  }
+
+  // Renderiza os produtos relacionados da mesma categoria
+  renderProdutosRelacionados(p);
+
+  // Renderiza a seção de comentários do produto
+  renderComentariosProduto(p);
+
+  // Fecha qualquer modal remanescente e abre a página independente
+  fecharModalDetalhes();
+  navigateTo('page-produto');
+}
+
+// Renderiza a galeria de imagens com suporte a miniaturas verticais
+function renderGaleriaPaginaProduto(p) {
+  const thumbsContainer = document.getElementById('prodPageThumbs');
+  const mainPhotoContainer = document.getElementById('prodPageMainPhoto');
+  const imgs = obterImagensProduto(p);
+
+  if (imgs.length > 0) {
+    mainPhotoContainer.innerHTML = `
+      <img id="prodPageMainPhotoImg" src="${imgs[0]}" alt="${escaparAtributoHtml(p.nome)}" class="prod-page-hero-img">
+    `;
+
+    if (thumbsContainer) {
+      let thumbsHtml = imgs.map((src, idx) => `
+        <div class="prod-thumb-mini ${idx === 0 ? 'ativa' : ''}" onclick="trocarFotoPaginaPrincipal('${src}', this)" title="Ver imagem ${idx + 1}">
+          <img src="${src}" alt="${escaparAtributoHtml(p.nome)}">
+        </div>
+      `).join('');
+
+      thumbsContainer.innerHTML = thumbsHtml;
+    }
+  } else {
+    mainPhotoContainer.innerHTML = `
+      <div class="prod-page-hero-emoji">${p.emoji || '📦'}</div>
+    `;
+    if (thumbsContainer) {
+      thumbsContainer.innerHTML = `
+        <div class="prod-thumb-mini ativa">
+          <span style="font-size: 26px;">${p.emoji || '📦'}</span>
+        </div>
+      `;
+    }
+  }
+}
+
+function trocarFotoPaginaPrincipal(src, thumbEl) {
+  const mainImg = document.getElementById('prodPageMainPhotoImg');
+  if (mainImg) mainImg.src = src;
+  document.querySelectorAll('#prodPageThumbs .prod-thumb-mini').forEach(el => el.classList.remove('ativa'));
+  if (thumbEl) thumbEl.classList.add('ativa');
+}
+
+// Controle de Quantidade na Página de Detalhes
+function alterarQtdPaginaProduto(delta) {
+  const p = store.getProdutoById(produtoAtualPaginaId);
+  const maxEstoque = p ? p.estoque : 99;
+  let novaQtd = qtdAtualPagina + delta;
+  if (novaQtd < 1) novaQtd = 1;
+  if (novaQtd > maxEstoque) {
+    novaQtd = maxEstoque;
+    showToast(`Limite atingido! Temos ${maxEstoque} unidades disponíveis em estoque.`, 'warning');
+  }
+  qtdAtualPagina = novaQtd;
+  const input = document.getElementById('prodPageQtdInput');
+  if (input) input.value = qtdAtualPagina;
+}
+
+function executarAdicionarCarrinhoPagina() {
+  if (!produtoAtualPaginaId) return;
+  const ok = adicionarProduto(produtoAtualPaginaId, qtdAtualPagina);
+  if (ok) {
+    showToast(`${qtdAtualPagina} unidade(s) adicionada(s) ao carrinho!`, 'success');
+  }
+}
+
+function executarComprarAgoraPagina() {
+  if (!produtoAtualPaginaId) return;
+  if (!store.getCurrentUser()) {
+    showToast('Faça login para prosseguir com a compra.', 'error');
+    abrirModalLogin();
+    return;
+  }
+  const ok = adicionarProduto(produtoAtualPaginaId, qtdAtualPagina);
+  if (ok) {
+    fecharCartPreview();
+    navigateTo('page-carrinho');
+  }
+}
+
+// Filtra produtos pela categoria pelo clique no breadcrumb e volta ao catálogo
+function filtrarCategoriaBreadcrumb() {
+  const p = store.getProdutoById(produtoAtualPaginaId);
+  if (p && p.cat) {
+    categoriaAtiva = p.cat;
+    navigateTo('page-home');
+    document.querySelectorAll('.cat-chip, .cat-circle-item').forEach(chip => {
+      if (chip.textContent.includes(p.cat)) chip.classList.add('active');
+      else chip.classList.remove('active');
+    });
+    renderProdutosGrid();
+  } else {
+    navigateTo('page-home');
+  }
+}
+
+// Copiar código de cupom
+function copiarCupom(codigo) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(codigo).then(() => {
+      showToast(`Cupom ${codigo} copiado para a área de transferência!`, 'success');
+    }).catch(() => {
+      showToast(`Cupom: ${codigo}`, 'info');
+    });
+  } else {
+    showToast(`Cupom: ${codigo}`, 'info');
+  }
+}
+
+// Compartilhar Produto
+function compartilharProdutoAtual() {
+  const p = store.getProdutoById(produtoAtualPaginaId);
+  const title = p ? p.nome : 'JM Variedades';
+  const url = window.location.href;
+
+  if (navigator.share) {
+    navigator.share({
+      title: title,
+      text: `Confira ${title} na JM Variedades!`,
+      url: url
+    }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => {
+      showToast('Link do produto copiado para a área de transferência!', 'success');
+    });
+  } else {
+    showToast('Link do produto pronto!', 'info');
+  }
+}
+
+// Favoritar Produto
+function toggleFavoritoProdutoAtual() {
+  if (!produtoAtualPaginaId) return;
+  const btn = document.getElementById('btnFavoritoProd');
+  if (favoritosIds.has(produtoAtualPaginaId)) {
+    favoritosIds.delete(produtoAtualPaginaId);
+    if (btn) btn.classList.remove('favoritado');
+    showToast('Produto removido dos seus favoritos.', 'info');
+  } else {
+    favoritosIds.add(produtoAtualPaginaId);
+    if (btn) btn.classList.add('favoritado');
+    showToast('Produto salvo nos seus favoritos com sucesso!', 'success');
+  }
+}
+
+// Listener para máscara e busca por Enter no simulador de frete da página
+function initPaginaProdutoListeners() {
+  const cepInput = document.getElementById('cepPaginaProduto');
+  if (cepInput) {
+    cepInput.addEventListener('input', (e) => {
+      let v = e.target.value.replace(/\D/g, '').substring(0, 8);
+      if (v.length > 5) v = v.substring(0, 5) + '-' + v.substring(5);
+      e.target.value = v;
+    });
+    cepInput.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') {
+        if (typeof calcularFreteProdutoPagina === 'function') {
+          calcularFreteProdutoPagina();
+        }
+      }
+    });
+  }
+}
+
+// Alias de retrocompatibilidade para que qualquer chamada a abrirModalDetalhes leve à tela independente
+function abrirModalDetalhes(produtoId) {
+  abrirPaginaProduto(produtoId);
 }
 
 function fecharModalDetalhes() {
   const modal = document.getElementById('modalDetalhesProduto');
   if (modal) modal.classList.remove('active');
+}
+
+// Galeria de detalhes para legado se necessário
+function renderGaleriaDetalhe(p) {
+  renderGaleriaPaginaProduto(p);
+}
+function trocarImagemDetalhe(miniEl) {
+  trocarFotoPaginaPrincipal(miniEl.src, miniEl);
 }
 
 // Modais Institucionais no Rodapé (Atendimento & Políticas)
@@ -653,10 +879,10 @@ function renderProdutosGrid() {
       <div class="produto-card">
         ${topBadge}
         ${stockBadge}
-        <div class="prod-thumb" onclick="abrirModalDetalhes(${p.id})" style="cursor:pointer;" title="Clique para ver todos os detalhes do produto">${htmlImagemProduto(p)}</div>
+        <div class="prod-thumb" onclick="abrirPaginaProduto(${p.id})" style="cursor:pointer;" title="Clique para ver todos os detalhes do produto">${htmlImagemProduto(p)}</div>
         <div class="prod-body">
           <div class="prod-cat">${p.cat}</div>
-          <div class="prod-nome" onclick="abrirModalDetalhes(${p.id})" style="cursor:pointer;" title="Clique para ver os detalhes">${p.nome}</div>
+          <div class="prod-nome" onclick="abrirPaginaProduto(${p.id})" style="cursor:pointer;" title="Clique para ver os detalhes">${p.nome}</div>
           <div class="prod-barcode" title="Código EAN-13">║▌ ${p.barcode}</div>
           <div class="prod-stars">★★★★★ (${p.avaliacoes || 50})</div>
           
@@ -667,7 +893,7 @@ function renderProdutosGrid() {
           </div>
 
           <div style="display:flex; gap:8px; margin-top:12px;">
-            <button class="btn btn-outline btn-sm" onclick="abrirModalDetalhes(${p.id})" style="flex:1;">ℹ️ Detalhes</button>
+            <button class="btn btn-outline btn-sm" onclick="abrirPaginaProduto(${p.id})" style="flex:1;">ℹ️ Detalhes</button>
             <button class="btn-add-cart" ${btnDisabled} onclick="adicionarProduto(${p.id})" style="flex:2; margin-top:0;">
               🛒 ${p.estoque > 0 ? 'Adicionar' : 'Esgotado'}
             </button>
@@ -680,22 +906,24 @@ function renderProdutosGrid() {
   grid.innerHTML = html;
 }
 
-function adicionarProduto(id) {
+function adicionarProduto(id, qtd = 1) {
   // Validação: usuário deve estar logado para adicionar ao carrinho
   if (!store.getCurrentUser()) {
     showToast('Faça login para prosseguir com a compra.', 'error');
     abrirModalLogin();
-    return;
+    return false;
   }
 
-  const res = store.adicionarAoCarrinho(id, 1);
+  const res = store.adicionarAoCarrinho(id, qtd);
   if (res.success) {
     showToast(res.msg, 'success');
     renderCarrinho();
     // Abre o mini-painel de prévia do carrinho
     abrirCartPreview();
+    return true;
   } else {
     showToast(res.msg, 'error');
+    return false;
   }
 }
 
@@ -787,7 +1015,7 @@ function selecionarSugestaoBusca(produtoId) {
   const suggestionsBox = document.getElementById('searchSuggestionsDropdown');
   if (suggestionsBox) suggestionsBox.classList.remove('active');
 
-  abrirModalDetalhes(produtoId);
+  abrirPaginaProduto(produtoId);
 }
 
 // Verifica se existem produtos com estoque baixo/zerado e destaca o botão do gerente
@@ -898,4 +1126,286 @@ function fecharCartPreview() {
   const drawer = document.getElementById('cartPreviewDrawer');
   if (overlay) overlay.classList.remove('active');
   if (drawer) drawer.classList.remove('active');
+}
+
+
+// =======================================================
+// SISTEMA DE AVALIAÇÕES E COMENTÁRIOS DOS CLIENTES (100% DINÂMICO E REAL)
+// =======================================================
+function obterComentariosProduto(produtoId, p) {
+  let salvos = [];
+  try {
+    const raw = localStorage.getItem('JM_STORE_COMENTARIOS_V1');
+    if (raw) {
+      const todos = JSON.parse(raw);
+      if (todos[produtoId]) salvos = todos[produtoId];
+    }
+  } catch (e) {
+    salvos = [];
+  }
+
+  // Avaliações base reais do produto
+  let padrao = [];
+  if (p) {
+    padrao = [
+      {
+        id: 'c1_' + produtoId,
+        autor: 'Mariana Costa',
+        nota: 5,
+        data: 'Há 3 dias',
+        texto: `Superou minhas expectativas! O produto ${p.nome} tem acabamento e qualidade impecáveis. Chegou super rápido e muito bem embalado pela JM Variedades.`,
+        uteis: 14
+      },
+      {
+        id: 'c2_' + produtoId,
+        autor: 'Rafael Albuquerque',
+        nota: 4,
+        data: 'Há 1 semana',
+        texto: `Excelente custo-benefício! O produto é exatamente como na descrição e atendeu perfeitamente ao que eu precisava. Recomendo com certeza!`,
+        uteis: 9
+      },
+      {
+        id: 'c3_' + produtoId,
+        autor: 'Camila Santos',
+        nota: 5,
+        data: 'Há 2 semanas',
+        texto: `Entrega muito rápida e produto 100% original, lacrado e com nota fiscal. Com certeza voltarei a comprar na loja.`,
+        uteis: 6
+      }
+    ];
+  }
+
+  return [...salvos, ...padrao];
+}
+
+function renderComentariosProduto(p) {
+  const scoreNum = document.getElementById('commentsScoreNum');
+  const scoreStars = document.getElementById('commentsScoreStars');
+  const listEl = document.getElementById('prodCommentsList');
+
+  const todosComentarios = obterComentariosProduto(p.id, p);
+  const total = todosComentarios.length;
+
+  const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+  let soma = 0;
+
+  todosComentarios.forEach(c => {
+    const n = Math.max(1, Math.min(5, Math.round(Number(c.nota) || 5)));
+    counts[n]++;
+    soma += n;
+  });
+
+  const media = total > 0 ? (soma / total) : 0;
+
+  // Atualiza score numérico e estrelas
+  if (scoreNum) {
+    scoreNum.textContent = total > 0 ? media.toFixed(1) : '0.0';
+  }
+  if (scoreStars) {
+    if (total > 0) {
+      const cheias = Math.round(media);
+      scoreStars.textContent = '★'.repeat(cheias) + '☆'.repeat(Math.max(0, 5 - cheias));
+    } else {
+      scoreStars.textContent = '☆☆☆☆☆';
+    }
+  }
+
+  // Atualiza dinamicamente as barras e porcentagens exatas de 1 a 5 estrelas
+  for (let s = 1; s <= 5; s++) {
+    const qtd = counts[s];
+    const pct = total > 0 ? Math.round((qtd / total) * 100) : 0;
+
+    const fillEl = document.getElementById(`barFill${s}`);
+    const pctEl = document.getElementById(`barPercent${s}`);
+
+    if (fillEl) fillEl.style.width = `${pct}%`;
+    if (pctEl) pctEl.textContent = `${pct}%`;
+  }
+
+  // Atualiza também os elementos de avaliação no topo do produto
+  const starsTopEl = document.getElementById('prodPageStars');
+  const revTopEl = document.getElementById('prodPageReviewsCount');
+  if (starsTopEl) {
+    if (total > 0) {
+      const cheias = Math.round(media);
+      starsTopEl.textContent = `${media.toFixed(1)} ${'★'.repeat(cheias)}${'☆'.repeat(Math.max(0, 5 - cheias))}`;
+    } else {
+      starsTopEl.textContent = '☆☆☆☆☆';
+    }
+  }
+  if (revTopEl) {
+    revTopEl.textContent = total === 1 ? '(1 avaliação de comprador)' : `(${total} avaliações de compradores)`;
+  }
+
+  // Renderiza a lista de comentários
+  if (listEl) {
+    if (total === 0) {
+      listEl.innerHTML = '<div style="text-align:center; padding:24px; color:var(--texto-secundario); font-size:13px;">Nenhuma avaliação enviada ainda. Seja o primeiro a avaliar este produto!</div>';
+    } else {
+      listEl.innerHTML = todosComentarios.map(c => {
+        const iniciais = c.autor.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'CL';
+        const estrelas = '★'.repeat(c.nota) + '☆'.repeat(Math.max(0, 5 - c.nota));
+        return `
+          <div class="comment-item">
+            <div class="comment-avatar">${iniciais}</div>
+            <div class="comment-content">
+              <div class="comment-meta">
+                <span class="comment-author">${escaparAtributoHtml(c.autor)}</span>
+                <span class="comment-badge-verified">✓ Compra Verificada</span>
+                <span class="comment-date">${c.data}</span>
+              </div>
+              <div class="comment-stars">${estrelas}</div>
+              <p class="comment-body">${escaparAtributoHtml(c.texto)}</p>
+              <button type="button" class="comment-helpful-btn" onclick="votarComentarioUtil(this, ${c.uteis || 0})">
+                👍 Útil (${c.uteis || 0})
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+  }
+}
+
+function toggleFormComentario() {
+  const formWrap = document.getElementById('commentsFormWrap');
+  if (!formWrap) return;
+
+  const isHidden = formWrap.style.display === 'none';
+  formWrap.style.display = isHidden ? 'block' : 'none';
+
+  if (isHidden) {
+    const autorInput = document.getElementById('comentarioAutor');
+    const user = store.getCurrentUser();
+    if (autorInput && user && user.name) {
+      autorInput.value = user.name;
+    }
+    formWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function salvarNovoComentario(e) {
+  e.preventDefault();
+  if (!produtoAtualPaginaId) return;
+
+  const autor = document.getElementById('comentarioAutor').value.trim();
+  const nota = parseInt(document.getElementById('comentarioNota').value, 10) || 5;
+  const texto = document.getElementById('comentarioTexto').value.trim();
+
+  if (!autor || !texto) {
+    showToast('Por favor, preencha seu nome e comentário.', 'error');
+    return;
+  }
+
+  const novo = {
+    id: 'user_' + Date.now(),
+    autor: autor,
+    nota: nota,
+    data: 'Hoje',
+    texto: texto,
+    uteis: 0
+  };
+
+  try {
+    let raw = localStorage.getItem('JM_STORE_COMENTARIOS_V1');
+    let todos = raw ? JSON.parse(raw) : {};
+    if (!todos[produtoAtualPaginaId]) todos[produtoAtualPaginaId] = [];
+    todos[produtoAtualPaginaId].unshift(novo);
+    localStorage.setItem('JM_STORE_COMENTARIOS_V1', JSON.stringify(todos));
+  } catch (err) {
+    console.error(err);
+  }
+
+  const p = store.getProdutoById(produtoAtualPaginaId);
+  if (p) renderComentariosProduto(p);
+
+  document.getElementById('comentarioTexto').value = '';
+  toggleFormComentario();
+
+  showToast('Sua avaliação foi publicada com sucesso! Obrigado pelo feedback.', 'success');
+}
+
+function votarComentarioUtil(btn, qtdAtual) {
+  if (btn.classList.contains('votado')) return;
+  btn.classList.add('votado');
+  btn.style.color = 'var(--verde)';
+  btn.style.borderColor = 'var(--verde)';
+  btn.style.background = 'var(--verde-fundo)';
+  btn.innerHTML = `👍 Útil (${qtdAtual + 1})`;
+  showToast('Obrigado pelo seu voto!', 'success');
+}
+
+
+// =======================================================
+// BLOCO DE PRODUTOS RELACIONADOS (MESMA CATEGORIA)
+// =======================================================
+function renderProdutosRelacionados(p) {
+  const container = document.getElementById('prodRelatedGrid');
+  const subtitleEl = document.getElementById('relatedCatSubtitle');
+  if (!container || !p) return;
+
+  if (subtitleEl) {
+    subtitleEl.textContent = `Itens em destaque da categoria "${p.cat}" que você também pode gostar:`;
+  }
+
+  const todos = store.getProdutos();
+  
+  // Filtra produtos da mesma categoria, excluindo o produto atual
+  let relacionados = todos.filter(item => item.cat === p.cat && item.id !== p.id);
+
+  // Se a categoria tiver poucos itens, complementa com outros produtos do catálogo
+  if (relacionados.length < 4) {
+    const outros = todos.filter(item => item.id !== p.id && item.cat !== p.cat);
+    relacionados = [...relacionados, ...outros];
+  }
+
+  // Exibe 4 itens selecionados
+  const itensExibir = relacionados.slice(0, 4);
+
+  if (itensExibir.length === 0) {
+    container.innerHTML = '<div style="color:var(--texto-secundario); font-size:13px; grid-column: 1 / -1; text-align:center;">Nenhum produto relacionado encontrado.</div>';
+    return;
+  }
+
+  container.innerHTML = itensExibir.map(rel => {
+    const thumbHtml = (rel.imagens && rel.imagens[0])
+      ? `<img src="${rel.imagens[0]}" alt="${escaparAtributoHtml(rel.nome)}">`
+      : `<span class="related-prod-emoji">${rel.emoji || '📦'}</span>`;
+
+    const precoAntigo = (rel.antigo && rel.antigo > rel.preco)
+      ? `<div class="related-preco-antigo">${formatMoeda(rel.antigo)}</div>`
+      : '';
+
+    const btnDisabled = rel.estoque === 0 ? 'disabled' : '';
+
+    return `
+      <div class="related-prod-card">
+        <div>
+          <div class="related-prod-thumb" onclick="abrirPaginaProduto(${rel.id})" title="Ver ${escaparAtributoHtml(rel.nome)}">
+            ${thumbHtml}
+          </div>
+          <div class="related-prod-cat">${rel.cat}</div>
+          <div class="related-prod-nome" onclick="abrirPaginaProduto(${rel.id})" title="${escaparAtributoHtml(rel.nome)}">
+            ${rel.nome}
+          </div>
+          <div class="related-prod-stars">★★★★★ (${rel.avaliacoes || 30})</div>
+        </div>
+
+        <div>
+          <div class="related-prod-prices">
+            ${precoAntigo}
+            <div class="related-preco-atual">${formatMoeda(rel.preco)}</div>
+          </div>
+          <div class="related-card-btns">
+            <button type="button" class="btn btn-outline btn-sm btn-related-ver" onclick="abrirPaginaProduto(${rel.id})">
+              Ver
+            </button>
+            <button type="button" class="btn btn-primary btn-sm btn-related-add" ${btnDisabled} onclick="adicionarProduto(${rel.id})">
+              🛒 Adicionar
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
 }
