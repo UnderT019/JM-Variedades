@@ -2549,7 +2549,7 @@ const PRODUTOS_INICIAIS = [
 
 // Todos os 18 Cupons com Regras de Negócio e Valores Mínimos de Compra
 const CUPONS_DISPONIVEIS = {
-  'BEMVINDO10': { codigo: 'BEMVINDO10', porcentagem: 10, minVal: 80, categoria: null, desc: '10% OFF em todas as categorias (Mín. R$ 80)' },
+  'BEMVINDO10': { codigo: 'BEMVINDO10', validade: '2027-12-31', limiteUso: 1, porcentagem: 10, minVal: 80, categoria: null, desc: '10% OFF em todas as categorias (Mín. R$ 80)' },
   'CASA15': { codigo: 'CASA15', porcentagem: 15, minVal: 100, categoria: ['Casa e Cozinha'], desc: '15% OFF em Casa e Cozinha (Mín. R$ 100)' },
   'LIMPA20': { codigo: 'LIMPA20', porcentagem: 20, minVal: 60, categoria: ['Limpeza'], desc: '20% OFF em Limpeza (Mín. R$ 60)' },
   'TECNO12': { codigo: 'TECNO12', porcentagem: 12, minVal: 120, categoria: ['Eletrônicos e Acessórios'], desc: '12% OFF em Eletrônicos (Mín. R$ 120)' },
@@ -2564,8 +2564,9 @@ const CUPONS_DISPONIVEIS = {
   'KIDS20': { codigo: 'KIDS20', porcentagem: 20, minVal: 50, categoria: ['Infantil'], desc: '20% OFF em Infantil (Mín. R$ 50)' },
   'FRETEGRATIS': { codigo: 'FRETEGRATIS', freteGratis: true, minVal: 150, desc: 'Frete Grátis em compras acima de R$ 150' },
   'PIX5': { codigo: 'PIX5', porcentagem: 5, minVal: 50, exigePix: true, desc: '5% OFF extra para pagamento via PIX (Mín. R$ 50)' },
-  '20REAIS': { codigo: '20REAIS', valorFixo: 20, minVal: 180, desc: 'R$ 20,00 OFF em compras acima de R$ 180' },
+  '20REAIS': { codigo: '20REAIS', validade: '2027-12-31', limiteUso: 1, valorFixo: 20, minVal: 180, desc: 'R$ 20,00 OFF em compras acima de R$ 180' },
   'FLASH25': { codigo: 'FLASH25', porcentagem: 25, minVal: 0, produtos: ['Caderno Espiral 96 folhas', 'Bloco Adesivo 4 cores', 'Caneca Cerâmica 350ml', 'Pano de Prato Kit 5', 'Kit Esponjas Multiuso 10 un.', 'Flanela Multiuso Kit 3', 'Pente de Madeira', 'Necessaire Média', 'Chaveiro Metálico', 'Kit Bolhas de Sabão'], desc: '25% OFF em Produtos Selecionados' },
+  'PASCOA10': { codigo: 'PASCOA10', validade: '2026-04-30', porcentagem: 10, minVal: 50, desc: '10% OFF Páscoa (Mín. R$ 50) - EXPIRADO' },
   'VOLTA10': { codigo: 'VOLTA10', porcentagem: 10, minVal: 100, desc: '10% OFF de Volta (Mín. R$ 100)' }
 };
 
@@ -3024,10 +3025,13 @@ class Store {
 
   aplicarCupom(codigo, formaPagamento = 'pix') {
     const code = String(codigo).trim().toUpperCase();
-    const cupom = CUPONS_DISPONIVEIS[code];
+    const cupom = this.getCuponsDisponiveis()[code];
     if (!cupom) {
       return { success: false, msg: 'Cupom inválido ou expirado!' };
     }
+
+    const erroRegra = this.validarRegrasCupom(cupom);
+    if (erroRegra) return { success: false, msg: erroRegra };
 
     if (cupom.exigePix && formaPagamento !== 'pix') {
       return { success: false, msg: 'O cupom PIX5 exige que a forma de pagamento selecionada seja PIX!' };
@@ -3066,6 +3070,74 @@ class Store {
     return { success: true, msg: `Cupom ${cupom.codigo} (${cupom.desc}) aplicado com sucesso!`, cupom };
   }
 
+  // --- CUPONS: cadastro, validade e limite de uso por cliente (H.002) ---
+  getCuponsCustom() { try { return JSON.parse(localStorage.getItem('JM_STORE_CUPONS_CUSTOM')) || {}; } catch (e) { return {}; } }
+  getCuponsDisponiveis() { return Object.assign({}, CUPONS_DISPONIVEIS, this.getCuponsCustom()); }
+  cadastrarCupom(c) {
+    const codigo = String(c.codigo || '').trim().toUpperCase();
+    if (!/^[A-Z0-9]{3,20}$/.test(codigo)) return { success: false, msg: 'Código inválido (use 3 a 20 letras/números).' };
+    if (this.getCuponsDisponiveis()[codigo]) return { success: false, msg: 'Já existe um cupom com esse código.' };
+    if (!(c.valor > 0)) return { success: false, msg: 'Informe um valor de desconto maior que zero.' };
+    if (c.tipo === 'percentual' && c.valor > 100) return { success: false, msg: 'Percentual não pode passar de 100%.' };
+    const novo = { codigo, minVal: Number(c.minVal) || 0, validade: c.validade || null, limiteUso: Number(c.limiteUso) || 0 };
+    if (c.tipo === 'percentual') novo.porcentagem = Number(c.valor); else novo.valorFixo = Number(c.valor);
+    novo.desc = (c.tipo === 'percentual' ? c.valor + '% OFF' : 'R$ ' + Number(c.valor).toFixed(2) + ' OFF') + ' (Mín. R$ ' + novo.minVal.toFixed(2) + ')';
+    const todos = this.getCuponsCustom(); todos[codigo] = novo;
+    localStorage.setItem('JM_STORE_CUPONS_CUSTOM', JSON.stringify(todos));
+    return { success: true, msg: 'Cupom ' + codigo + ' cadastrado!' };
+  }
+  getUsosCupom() { try { return JSON.parse(localStorage.getItem('JM_STORE_CUPONS_USOS')) || {}; } catch (e) { return {}; } }
+  chaveCliente(cpf) { const d = String(cpf || '').replace(/\D/g, ''); return d || null; }
+  validarRegrasCupom(cupom, cpf) {
+    if (!cupom) return null;
+    if (cupom.validade && new Date(cupom.validade + 'T23:59:59') < new Date()) return 'Cupom ' + cupom.codigo + ' fora da data de validade!';
+    if (cupom.limiteUso) {
+      const chave = this.chaveCliente(cpf !== undefined ? cpf : (document.getElementById('clientCPF') || {}).value);
+      const usos = chave ? ((this.getUsosCupom()[cupom.codigo] || {})[chave] || 0) : 0;
+      if (usos >= cupom.limiteUso) return 'Você já atingiu o limite de utilização do cupom ' + cupom.codigo + '.';
+    }
+    return null;
+  }
+  registrarUsoCupom(codigo, cpf) {
+    const chave = this.chaveCliente(cpf); if (!chave) return;
+    const u = this.getUsosCupom(); u[codigo] = u[codigo] || {}; u[codigo][chave] = (u[codigo][chave] || 0) + 1;
+    localStorage.setItem('JM_STORE_CUPONS_USOS', JSON.stringify(u));
+  }
+
+  // --- PEDIDOS: reserva de estoque, confirmação de pagamento e expiração (H04.005) ---
+  estoqueReservado(produtoId) {
+    let r = 0;
+    this.getPedidos().forEach(p => { if (p.status === 'Aguardando Pagamento') (p.itens || []).forEach(i => { if (i.id === produtoId) r += i.qtd; }); });
+    return r;
+  }
+  confirmarPagamentoPedido(pedidoId) {
+    const pedidos = this.getPedidos(); const ped = pedidos.find(p => p.id === pedidoId);
+    if (!ped || ped.status !== 'Aguardando Pagamento') return { success: false, msg: 'Pedido não está aguardando pagamento.' };
+    const produtos = this.getProdutos(); const historico = this.getHistorico();
+    ped.itens.forEach(i => {
+      const p = produtos.find(x => x.id === i.id); if (!p) return;
+      p.estoque = Math.max(0, p.estoque - i.qtd);
+      historico.unshift({ id: 'HIST-' + Math.floor(Math.random() * 899999 + 100000), barcode: p.barcode, produtoNome: p.nome, timestamp: new Date().toLocaleString('pt-BR'), tipo: 'Venda (Pagamento confirmado)', qtd: -i.qtd, pedidoId: ped.id, saldoResultante: p.estoque, obs: 'Baixa após confirmação do pagamento' });
+    });
+    ped.status = 'Pago'; ped.expiraEm = null;
+    this.saveProdutos(produtos);
+    localStorage.setItem(STORAGE_KEYS.HISTORICO, JSON.stringify(historico));
+    localStorage.setItem(STORAGE_KEYS.PEDIDOS, JSON.stringify(pedidos));
+    return { success: true };
+  }
+  cancelarPedidoAguardando(pedidoId, motivo) {
+    const pedidos = this.getPedidos(); const ped = pedidos.find(p => p.id === pedidoId);
+    if (!ped || ped.status !== 'Aguardando Pagamento') return false;
+    ped.status = 'Cancelado'; ped.motivoCancelamento = motivo || 'Prazo de pagamento expirado'; ped.expiraEm = null;
+    localStorage.setItem(STORAGE_KEYS.PEDIDOS, JSON.stringify(pedidos));
+    return true;
+  }
+  expirarPedidosVencidos() {
+    let n = 0;
+    this.getPedidos().forEach(p => { if (p.status === 'Aguardando Pagamento' && p.expiraEm && p.expiraEm < Date.now()) { if (this.cancelarPedidoAguardando(p.id)) n++; } });
+    return n;
+  }
+
   removerCupom() {
     localStorage.removeItem(STORAGE_KEYS.CUPOM);
   }
@@ -3085,10 +3157,11 @@ class Store {
     const historico = this.getHistorico();
     const pedidoId = 'JM-' + Math.floor(Math.random() * 899999 + 100000);
     const dataAtual = new Date().toLocaleString('pt-BR');
+    const pago = dadosCheckout.metodoPagamento === 'cartao';
 
     for (const item of carrinho) {
       const p = produtos.find(prod => prod.id === item.id);
-      if (!p || p.estoque < item.qtd) {
+      if (!p || (p.estoque - this.estoqueReservado(p.id)) < item.qtd) {
         return { success: false, msg: `Estoque insuficiente para o produto ${p ? p.nome : 'desconhecido'}` };
       }
     }
@@ -3096,9 +3169,9 @@ class Store {
     const itensPedido = [];
     carrinho.forEach(item => {
       const p = produtos.find(prod => prod.id === item.id);
-      p.estoque -= item.qtd;
+      if (pago) p.estoque -= item.qtd;
 
-      historico.unshift({
+      if (pago) historico.unshift({
         id: 'HIST-' + Math.floor(Math.random() * 899999 + 100000),
         barcode: p.barcode,
         produtoNome: p.nome,
@@ -3128,6 +3201,7 @@ class Store {
       id: pedidoId,
       data: dataAtual,
       cliente: dadosCheckout.cliente,
+      contaEmail: ((this.getCurrentUser() || {}).email || '').toLowerCase(),
       endereco: dadosCheckout.endereco,
       itens: itensPedido,
       subtotal: dadosCheckout.subtotal,
@@ -3136,7 +3210,8 @@ class Store {
       frete: dadosCheckout.frete,
       total: dadosCheckout.total,
       metodoPagamento: dadosCheckout.metodoPagamento,
-      status: dadosCheckout.metodoPagamento === 'cartao' ? 'Pago' : 'Aguardando Pagamento'
+      status: pago ? 'Pago' : 'Aguardando Pagamento',
+      expiraEm: pago ? null : Date.now() + (dadosCheckout.metodoPagamento === 'pix' ? 30 * 60 * 1000 : 3 * 24 * 3600 * 1000)
     };
 
     const pedidos = this.getPedidos();
@@ -3145,6 +3220,7 @@ class Store {
 
     this.limparCarrinho();
 
+    if (novoPedido.cupomCodigo) this.registrarUsoCupom(novoPedido.cupomCodigo, dadosCheckout.cliente.cpf);
     return { success: true, pedido: novoPedido };
   }
 

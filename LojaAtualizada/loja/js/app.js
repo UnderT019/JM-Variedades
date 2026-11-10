@@ -274,6 +274,7 @@ function salvarAlteracoesMeusDados(e) {
 }
 
 function renderMeusPedidos() {
+  store.expirarPedidosVencidos();
   const container = document.getElementById('meusPedidosListaContainer');
   if (!container) return;
 
@@ -287,7 +288,7 @@ function renderMeusPedidos() {
     const uEmail = currentUser.email ? currentUser.email.toLowerCase() : '';
     const pNome = p.cliente && p.cliente.nome ? p.cliente.nome.toLowerCase() : '';
     const uNome = currentUser.name ? currentUser.name.toLowerCase() : '';
-    return (uEmail && pEmail === uEmail) || (uNome && pNome === uNome);
+    return (uEmail && pEmail === uEmail) || (uNome && pNome === uNome) || (uEmail && p.contaEmail === uEmail);
   });
 
   if (pedidosDoUsuario.length === 0) {
@@ -306,7 +307,7 @@ function renderMeusPedidos() {
   pedidosDoUsuario.forEach(p => {
     const isPago = p.status === 'Pago';
     const statusClass = isPago ? 'status-ok' : 'status-baixo';
-    const statusIcon = isPago ? '✓' : '⏳';
+    const statusIcon = isPago ? '✓' : (p.status === 'Cancelado' ? '✖' : '⏳');
 
     let itensHtml = (p.itens || []).map(item => `
       <div class="pedido-item-row">
@@ -339,6 +340,7 @@ function renderMeusPedidos() {
           <div style="margin-top:4px;">💳 <b>Pagamento:</b> ${p.metodoPagamento ? p.metodoPagamento.toUpperCase() : 'Pix'} | 🚚 <b>Frete:</b> ${p.frete === 0 ? 'Grátis' : formatMoeda(p.frete)}</div>
         </div>
 
+        ${blocoAcoesPedido(p)}
         <div class="pedido-footer">
           <div style="font-size:14px; color:var(--texto-secundario);">
             Total: <span style="font-size:20px; font-weight:900; color:var(--laranja-principal);">${formatMoeda(p.total)}</span>

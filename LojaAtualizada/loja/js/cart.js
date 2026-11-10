@@ -76,8 +76,18 @@ function renderCarrinho() {
   calcularEEstipularValores();
 }
 
+function invalidarFreteCarrinho() {
+  if (store.getFreteSelecionado() || store.getFreteCotacao()) {
+    store.limparFrete();
+    freteSelecionadoVal = 0;
+    freteSelecionadoNome = '';
+    showToast('Carrinho alterado: calcule o frete novamente.', 'error');
+  }
+}
+
 function alterarQuantidade(produtoId, delta) {
   const res = store.atualizarQtdCarrinho(produtoId, delta);
+  if (res && res.success !== false) invalidarFreteCarrinho();
   if (res && !res.success) {
     showToast(res.msg, 'error');
   }
@@ -87,6 +97,7 @@ function alterarQuantidade(produtoId, delta) {
 
 function removerItemCarrinho(produtoId) {
   store.removerDoCarrinho(produtoId);
+  invalidarFreteCarrinho();
   showToast('Item removido do carrinho.', 'success');
   renderCarrinho();
   renderCheckoutSummary();
@@ -794,6 +805,7 @@ function confirmarPedidoCheckout() {
     showToast('Adicione produtos ao carrinho antes de finalizar!', 'error');
     return;
   }
+  if (!validarCheckout()) return;
 
   const nome = document.getElementById('clientNome')?.value || 'Cliente JM Variedades';
   const email = document.getElementById('clientEmail')?.value || 'cliente@exemplo.com';
@@ -912,3 +924,82 @@ document.addEventListener('click', (e) => {
   const modal = document.getElementById('modalConfirmação');
   if (modal && e.target === modal) fecharReciboEVoltar();
 });
+
+// ===== VALIDAÇÃO DO CHECKOUT, RECUSA DE CARTÃO E AÇÕES DE PEDIDO (H003 / H04.005) =====
+function cpfValido(cpf) {
+  const d = String(cpf || '').replace(/\D/g, '');
+  if (d.length !== 11 || /^(\d)\1+$/.test(d)) return false;
+  for (let t = 9; t < 11; t++) {
+    let soma = 0;
+    for (let i = 0; i < t; i++) soma += Number(d[i]) * (t + 1 - i);
+    if (((soma * 10) % 11) % 10 !== Number(d[t])) return false;
+  }
+  return true;
+}
+
+function validarCheckout() {
+  const v = id => ((document.getElementById(id) || {}).value || '').trim();
+  const erro = (id, msg) => {
+    const el = document.getElementById(id);
+    if (el) { el.style.borderColor = 'var(--vermelho, #C94A4A)'; el.focus(); el.addEventListener('input', () => { el.style.borderColor = ''; }, { once: true }); }
+    showToast(msg, 'error');
+    return false;
+  };
+  if (v('clientNome').split(/\s+/).filter(Boolean).length < 2) return erro('clientNome', 'Informe seu nome completo.');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v('clientEmail'))) return erro('clientEmail', 'E-mail inválido.');
+  if (!cpfValido(v('clientCPF'))) return erro('clientCPF', 'CPF inválido.');
+  if (v('clientTelefone').replace(/\D/g, '').length < 10) return erro('clientTelefone', 'Telefone inválido (com DDD).');
+  if (v('cepFrete').replace(/\D/g, '').length !== 8) return erro('cepFrete', 'Informe um CEP válido com 8 dígitos.');
+  if (!v('checkoutRua')) return erro('checkoutRua', 'Informe o logradouro.');
+  if (!v('checkoutNumero')) return erro('checkoutNumero', 'Informe o número do endereço.');
+  if (!v('checkoutBairro')) return erro('checkoutBairro', 'Informe o bairro.');
+  if (!v('checkoutCidade')) return erro('checkoutCidade', 'Informe a cidade.');
+  if (!/^[A-Za-z]{2}$/.test(v('checkoutUF'))) return erro('checkoutUF', 'Informe a UF com 2 letras.');
+  if (!store.getFreteSelecionado()) { showToast('Calcule e escolha uma opção de frete antes de finalizar.', 'error'); return false; }
+
+  const cupom = store.getCupomAplicado();
+  const erroCupom = cupom ? store.validarRegrasCupom(cupom, v('clientCPF')) : null;
+  if (erroCupom) { store.removerCupom(); renderCarrinho(); renderCheckoutSummary(); showToast(erroCupom, 'error'); return false; }
+
+  if (metodoPagamentoSelecionado === 'cartao') {
+    const num = v('inputNumeroCartao').replace(/\D/g, '');
+    if (num.length < 13 || num.length > 19) return erro('inputNumeroCartao', 'Número do cartão inválido.');
+    if (v('inputNomeCartao').length < 3) return erro('inputNomeCartao', 'Informe o nome impresso no cartão.');
+    const m = v('inputValidadeCartao').match(/^(\d{2})\/(\d{2})$/);
+    const mes = m ? Number(m[1]) : 0, ano = m ? 2000 + Number(m[2]) : 0;
+    const hoje = new Date();
+    if (!m || mes < 1 || mes > 12 || ano < hoje.getFullYear() || (ano === hoje.getFullYear() && mes < hoje.getMonth() + 1)) return erro('inputValidadeCartao', 'Validade do cartão inválida ou vencida.');
+    if (!/^\d{3,4}$/.test(v('inputCVVCartao'))) return erro('inputCVVCartao', 'CVV inválido.');
+    if (num.endsWith('0000')) {
+      showToast('Pagamento recusado pela operadora. Tente novamente ou escolha outra forma de pagamento.', 'error');
+      const el = document.getElementById('inputNumeroCartao'); if (el) el.focus();
+      return false;
+    }
+  }
+  return true;
+}
+
+function blocoAcoesPedido(p) {
+  if (p.status === 'Cancelado') return `<div style="background:#FDECEC; color:#C94A4A; border-radius:10px; padding:10px 14px; margin-bottom:14px; font-size:12px; font-weight:700;">✖ Pedido cancelado: ${p.motivoCancelamento || 'prazo expirado'}. O estoque reservado foi liberado.</div>`;
+  if (p.status !== 'Aguardando Pagamento') return '';
+  const prazo = p.expiraEm ? new Date(p.expiraEm).toLocaleString('pt-BR') : '';
+  return `<div style="background:#FFF8E6; border-radius:10px; padding:10px 14px; margin-bottom:14px; font-size:12px;">
+    ⏳ Aguardando pagamento${prazo ? ' — vence em <b>' + prazo + '</b>' : ''}. O estoque está reservado e só baixa após a confirmação.
+    <div style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;">
+      <button class="btn btn-primary btn-sm" onclick="simularPagamentoPedido('${p.id}')">✔ Simular pagamento confirmado</button>
+      <button class="btn btn-outline btn-sm" onclick="simularVencimentoPedido('${p.id}')">⏱ Simular vencimento do prazo</button>
+    </div></div>`;
+}
+function simularPagamentoPedido(id) {
+  const r = store.confirmarPagamentoPedido(id);
+  showToast(r.success ? 'Pagamento confirmado! Estoque baixado e pedido marcado como Pago.' : r.msg, r.success ? 'success' : 'error');
+  renderMeusPedidos();
+}
+function simularVencimentoPedido(id) {
+  const ped = store.getPedidos().find(p => p.id === id);
+  if (ped) { const todos = store.getPedidos(); todos.find(p => p.id === id).expiraEm = Date.now() - 1000; localStorage.setItem(STORAGE_KEYS.PEDIDOS, JSON.stringify(todos)); }
+  store.expirarPedidosVencidos();
+  showToast('Prazo expirado: pedido cancelado e estoque liberado.', 'error');
+  renderMeusPedidos();
+}
+setInterval(() => { if (store.expirarPedidosVencidos() > 0 && typeof renderMeusPedidos === 'function') { try { renderMeusPedidos(); } catch (e) {} } }, 30000);

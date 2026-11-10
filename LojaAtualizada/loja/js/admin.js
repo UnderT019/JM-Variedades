@@ -36,6 +36,7 @@ function efetuarLogoutAdmin() {
 
 // Renderiza a view completa do Painel Administrativo
 function renderPainelAdmin() {
+  try { renderListaCuponsAdmin(); } catch (e) {}
   const dashboardView = document.getElementById('adminDashboardView');
   if (!dashboardView) return;
 
@@ -886,4 +887,22 @@ if (document.readyState === 'loading') {
 } else {
   carregarTarjaAnuncio();
   iniciarUploadArrastar();
+}
+
+// ===== CADASTRO DE CUPONS NO PAINEL (H.002) =====
+function cadastrarCupomAdmin(e) {
+  if (e) e.preventDefault();
+  const g = id => document.getElementById(id).value;
+  const res = store.cadastrarCupom({ codigo: g('cupCodigo'), tipo: g('cupTipo'), valor: parseFloat(g('cupValor')), minVal: parseFloat(g('cupMin')) || 0, validade: g('cupValidade'), limiteUso: parseInt(g('cupLimite'), 10) || 0 });
+  showToast(res.msg, res.success ? 'success' : 'error');
+  if (res.success) { document.getElementById('formCupomAdmin').reset(); renderListaCuponsAdmin(); }
+}
+function renderListaCuponsAdmin() {
+  const box = document.getElementById('listaCuponsAdmin'); if (!box) return;
+  const hoje = new Date();
+  const linhas = Object.values(store.getCuponsDisponiveis()).map(c => {
+    const exp = c.validade && new Date(c.validade + 'T23:59:59') < hoje;
+    return `<tr><td><b>${c.codigo}</b></td><td>${c.porcentagem ? c.porcentagem + '%' : (c.valorFixo ? 'R$ ' + c.valorFixo : (c.freteGratis ? 'Frete grátis' : '-'))}</td><td>R$ ${(c.minVal || 0).toFixed(2)}</td><td>${c.validade ? c.validade.split('-').reverse().join('/') : 'sem prazo'}${exp ? ' <span style="color:#C94A4A">(expirado)</span>' : ''}</td><td>${c.limiteUso ? c.limiteUso + ' por cliente' : 'ilimitado'}</td></tr>`;
+  }).join('');
+  box.innerHTML = `<table style="width:100%; font-size:12px; border-collapse:collapse;"><thead><tr style="text-align:left;"><th>Código</th><th>Desconto</th><th>Mínimo</th><th>Validade</th><th>Limite de uso</th></tr></thead><tbody>${linhas}</tbody></table>`;
 }

@@ -705,7 +705,7 @@
             <div id="pag-detalhe-cartao" class="pag-box-detalhe" style="display:none">
               <div class="form-grid">
                 <div class="field full">
-                  <label>Número do Cartão</label>
+                  <label>Número do Cartão <small style="font-weight:400;color:#999">(demonstração: final 0000 = recusado)</small></label>
                   <input type="text" id="inputNumeroCartao" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric" oninput="mascaraNumeroCartao(this)">
                 </div>
                 <div class="field full">
@@ -1050,6 +1050,20 @@
             <p style="font-size: 14px; color: var(--texto-secundario);">Métricas em tempo real de vendas, faturamento e controle de estoque.</p>
           </div>
           <button class="btn btn-danger btn-sm" onclick="efetuarLogoutAdmin()">🔒 Sair / Logout</button>
+        </div>
+
+        <div class="card" style="border-left: 5px solid var(--laranja-principal);">
+          <h3>🏷️ Cadastrar Cupom de Desconto</h3>
+          <form id="formCupomAdmin" onsubmit="cadastrarCupomAdmin(event)" style="display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; margin:10px 0;">
+            <input id="cupCodigo" placeholder="Código (ex.: INSTA10)" style="padding:10px; width:150px;" required>
+            <select id="cupTipo" style="padding:10px;"><option value="percentual">Percentual (%)</option><option value="fixo">Valor fixo (R$)</option></select>
+            <input id="cupValor" type="number" step="0.01" min="0.01" placeholder="Valor" style="padding:10px; width:90px;" required>
+            <input id="cupMin" type="number" step="0.01" min="0" placeholder="Mín. carrinho R$" style="padding:10px; width:130px;">
+            <input id="cupValidade" type="date" style="padding:10px;" title="Validade">
+            <input id="cupLimite" type="number" min="1" placeholder="Usos/cliente" style="padding:10px; width:110px;">
+            <button class="btn btn-primary" type="submit">Cadastrar ➔</button>
+          </form>
+          <div id="listaCuponsAdmin" style="max-height:200px; overflow:auto;"></div>
         </div>
 
         <!-- Módulo de Personalização da Tarja de Anúncios / Banner Superior -->
